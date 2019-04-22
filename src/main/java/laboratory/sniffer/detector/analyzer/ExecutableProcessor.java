@@ -1,0 +1,173 @@
+package laboratory.sniffer.detector.analyzer;
+
+import laboratory.sniffer.detector.entities.DetectorArgument;
+import laboratory.sniffer.detector.entities.DetectorMethod;
+import laboratory.sniffer.detector.entities.DetectorModifiers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import spoon.reflect.code.*;
+import spoon.reflect.declaration.*;
+import spoon.reflect.visitor.filter.TypeFilter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public abstract class ExecutableProcessor<T extends CtExecutable> {
+    private static final Logger logger = LoggerFactory.getLogger(ExecutableProcessor.class.getName());
+
+    public void process(T ctExecutable) {
+        String name = ctExecutable.getSimpleName();
+        System.out.println("name methode "+name);
+        String returnType = ctExecutable.getType().getQualifiedName();
+
+        String visibility = "null";
+        if (ctExecutable instanceof CtModifiable) {
+            CtModifiable modifiable = (CtModifiable) ctExecutable;
+            visibility = modifiable.getVisibility() == null ? "null" : modifiable.getVisibility().toString();
+        }
+        DetectorModifiers detectorModifiers = DataConverter.convertTextToModifier(visibility);
+        if (detectorModifiers == null) {
+            detectorModifiers = DetectorModifiers.PROTECTED;
+        }
+        int position = 0;
+        String qualifiedName;
+        DetectorMethod detectorMethod = DetectorMethod.createDetectorMethod(name, detectorModifiers, returnType,
+                MainProcessor.currentClass);
+        MainProcessor.currentMethod = detectorMethod;
+        for (CtParameter<?> ctParameter : (List<CtParameter>) ctExecutable.getParameters()) {
+            qualifiedName = ctParameter.getType().getQualifiedName();
+            DetectorArgument.createDetectorArgument(qualifiedName, position, detectorMethod);
+            position++;
+        }
+        int numberOfDeclaredLocals = ctExecutable.getElements(new TypeFilter<CtLocalVariable>(CtLocalVariable.class)).size();
+        detectorMethod.setNumberOfLines(countEffectiveCodeLines(ctExecutable));
+        handleUsedVariables(ctExecutable, detectorMethod);
+        handleInvocations(ctExecutable, detectorMethod);
+        detectorMethod.setComplexity(getComplexity(ctExecutable));
+        detectorMethod.setNumberOfDeclaredLocals(numberOfDeclaredLocals);
+
+        process(ctExecutable, detectorMethod);
+    }
+
+    /**
+     * Define the process behavior specific to the current element.
+     *
+     * @param ctExecutable  The processed spoon executable.
+     * @param detectorMethod The processed output so far.
+     */
+    protected abstract void process(T ctExecutable, DetectorMethod detectorMethod);
+
+    private int countEffectiveCodeLines(T ctMethod) {
+        try {
+            System.out.println("body    "+ctMethod.getBody().toString());
+            int numberOfLogicalLines=0;
+            int numbeOfLinesWithSemicolonnes=ctMethod.getBody().toString().split(";").length;
+            int nbCtFor=ctMethod.getBody().getElements(new TypeFilter(CtFor.class)).size();
+            int nbCtSwitch=ctMethod.getBody().getElements(new TypeFilter(CtSwitch.class)).size();
+            int nbCtConditional=ctMethod.getBody().getElements(new TypeFilter(CtConditional.class)).size();
+            int nbCtDo=ctMethod.getBody().getElements(new TypeFilter(CtDo.class)).size()*2;
+            int nbCtForEach=ctMethod.getBody().getElements(new TypeFilter(CtForEach.class)).size();
+            int nbCtIf=ctMethod.getBody().getElements(new TypeFilter(CtIf.class)).size();
+            int nbCtThrow=ctMethod.getBody().getElements(new TypeFilter(CtThrow.class)).size();
+            int nbCtAnnotation=ctMethod.getBody().getElements(new TypeFilter(CtAnnotation.class)).size();
+            int nbCtTry=ctMethod.getBody().getElements(new TypeFilter(CtTry.class)).size();
+            int nbCtCatch=ctMethod.getBody().getElements(new TypeFilter(CtCatch.class)).size();
+            int nbCtWhile=ctMethod.getBody().getElements(new TypeFilter(CtWhile.class)).size();
+
+
+
+            List<CtElement> catchs=ctMethod.getBody().getElements(new TypeFilter(CtCatch.class));
+            //for (String elem:lines) {
+            //  System.out.println("****************************");
+            //System.out.println(elem);
+            //System.out.println("****************************");
+            //}
+
+
+
+
+
+            List<String> lines= Arrays.asList(ctMethod.getBody().toString().split(";"));
+
+
+            numberOfLogicalLines=numbeOfLinesWithSemicolonnes+nbCtFor-(nbCtFor*2)
+                    +nbCtSwitch+nbCtConditional+nbCtDo
+                    +nbCtForEach+nbCtIf+nbCtTry+nbCtCatch+nbCtWhile+1;
+            // + 1 pour le prototype de la methode
+            // le nombre de block s'ajoute automatiquement 
+            System.out.println("number of instruction   "+numberOfLogicalLines);
+
+            return numberOfLogicalLines;
+
+        } catch (NullPointerException npe) {
+            return ctMethod.getPosition().getEndLine() - ctMethod.getPosition().getLine();
+        }
+    }
+
+    private void handleUsedVariables(T ctExecutable, DetectorMethod detectorMethod) {
+        List<CtFieldAccess> elements = ctExecutable.getElements(new TypeFilter<CtFieldAccess>(CtFieldAccess.class));
+        String variableTarget = null;
+        String variableName;
+
+        CtTypeMember member = ctExecutable instanceof CtTypeMember ? (CtTypeMember) ctExecutable : null;
+        for (CtFieldAccess ctFieldAccess : elements) {
+            if (ctFieldAccess.getTarget() != null && ctFieldAccess.getTarget().getType() != null) {
+                if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
+                    variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
+                    variableName = ctFieldAccess.getVariable().getSimpleName();
+                    detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+                }
+            }
+        }
+    }
+
+    private void handleInvocations(T ctConstructor, DetectorMethod detectorMethod) {
+        String targetName;
+        String executable;
+        String type = "Unknown";
+        // Thanks to spoon we have to use a CtAbstractInvocation
+        List<CtAbstractInvocation> invocations = ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));
+        for (CtAbstractInvocation invocation : invocations) {
+            executable = invocation.getExecutable().getSimpleName();
+            targetName = getTarget(invocation);
+            if (invocation.getExecutable().getType() != null) {
+                type = invocation.getExecutable().getType().getQualifiedName();
+            }
+            if (targetName != null) {
+                detectorMethod.getInvocationData().add(new InvocationData(targetName, executable, type));
+            }
+        }
+    }
+
+    private String getTarget(CtAbstractInvocation ctInvocation) {
+        try {
+            return ctInvocation.getExecutable().getDeclaringType().getQualifiedName();
+        } catch (NullPointerException nullPointerException) {
+            logger.warn("Could not find qualified name for method call: " + ctInvocation.toString() + " (" + nullPointerException.getMessage() + ")");
+        }
+        return null;
+    }
+
+    private int getComplexity(T ctConstructor) {
+        int numberOfTernaries = ctConstructor.getElements(new TypeFilter<CtConditional>(CtConditional.class)).size();
+        int numberOfIfs = ctConstructor.getElements(new TypeFilter<CtIf>(CtIf.class)).size();
+        int numberOfCases = ctConstructor.getElements(new TypeFilter<CtCase>(CtCase.class)).size();
+        int numberOfReturns = ctConstructor.getElements(new TypeFilter<CtReturn>(CtReturn.class)).size();
+        int numberOfLoops = ctConstructor.getElements(new TypeFilter<CtLoop>(CtLoop.class)).size();
+        int numberOfBinaryOperators = ctConstructor.getElements(new TypeFilter<CtBinaryOperator>(CtBinaryOperator.class) {
+            private final List<BinaryOperatorKind> operators = Arrays.asList(BinaryOperatorKind.AND, BinaryOperatorKind.OR);
+
+            @Override
+            public boolean matches(CtBinaryOperator element) {
+                return super.matches(element) && operators.contains(element.getKind());
+            }
+        }).size();
+        int numberOfCatches = ctConstructor.getElements(new TypeFilter<CtCatch>(CtCatch.class)).size();
+        int numberOfThrows = ctConstructor.getElements(new TypeFilter<CtThrow>(CtThrow.class)).size();
+        int numberOfBreaks = ctConstructor.getElements(new TypeFilter<CtBreak>(CtBreak.class)).size();
+        int numberOfContinues = ctConstructor.getElements(new TypeFilter<CtContinue>(CtContinue.class)).size();
+        return numberOfBreaks + numberOfCases + numberOfCatches + numberOfContinues + numberOfIfs + numberOfLoops +
+                numberOfReturns + numberOfTernaries + numberOfThrows + numberOfBinaryOperators + 1;
+    }
+}

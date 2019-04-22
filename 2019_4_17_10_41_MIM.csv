@@ -1,0 +1,4 @@
+commit_number,file_path,instance,key
+130,D:\test2\src\ch\blinkenlights\battery\BlinkenlightsBatteryService.java,getService#ch.blinkenlights.battery.BlinkenlightsBatteryService$LocalBinder,e3b13fa4980e15279714dd39db670d3c95ee6b30
+130,D:\test2\src\ch\blinkenlights\battery\BlinkenlightsBatteryService.java,gtx#ch.blinkenlights.battery.BlinkenlightsBatteryService,e3b13fa4980e15279714dd39db670d3c95ee6b30
+130,D:\test2\src\ch\blinkenlights\battery\BlinkenlightsBatteryService.java,isICS#ch.blinkenlights.battery.BlinkenlightsBatteryService,e3b13fa4980e15279714dd39db670d3c95ee6b30

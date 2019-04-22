@@ -1,0 +1,8 @@
+.gradle
+*.iml
+out/
+.idea
+*~
+build
+classes
+META-INF
