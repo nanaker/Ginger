@@ -60,13 +60,14 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     private int countEffectiveCodeLines(T ctMethod) {
         try {
-            System.out.println("body    "+ctMethod.getBody().toString());
+           // System.out.println("body    "+ctMethod.getBody().toString());
             int numberOfLogicalLines=0;
+            int nbCommentwithSemicoloone=0;
             int numbeOfLinesWithSemicolonnes=ctMethod.getBody().toString().split(";").length;
             int nbCtFor=ctMethod.getBody().getElements(new TypeFilter(CtFor.class)).size();
             int nbCtSwitch=ctMethod.getBody().getElements(new TypeFilter(CtSwitch.class)).size();
             int nbCtConditional=ctMethod.getBody().getElements(new TypeFilter(CtConditional.class)).size();
-            int nbCtDo=ctMethod.getBody().getElements(new TypeFilter(CtDo.class)).size()*2;
+            int nbCtDo=ctMethod.getBody().getElements(new TypeFilter(CtDo.class)).size();
             int nbCtForEach=ctMethod.getBody().getElements(new TypeFilter(CtForEach.class)).size();
             int nbCtIf=ctMethod.getBody().getElements(new TypeFilter(CtIf.class)).size();
             int nbCtThrow=ctMethod.getBody().getElements(new TypeFilter(CtThrow.class)).size();
@@ -74,26 +75,15 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
             int nbCtTry=ctMethod.getBody().getElements(new TypeFilter(CtTry.class)).size();
             int nbCtCatch=ctMethod.getBody().getElements(new TypeFilter(CtCatch.class)).size();
             int nbCtWhile=ctMethod.getBody().getElements(new TypeFilter(CtWhile.class)).size();
-
-
-
-            List<CtElement> catchs=ctMethod.getBody().getElements(new TypeFilter(CtCatch.class));
-            //for (String elem:lines) {
-            //  System.out.println("****************************");
-            //System.out.println(elem);
-            //System.out.println("****************************");
-            //}
-
-
-
-
-
-            List<String> lines= Arrays.asList(ctMethod.getBody().toString().split(";"));
-
+            int nbCtComment=ctMethod.getBody().getElements(new TypeFilter(CtComment.class)).size();
+            List<CtElement> comments=ctMethod.getBody().getElements(new TypeFilter(CtComment.class));
+            for (CtElement elem:comments) {
+                nbCommentwithSemicoloone=+elem.toString().split(";").length-1;
+            }
 
             numberOfLogicalLines=numbeOfLinesWithSemicolonnes+nbCtFor-(nbCtFor*2)
                     +nbCtSwitch+nbCtConditional+nbCtDo
-                    +nbCtForEach+nbCtIf+nbCtTry+nbCtCatch+nbCtWhile+1;
+                    +nbCtForEach+nbCtIf+nbCtTry+nbCtCatch+nbCtWhile-nbCommentwithSemicoloone+1;
             // + 1 pour le prototype de la methode
             // le nombre de block s'ajoute automatiquement 
             System.out.println("number of instruction   "+numberOfLogicalLines);
