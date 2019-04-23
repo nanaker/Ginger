@@ -31,10 +31,11 @@ import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.codehaus.plexus.util.FileUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,29 +73,24 @@ public class Main {
         try {
 
 
+
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
 
             runAnalysis(pathOfApplicationToAnalyse);
 
 
-            String[] argumentsQyery=new String[7];
+            String[] argumentsQyery=new String[5];
             argumentsQyery[0]="query";
             argumentsQyery[1]="-db";
             argumentsQyery[2]="db";
             argumentsQyery[3]="-d";
             argumentsQyery[4]="TRUE";
-            argumentsQyery[5]="-r";
-            argumentsQyery[6]="HAS";
+
+
             Namespace res = parser.parseArgs(argumentsQyery);
             System.out.println("res=="+res);
             queryMode(res);
 
-
-            /*if (res.getString("sub_command").equals("analyse")) {
-                runAnalysis(res);
-            } else if (res.getString("sub_command").equals("query")) {
-                queryMode(res);
-            }*/
         } catch (ArgumentParserException e) {
             analyseParser.handleError(e);
         } catch (Exception e) {
@@ -108,6 +104,8 @@ public class Main {
 
     public static void runAnalysis(Namespace arg) throws Exception {
 
+
+        deteleContenetOfDirectory("db");
         System.out.println("Collecting metrics");
         logger.info("Collecting metrics");
         String path = arg.getString("folder");
@@ -129,7 +127,7 @@ public class Main {
         MetricsCalculator.calculateAppMetrics(MainProcessor.currentApp);
         System.out.println("metrique claculator");
         ModelToGraph modelToGraph = new ModelToGraph(arg.getString("database"));
-        FileUtils.cleanDirectory(new File("db"));
+
         modelToGraph.insertApp(MainProcessor.currentApp);
         System.out.println("Saving into database " + arg.getString("database"));
         logger.info("Saving into database " + arg.getString("database"));
@@ -143,12 +141,11 @@ public class Main {
         logger.info("Executing Queries");
         QueryEngine queryEngine = new QueryEngine(arg.getString("database"));
         String request = arg.get("request");
-        Boolean details = arg.get("details");
+
         Calendar cal = new GregorianCalendar();
         String csvDate = String.valueOf(cal.get(Calendar.YEAR)) + "_" + String.valueOf(cal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + "_" + String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + "_" + String.valueOf(cal.get(Calendar.MINUTE));
         String csvPrefix = arg.getString("csv") + csvDate;
         System.out.println("Resulting csv file name will start with prefix");
-        logger.debug("Resulting csv file name will start with prefix " + csvPrefix);
         System.out.println("request "+request);
 
                 queryEngine.setCsvPrefix(csvPrefix);
@@ -166,6 +163,22 @@ public class Main {
 
     public static void addLibrary(DetectorApp detectorApp, String libraryString) {
         DetectorLibrary.createDetectorLibrary(libraryString, detectorApp);
+    }
+
+    public static void deteleContenetOfDirectory(String path){
+        File directory = new File("db");
+        File[] contents = directory.listFiles();
+        for ( File f : contents) {
+
+            if(f.isDirectory()){
+                File[] c = f.listFiles();
+                for(File ff:c){
+                    ff.delete();
+                }
+            }else{
+                f.delete();
+            }
+        }
     }
 
 
