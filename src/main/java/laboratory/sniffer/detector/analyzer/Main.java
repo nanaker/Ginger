@@ -34,6 +34,7 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.codehaus.plexus.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,6 +73,7 @@ public class Main {
 
 
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
+
             runAnalysis(pathOfApplicationToAnalyse);
 
 
@@ -127,6 +129,7 @@ public class Main {
         MetricsCalculator.calculateAppMetrics(MainProcessor.currentApp);
         System.out.println("metrique claculator");
         ModelToGraph modelToGraph = new ModelToGraph(arg.getString("database"));
+        FileUtils.cleanDirectory(new File("db"));
         modelToGraph.insertApp(MainProcessor.currentApp);
         System.out.println("Saving into database " + arg.getString("database"));
         logger.info("Saving into database " + arg.getString("database"));
