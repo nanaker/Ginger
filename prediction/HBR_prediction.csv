@@ -1,9 +1,4 @@
 number_of_instructions,cyclomatic_complexity,has_methode_onReceive,full_name
-21,8,true,onReceive#de.nproth.pin.DeleteNoteReceiver
-25,8,true,onReceive#de.nproth.pin.SnoozeNoteReceiver
-9,4,true,onReceive#de.nproth.pin.BootReceiver
-2,1,false,<init>#de.nproth.pin.AlarmReceiver
-4,1,true,onReceive#de.nproth.pin.AlarmReceiver
-2,1,false,<init>#de.nproth.pin.BootReceiver
-2,1,false,<init>#de.nproth.pin.DeleteNoteReceiver
-2,1,false,<init>#de.nproth.pin.SnoozeNoteReceiver
+10,2,true,onReceive#ch.blinkenlights.battery.BlinkenlightsBatteryService$android.content.BroadcastReceiver1
+3,1,true,onReceive#ch.blinkenlights.battery.BlinkenlightsBatteryBootReceiver
+2,1,false,<init>#ch.blinkenlights.battery.BlinkenlightsBatteryBootReceiver

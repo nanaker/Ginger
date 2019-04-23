@@ -58,6 +58,7 @@ public class Main {
 
 
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
+            System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
             runAnalysis(pathOfApplicationToAnalyse);
 
