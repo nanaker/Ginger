@@ -45,8 +45,6 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         String relativePath = absolutePath.replaceFirst(s,"");
 
 
-
-
         if (ctType.isAnonymous()) {
 
             String[] splitName = qualifiedName.split("\\$");
