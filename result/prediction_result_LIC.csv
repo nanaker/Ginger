@@ -1,0 +1,6 @@
+is_static,class_complexity,full_name,is_code_smell
+False,7,de.nproth.pin.NotesProvider$android.database.sqlite.SQLiteOpenHelper1,True
+False,4,de.nproth.pin.NoteActivity$android.widget.TextView$OnEditorActionListener1,True
+False,2,de.nproth.pin.NoteActivity$android.view.View$OnLongClickListener2,True
+False,2,de.nproth.pin.NoteActivity$android.view.View$OnLongClickListener3,True
+False,2,de.nproth.pin.NoteActivity$java.lang.Runnable4,True

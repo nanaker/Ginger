@@ -14,7 +14,7 @@ from imblearn.combine import SMOTEENN
 
 ##NLMR
 
-df = pd.read_csv('dataset/NLMR/NLMR_.csv')
+df = pd.read_csv('../../dataset/NLMR/NLMR_.csv')
 print(df['is_code_smell'].describe())
 
 Y = df.is_code_smell.values
@@ -36,7 +36,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("RandomUnderSampler by default")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_RandomUnderSampler.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_RandomUnderSampler.csv', index=False)
 
 
 #
@@ -50,7 +50,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("RandomUnderSampler")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_RandomUnderSampler.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_RandomUnderSampler.csv', index=False)
 
 
 
@@ -66,7 +66,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("AllKNN")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_AllKNN.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_AllKNN.csv', index=False)
 
 #CondensedNearestNeighbour non efficace il a garder une seule instance de la classe non defaut de code
 rus = CondensedNearestNeighbour(return_indices=True)
@@ -78,7 +78,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("CondensedNearestNeighbour")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_CondensedNearestNeighbour.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_CondensedNearestNeighbour.csv', index=False)
 #
 #
 #
@@ -92,7 +92,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("TomekLinks")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_TomekLinks.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_TomekLinks.csv', index=False)
 
 
 
@@ -106,7 +106,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("InstanceHardnessThreshold")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_InstanceHardnessThreshold.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_InstanceHardnessThreshold.csv', index=False)
 
 
 NearMiss
@@ -119,7 +119,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("NearMiss")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_NearMiss.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_NearMiss.csv', index=False)
 
 
 
@@ -133,7 +133,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("OneSidedSelection")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/NLMR/NLMR_OneSidedSelection.csv', index=False)
+undersampled_data.to_csv('../../dataset/NLMR/NLMR_OneSidedSelection.csv', index=False)
 
 
 

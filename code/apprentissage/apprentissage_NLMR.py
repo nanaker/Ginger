@@ -18,17 +18,17 @@ from sklearn.externals.six import StringIO
 import pydot
 
 ##NLMR
-datasetpath=["dataset/NLMR/taken/NLMR_.csv","dataset/NLMR/taken/NLMR_RandomUnderSampler.csv","dataset/NLMR/taken/NLMR_AllKNN.csv","dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv","dataset/NLMR/taken/NLMR_NearMiss.csv","dataset/NLMR/taken/NLMR_OneSidedSelection.csv","dataset/NLMR/taken/NLMR_TomekLinks.csv","dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv"]
+datasetpath=["../../dataset/NLMR/taken/NLMR_.csv","../../dataset/NLMR/taken/NLMR_RandomUnderSampler.csv","../../dataset/NLMR/taken/NLMR_AllKNN.csv","../../dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv","../../dataset/NLMR/taken/NLMR_NearMiss.csv","../../dataset/NLMR/taken/NLMR_OneSidedSelection.csv","../../dataset/NLMR/taken/NLMR_TomekLinks.csv","../../dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv"]
 
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_del.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_RandomUnderSampler.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_AllKNN.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_NearMiss.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_OneSidedSelection.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_RandomUnderSampler_default.csv')
-#df = pd.read_csv('dataset/NLMR/taken/NLMR_TomekLinks.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_del.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_RandomUnderSampler.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_AllKNN.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_NearMiss.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_OneSidedSelection.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_RandomUnderSampler_default.csv')
+#df = pd.read_csv('../../dataset/NLMR/taken/NLMR_TomekLinks.csv')
 
 
 
@@ -40,7 +40,7 @@ for j in range(4):
 
  for path in datasetpath:
 
-    if((j==3)&(path=="dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv")):
+    if((j==3)&(path=="../../dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv")):
      continue
 
     print("\n\n")
@@ -88,7 +88,7 @@ for j in range(4):
     lr_model = clf.fit(X_train, y_train)
 
     #Visualisation
-   # tree.export_graphviz(lr_model, out_file="dataset/NLMR/NLMR_model_tree",
+   # tree.export_graphviz(lr_model, out_file="../../dataset/NLMR/NLMR_model_tree",
   #                   feature_names=list(df.columns),
    #                    class_names=['non_smelly','smelly'],
    #                    filled=True, rounded=True,
@@ -179,7 +179,7 @@ for j in range(4):
     result=result.append(pd.Series([classification, path, test_methode, np.mean(F_mesures)], index=result.columns), ignore_index=True)
 
 
-result.to_csv('dataset/NLMR/NLMR_train_result2.csv', index=False)
+result.to_csv('../../dataset/NLMR/NLMR_train_result2.csv', index=False)
 
 
 

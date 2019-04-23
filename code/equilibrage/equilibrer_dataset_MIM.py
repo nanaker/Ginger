@@ -12,7 +12,7 @@ from imblearn.under_sampling import ClusterCentroids
 
 ##MIM
 
-df = pd.read_csv('dataset/MIM/MIM_.csv')
+df = pd.read_csv('../../dataset/MIM/MIM_.csv')
 print(df['is_code_smell'].describe())
 
 Y = df.is_code_smell.values
@@ -31,7 +31,7 @@ X = df.values
 # undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 # print("RandomUnderSampler by default")
 # print(undersampled_data.describe())
-# undersampled_data.to_csv('dataset/MIM/MIM_RandomUnderSampler_default.csv', index=False)
+# undersampled_data.to_csv('../../dataset/MIM/MIM_RandomUnderSampler_default.csv', index=False)
 #
 #
 # #
@@ -45,7 +45,7 @@ X = df.values
 # undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 # print("RandomUnderSampler")
 # print(undersampled_data.describe())
-# undersampled_data.to_csv('dataset/MIM/MIM_RandomUnderSampler.csv', index=False)
+# undersampled_data.to_csv('../../dataset/MIM/MIM_RandomUnderSampler.csv', index=False)
 #
 #
 #
@@ -61,7 +61,7 @@ X = df.values
 # undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 # print("AllKNN")
 # print(undersampled_data.describe())
-# undersampled_data.to_csv('dataset/MIM/MIM_AllKNN.csv', index=False)
+# undersampled_data.to_csv('../../dataset/MIM/MIM_AllKNN.csv', index=False)
 #
 # #CondensedNearestNeighbour non efficace il a garder une seule instance de la classe non defaut de code
 # rus = CondensedNearestNeighbour(return_indices=True)
@@ -73,7 +73,7 @@ X = df.values
 # undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 # print("CondensedNearestNeighbour")
 # print(undersampled_data.describe())
-# undersampled_data.to_csv('dataset/MIM/MIM_CondensedNearestNeighbour.csv', index=False)
+# undersampled_data.to_csv('../../dataset/MIM/MIM_CondensedNearestNeighbour.csv', index=False)
 #
 #
 #
@@ -87,7 +87,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("TomekLinks")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/MIM/MIM_TomekLinks.csv', index=False)
+undersampled_data.to_csv('../../dataset/MIM/MIM_TomekLinks.csv', index=False)
 
 #
 #
@@ -101,7 +101,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("InstanceHardnessThreshold")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/MIM/MIM_InstanceHardnessThreshold.csv', index=False)
+undersampled_data.to_csv('../../dataset/MIM/MIM_InstanceHardnessThreshold.csv', index=False)
 
 
 #NearMiss
@@ -114,7 +114,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("NearMiss")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/MIM/MIM_NearMiss.csv', index=False)
+undersampled_data.to_csv('../../dataset/MIM/MIM_NearMiss.csv', index=False)
 
 
 
@@ -128,7 +128,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("OneSidedSelection")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/MIM/MIM_OneSidedSelection.csv', index=False)
+undersampled_data.to_csv('../../dataset/MIM/MIM_OneSidedSelection.csv', index=False)
 
 
 

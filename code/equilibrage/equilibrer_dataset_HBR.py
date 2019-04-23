@@ -12,7 +12,7 @@ from imblearn.under_sampling import ClusterCentroids
 
 ##HBR
 
-df = pd.read_csv('dataset/HBR/HBR_.csv')
+df = pd.read_csv('../../dataset/HBR/HBR_.csv')
 print(df['is_code_smell'].describe())
 
 Y = df.is_code_smell.values
@@ -34,7 +34,7 @@ print("RandomUnderSampler by default")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_RandomUnderSampler_default.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_RandomUnderSampler_default.csv', index=False)
 
 
 #
@@ -50,7 +50,7 @@ print("RandomUnderSampler")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_RandomUnderSampler.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_RandomUnderSampler.csv', index=False)
 
 
 
@@ -68,7 +68,7 @@ print("AllKNN")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_AllKNN.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_AllKNN.csv', index=False)
 
 #CondensedNearestNeighbour non efficace il a garder une seule instance de la classe non defaut de code
 rus = CondensedNearestNeighbour(return_indices=True)
@@ -80,7 +80,7 @@ y_resampled.columns = ['is_code_smell']
 undersampled_data = pd.concat([X_resampled, y_resampled], axis=1)
 print("CondensedNearestNeighbour")
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_CondensedNearestNeighbour.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_CondensedNearestNeighbour.csv', index=False)
 #
 #
 #
@@ -96,7 +96,7 @@ print("TomekLinks")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_TomekLinks.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_TomekLinks.csv', index=False)
 
 #
 #
@@ -112,7 +112,7 @@ print("InstanceHardnessThreshold")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_InstanceHardnessThreshold.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_InstanceHardnessThreshold.csv', index=False)
 
 
 #NearMiss
@@ -127,7 +127,7 @@ print("NearMiss")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_NearMiss.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_NearMiss.csv', index=False)
 
 
 
@@ -143,7 +143,7 @@ print("OneSidedSelection")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HBR/HBR_OneSidedSelection.csv', index=False)
+undersampled_data.to_csv('../../dataset/HBR/HBR_OneSidedSelection.csv', index=False)
 
 
 

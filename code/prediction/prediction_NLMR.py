@@ -19,14 +19,15 @@ import pydot
 
 # Read the model
 
-file_name='models/model_NLMR.pickle'
+file_name='../models/model_NLMR.pickle'
 lr_model=p.load(open(file_name, 'rb'))
 
-data_full_name = pd.read_csv('dataset/NLMR/prediction/NLMR_prediction.csv')
+data_full_name = pd.read_csv('../../prediction/NLMR_prediction.csv')
 
-data=pd.read_csv('dataset/NLMR/prediction/NLMR_prediction.csv')
+data=pd.read_csv('../../prediction/NLMR_prediction.csv')
 data.drop('full_name', axis=1, inplace=True)
 data.drop('class_complexity', axis=1, inplace=True)
+
 
 X = data.values
 # prediction
@@ -40,7 +41,25 @@ data_full_name["is_code_smell"]=predictions
 #data2=data[(data["is_code_smell"] =="True")]
 data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
 print(data2["is_code_smell"].describe())
-data2.to_csv('dataset/NLMR/prediction_result2.csv', index=False)
+data2.to_csv('../../result/prediction_result_NLMR.csv', index=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

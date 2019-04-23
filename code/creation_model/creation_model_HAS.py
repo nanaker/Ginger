@@ -19,17 +19,18 @@ import pydot
 
 #df = pd.read_csv('dataset/HAS/taken/HAS_del.csv')
 
-datasetpath=["dataset/HAS/taken/HAS_.csv","dataset/HAS/taken/HAS_RandomUnderSampler.csv"
-    ,"dataset/HAS/taken/HAS_AllKNN.csv",
-          #   "dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv",
-             "dataset/HAS/taken/HAS_NearMiss.csv",
-             "dataset/HAS/taken/HAS_OneSidedSelection.csv",
-             "dataset/HAS/taken/HAS_RandomUnderSampler_default.csv",
-             "dataset/HAS/taken/HAS_TomekLinks.csv"
+datasetpath=["../../dataset/HAS/taken/HAS_.csv"
+    ,"../../dataset/HAS/taken/HAS_RandomUnderSampler.csv"
+    ,"../../dataset/HAS/taken/HAS_AllKNN.csv",
+             "../../dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv",
+             "../../dataset/HAS/taken/HAS_NearMiss.csv",
+             "../../dataset/HAS/taken/HAS_OneSidedSelection.csv",
+             "../../dataset/HAS/taken/HAS_RandomUnderSampler_default.csv",
+             "../../dataset/HAS/taken/HAS_TomekLinks.csv"
           #   ,"dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv"
              ]
 
-df = pd.read_csv(datasetpath[8])
+df = pd.read_csv(datasetpath[3])
 idx = np.random.permutation(df.index)
 df.reindex(idx)
 print(df['is_code_smell'].describe())
@@ -51,7 +52,7 @@ clf = tree.DecisionTreeClassifier()
 
 lr_model = clf.fit(X, Y)
 
-file_name='models/model_HAS.pickle'
+file_name='../models/model_HAS.pickle'
 p.dump(clf, open(file_name, 'wb'))
 
 

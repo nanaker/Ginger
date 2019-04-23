@@ -19,8 +19,15 @@ import pydot
 
 #df = pd.read_csv('dataset/LIC/taken/LIC_del.csv')
 
-datasetpath=["dataset/LIC/taken/LIC_.csv","dataset/LIC/taken/LIC_RandomUnderSampler.csv"
-    
+datasetpath=["../../dataset/LIC/taken/LIC_.csv"
+    ,"../../dataset/LIC/taken/LIC_RandomUnderSampler.csv"
+    ,"../../dataset/LIC/taken/LIC_AllKNN.csv",
+             "../../dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv",
+             "../../dataset/LIC/taken/LIC_NearMiss.csv",
+             "../../dataset/LIC/taken/LIC_OneSidedSelection.csv",
+             "../../dataset/LIC/taken/LIC_RandomUnderSampler_default.csv",
+             "../../dataset/LIC/taken/LIC_TomekLinks.csv"
+          #   ,"dataset/LIC/taken/LIC_CondensedNearestNeighbour.csv"
              ]
 
 df = pd.read_csv(datasetpath[1])
@@ -35,7 +42,7 @@ X = df.values
 
 
 
-#creer le model d'entrainement en utilisant les arbres de decisions, foret aléatoire , Naive Bayes , SVM 
+#creer le model d'entrainement en utilisant les arbres de decisions, foret aléatoire , Naive Bayes , SVM
 
 clf = tree.DecisionTreeClassifier()
 #clf = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=0)
@@ -45,7 +52,7 @@ clf = tree.DecisionTreeClassifier()
 
 lr_model = clf.fit(X, Y)
 
-file_name='models/model_LIC.pickle'
+file_name='../models/model_LIC.pickle'
 p.dump(clf, open(file_name, 'wb'))
 
 

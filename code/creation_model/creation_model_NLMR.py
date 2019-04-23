@@ -19,8 +19,15 @@ import pydot
 
 #df = pd.read_csv('dataset/NLMR/taken/NLMR_del.csv')
 
-datasetpath=["dataset/NLMR/taken/NLMR_.csv","dataset/NLMR/taken/NLMR_RandomUnderSampler.csv"
-    
+datasetpath=["../../dataset/NLMR/taken/NLMR_.csv"
+    ,"../../dataset/NLMR/taken/NLMR_RandomUnderSampler.csv"
+    ,"../../dataset/NLMR/taken/NLMR_AllKNN.csv",
+             "../../dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv",
+             "../../dataset/NLMR/taken/NLMR_NearMiss.csv",
+             "../../dataset/NLMR/taken/NLMR_OneSidedSelection.csv",
+             "../../dataset/NLMR/taken/NLMR_RandomUnderSampler_default.csv",
+             "../../dataset/NLMR/taken/NLMR_TomekLinks.csv"
+          #   ,"dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv"
              ]
 
 df = pd.read_csv(datasetpath[1])
@@ -45,7 +52,7 @@ clf = tree.DecisionTreeClassifier()
 
 lr_model = clf.fit(X, Y)
 
-file_name='models/model_NLMR.pickle'
+file_name='../models/model_NLMR.pickle'
 p.dump(clf, open(file_name, 'wb'))
 
 

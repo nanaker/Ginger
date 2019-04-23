@@ -22,7 +22,7 @@ cmap = matplotlib.cm.get_cmap('plasma')
 
 
 
-df = pd.read_csv('dataset/HBR/HBR_train_result2.csv')
+df = pd.read_csv('../../dataset/HBR/HBR_train_result2.csv')
 df1=df[df['validation_methode']=='cross Validation']
 df1=df1.reset_index(drop=True)
 print(df1.head(3))

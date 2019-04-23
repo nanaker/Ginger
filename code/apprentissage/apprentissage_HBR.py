@@ -18,17 +18,17 @@ from sklearn.externals.six import StringIO
 import pydot
 
 ##HBR
-datasetpath=["dataset/HBR/taken/HBR_.csv","dataset/HBR/taken/HBR_RandomUnderSampler.csv","dataset/HBR/taken/HBR_AllKNN.csv","dataset/HBR/taken/HBR_InstanceHardnessThreshold.csv","dataset/HBR/taken/HBR_NearMiss.csv","dataset/HBR/taken/HBR_OneSidedSelection.csv","dataset/HBR/taken/HBR_RandomUnderSampler_default.csv","dataset/HBR/taken/HBR_TomekLinks.csv","dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv"]
+datasetpath=["../../dataset/HBR/taken/HBR_.csv","../../dataset/HBR/taken/HBR_RandomUnderSampler.csv","../../dataset/HBR/taken/HBR_AllKNN.csv","../../dataset/HBR/taken/HBR_InstanceHardnessThreshold.csv","../../dataset/HBR/taken/HBR_NearMiss.csv","../../dataset/HBR/taken/HBR_OneSidedSelection.csv","../../dataset/HBR/taken/HBR_RandomUnderSampler_default.csv","../../dataset/HBR/taken/HBR_TomekLinks.csv","../../dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv"]
 
-#df = pd.read_csv('dataset/HBR/taken/HBR_del.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_RandomUnderSampler.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_AllKNN.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_InstanceHardnessThreshold.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_NearMiss.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_OneSidedSelection.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_RandomUnderSampler_default.csv')
-#df = pd.read_csv('dataset/HBR/taken/HBR_TomekLinks.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_del.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_RandomUnderSampler.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_AllKNN.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_InstanceHardnessThreshold.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_NearMiss.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_OneSidedSelection.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_RandomUnderSampler_default.csv')
+#df = pd.read_csv('../../dataset/HBR/taken/HBR_TomekLinks.csv')
 
 
 
@@ -40,7 +40,7 @@ for j in range(4):
 
  for path in datasetpath:
 
-   # if((j==3)&(path=="dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv")):
+   # if((j==3)&(path=="../../dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv")):
     #    continue
 
     print("\n\n")
@@ -64,7 +64,7 @@ for j in range(4):
     test_methode="Validation_70/30"
     print(df['is_code_smell'].describe())
 
-    #Construction du dataset
+    #Construction du ../../dataset
     Y = df.is_code_smell.values
     df.drop('is_code_smell', axis=1, inplace=True)
     X = df.values
@@ -88,7 +88,7 @@ for j in range(4):
     lr_model = clf.fit(X_train, y_train)
 
     #Visualisation
-   # tree.export_graphviz(lr_model, out_file="dataset/HBR/HBR_model_tree",
+   # tree.export_graphviz(lr_model, out_file="../../dataset/HBR/HBR_model_tree",
   #                   feature_names=list(df.columns),
    #                    class_names=['non_smelly','smelly'],
    #                    filled=True, rounded=True,
@@ -176,7 +176,7 @@ for j in range(4):
     result=result.append(pd.Series([classification, path, test_methode, np.mean(F_mesures)], index=result.columns), ignore_index=True)
 
 
-result.to_csv('dataset/HBR/HBR_train_result2.csv', index=False)
+result.to_csv('../../dataset/HBR/HBR_train_result2.csv', index=False)
 
 
 

@@ -71,32 +71,35 @@ public class QueryEngine {
         String name = csvSuffix;
         FileWriter fw = new FileWriter(name);
         BufferedWriter writer = new BufferedWriter(fw);
-        List<String> columns = result.isEmpty() ? new ArrayList<String>() : new ArrayList<>(result.get(0).keySet());
+        System.out.println("Emty result "+result.isEmpty()+"  "+csvSuffix);
+        List<String> columns = result.isEmpty() ? null : new ArrayList<>(result.get(0).keySet());
         Object val;
 
         int i;
-        int columns_size = columns.size() - 1;
-        for (i = 0; i < columns_size; i++) {
-            writer.write(columns.get(i));
-            writer.write(',');
-        }
-
-
-       if(columns.size()!=0) writer.write(columns.get(i));
-        writer.newLine();
-        for (Map<String, Object> row : result) {
+        if (columns!=null) {
+            int columns_size = columns.size() - 1;
             for (i = 0; i < columns_size; i++) {
+                writer.write(columns.get(i));
+                writer.write(',');
+            }
+
+
+            if (columns.size() != 0) writer.write(columns.get(i));
+            writer.newLine();
+            for (Map<String, Object> row : result) {
+                for (i = 0; i < columns_size; i++) {
+                    val = row.get(columns.get(i));
+                    if (val != null) {
+                        writer.write(val.toString());
+                        writer.write(',');
+                    }
+                }
                 val = row.get(columns.get(i));
                 if (val != null) {
                     writer.write(val.toString());
-                    writer.write(',');
                 }
+                writer.newLine();
             }
-            val = row.get(columns.get(i));
-            if (val != null) {
-                writer.write(val.toString());
-            }
-            writer.newLine();
         }
         writer.close();
         fw.close();

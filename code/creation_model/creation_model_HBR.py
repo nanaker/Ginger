@@ -19,14 +19,15 @@ import pydot
 
 #df = pd.read_csv('dataset/HBR/taken/HBR_del.csv')
 
-datasetpath=["dataset/HBR/taken/HBR_.csv","dataset/HBR/taken/HBR_RandomUnderSampler.csv"
-    ,"dataset/HBR/taken/HBR_AllKNN.csv",
-             "dataset/HBR/taken/HBR_InstanceHardnessThreshold.csv",
-             "dataset/HBR/taken/HBR_NearMiss.csv",
-             "dataset/HBR/taken/HBR_OneSidedSelection.csv",
-             "dataset/HBR/taken/HBR_RandomUnderSampler_default.csv",
-             "dataset/HBR/taken/HBR_TomekLinks.csv"
-             ,"dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv"
+datasetpath=["../../dataset/HBR/taken/HBR_.csv"
+    ,"../../dataset/HBR/taken/HBR_RandomUnderSampler.csv"
+    ,"../../dataset/HBR/taken/HBR_AllKNN.csv",
+             "../../dataset/HBR/taken/HBR_InstanceHardnessThreshold.csv",
+             "../../dataset/HBR/taken/HBR_NearMiss.csv",
+             "../../dataset/HBR/taken/HBR_OneSidedSelection.csv",
+             "../../dataset/HBR/taken/HBR_RandomUnderSampler_default.csv",
+             "../../dataset/HBR/taken/HBR_TomekLinks.csv"
+          #   ,"dataset/HBR/taken/HBR_CondensedNearestNeighbour.csv"
              ]
 
 df = pd.read_csv(datasetpath[3])
@@ -51,7 +52,7 @@ clf = tree.DecisionTreeClassifier()
 
 lr_model = clf.fit(X, Y)
 
-file_name='models/model_HBR.pickle'
+file_name='../models/model_HBR.pickle'
 p.dump(clf, open(file_name, 'wb'))
 
 

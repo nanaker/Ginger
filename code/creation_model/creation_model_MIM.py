@@ -19,14 +19,15 @@ import pydot
 
 #df = pd.read_csv('dataset/MIM/taken/MIM_del.csv')
 
-datasetpath=["dataset/MIM/taken/MIM_.csv","dataset/MIM/taken/MIM_RandomUnderSampler.csv"
-    ,"dataset/MIM/taken/MIM_AllKNN.csv",
-             "dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv",
-             "dataset/MIM/taken/MIM_NearMiss.csv",
-             "dataset/MIM/taken/MIM_OneSidedSelection.csv",
-             "dataset/MIM/taken/MIM_RandomUnderSampler_default.csv",
-             "dataset/MIM/taken/MIM_TomekLinks.csv"
-             ,"dataset/MIM/taken/MIM_CondensedNearestNeighbour.csv"
+datasetpath=["../../dataset/MIM/taken/MIM_.csv"
+    ,"../../dataset/MIM/taken/MIM_RandomUnderSampler.csv"
+    ,"../../dataset/MIM/taken/MIM_AllKNN.csv",
+             "../../dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv",
+             "../../dataset/MIM/taken/MIM_NearMiss.csv",
+             "../../dataset/MIM/taken/MIM_OneSidedSelection.csv",
+             "../../dataset/MIM/taken/MIM_RandomUnderSampler_default.csv",
+             "../../dataset/MIM/taken/MIM_TomekLinks.csv"
+          #   ,"dataset/MIM/taken/MIM_CondensedNearestNeighbour.csv"
              ]
 
 df = pd.read_csv(datasetpath[1])
@@ -51,7 +52,7 @@ clf = tree.DecisionTreeClassifier()
 
 lr_model = clf.fit(X, Y)
 
-file_name='models/model_MIM.pickle'
+file_name='../models/model_MIM.pickle'
 p.dump(clf, open(file_name, 'wb'))
 
 

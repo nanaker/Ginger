@@ -12,7 +12,7 @@ from imblearn.under_sampling import ClusterCentroids
 
 ##HAS
 
-df = pd.read_csv('dataset/HAS/HAS_.csv')
+df = pd.read_csv('../../dataset/HAS/HAS_.csv')
 print(df['is_code_smell'].describe())
 
 Y = df.is_code_smell.values
@@ -33,7 +33,7 @@ print("RandomUnderSampler by default")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_RandomUnderSampler_default.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_RandomUnderSampler_default.csv', index=False)
 
 
 #
@@ -49,7 +49,7 @@ print("RandomUnderSampler")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_RandomUnderSampler.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_RandomUnderSampler.csv', index=False)
 
 
 
@@ -66,7 +66,7 @@ print("AllKNN")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_AllKNN.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_AllKNN.csv', index=False)
 
 #CondensedNearestNeighbour non efficace il a garder une seule instance de la classe non defaut de code
 rus = CondensedNearestNeighbour(return_indices=True)
@@ -80,7 +80,7 @@ print("CondensedNearestNeighbour")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_CondensedNearestNeighbour.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_CondensedNearestNeighbour.csv', index=False)
 #
 #
 #
@@ -96,7 +96,7 @@ print("TomekLinks")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_TomekLinks.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_TomekLinks.csv', index=False)
 
 #
 #
@@ -112,7 +112,7 @@ print("InstanceHardnessThreshold")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_InstanceHardnessThreshold.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_InstanceHardnessThreshold.csv', index=False)
 
 
 #NearMiss
@@ -127,7 +127,7 @@ print("NearMiss")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_NearMiss.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_NearMiss.csv', index=False)
 
 
 
@@ -143,7 +143,7 @@ print("OneSidedSelection")
 print("is_code_smell ")
 print(undersampled_data['is_code_smell'].describe())
 print(undersampled_data.describe())
-undersampled_data.to_csv('dataset/HAS/HAS_OneSidedSelection.csv', index=False)
+undersampled_data.to_csv('../../dataset/HAS/HAS_OneSidedSelection.csv', index=False)
 
 
 

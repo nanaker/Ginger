@@ -19,12 +19,12 @@ import pydot
 
 # Read the model
 
-file_name='models/model_HAS.pickle'
+file_name='../models/model_HAS.pickle'
 lr_model=p.load(open(file_name, 'rb'))
 
-data_full_name = pd.read_csv('dataset/HAS/prediction/HAS_prediction.csv')
+data_full_name = pd.read_csv('../../prediction/HAS_prediction.csv')
 
-data=pd.read_csv('dataset/HAS/prediction/HAS_prediction.csv')
+data=pd.read_csv('../../prediction/HAS_prediction.csv')
 data.drop('full_name', axis=1, inplace=True)
 
 X = data.values
@@ -39,7 +39,7 @@ data_full_name["is_code_smell"]=predictions
 #data2=data[(data["is_code_smell"] =="True")]
 data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
 print(data2["is_code_smell"].describe())
-data2.to_csv('dataset/HAS/prediction_result2.csv', index=False)
+data2.to_csv('../../result/prediction_result_HAS.csv', index=False)
 
 
 
