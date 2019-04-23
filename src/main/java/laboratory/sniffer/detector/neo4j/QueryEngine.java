@@ -84,7 +84,7 @@ public class QueryEngine {
 
 
     public void resultToCSV(List<Map<String, Object>> result, String csvSuffix) throws IOException {
-        String name = csvPrefix + csvSuffix;
+        String name = csvSuffix;
         FileWriter fw = new FileWriter(name);
         BufferedWriter writer = new BufferedWriter(fw);
         List<String> columns = result.isEmpty() ? new ArrayList<String>() : new ArrayList<>(result.get(0).keySet());

@@ -10,7 +10,7 @@ public class NumberOfLines extends UnaryMetric<Integer> {
     private NumberOfLines(DetectorMethod detectorMethod, int value) {
         this.value = value;
         this.entity = detectorMethod;
-        this.name = "number_of_lines";
+        this.name = "number_of_instructions";
     }
 
     public static NumberOfLines createNumberOfLines(DetectorMethod detectorMethod, int value) {

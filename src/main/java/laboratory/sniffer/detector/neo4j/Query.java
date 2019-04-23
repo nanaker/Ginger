@@ -33,7 +33,7 @@ public abstract class Query {
 
     public void execute(boolean details) throws CypherException, IOException {
         List<Map<String, Object>> result = fetchResult(details);
-        queryEngine.resultToCSV(result, "_" + smellName + ".csv");
+        queryEngine.resultToCSV(result,  "prediction/"+smellName + "_prediction.csv");
 
     }
 

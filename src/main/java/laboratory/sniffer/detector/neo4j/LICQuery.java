@@ -16,10 +16,9 @@ public class LICQuery extends Query {
 
     @Override
     protected String getQuery(boolean details) {
-        String query = "MATCH (a:App)-[:APP_OWNS_CLASS]->(cl:Class) WHERE exists(cl.is_inner_class) AND NOT exists(cl.is_static) " +
-                "RETURN DISTINCT a.commit_number as commit_number, cl.app_key as key, cl.file_path as file_path";
+        String query = "MATCH (cl:Class) WHERE exists(cl.is_inner_class)  RETURN CASE WHEN cl.is_static = true THEN true ELSE false END AS is_static ,cl.class_complexity as class_complexity ";
         if (details) {
-            query += ",cl.name as instance";
+            query += ",cl.name as full_name order by class_complexity  desc";
         } else {
             query += ",count(cl) as LIC";
         }
