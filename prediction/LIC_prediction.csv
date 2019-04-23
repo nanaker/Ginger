@@ -1,9 +1,0 @@
-is_static,class_complexity,full_name
-false,2,ch.blinkenlights.battery.BlinkenlightsBatteryService$LocalBinder
-false,2,ch.blinkenlights.battery.BlinkenlightsBatteryService$android.content.BroadcastReceiver1
-false,1,ch.blinkenlights.battery.BlinkenlightsBattery$android.widget.CompoundButton.OnCheckedChangeListener1
-false,1,ch.blinkenlights.battery.BlinkenlightsBattery$android.widget.CompoundButton.OnCheckedChangeListener2
-false,1,ch.blinkenlights.battery.BlinkenlightsBattery$android.widget.CompoundButton.OnCheckedChangeListener3
-false,1,ch.blinkenlights.battery.BlinkenlightsBattery$android.widget.CompoundButton.OnCheckedChangeListener4
-false,1,ch.blinkenlights.battery.BlinkenlightsBattery$android.view.View.OnClickListener5
-false,1,ch.blinkenlights.battery.BlinkenlightsBattery$android.content.DialogInterface$OnClickListener6
