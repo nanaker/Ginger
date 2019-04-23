@@ -44,7 +44,7 @@ public class ModelToGraph {
     private Map<DetectorClass, Node> classNodeMap;
     private Map<DetectorVariable, Node> variableNodeMap;
 
-    private String key;
+
     private String appName;
 
     public ModelToGraph(String DatabasePath) {
@@ -56,21 +56,18 @@ public class ModelToGraph {
         variableNodeMap = new HashMap<>();
         IndexManager indexManager = new IndexManager(graphDatabaseService);
         indexManager.createIndex();
+
     }
 
     public Node insertApp(DetectorApp detectorApp) {
-        this.key = detectorApp.getKey();
+
         this.appName = detectorApp.getName();
         Node appNode;
         try (Transaction tx = graphDatabaseService.beginTx()) {
             appNode = graphDatabaseService.createNode(appLabel);
-            appNode.setProperty("app_key", key);
+
             appNode.setProperty("name", appName);
-            //appNode.setProperty("version", detectorApp.getVersion());
-            appNode.setProperty("commit_number", detectorApp.getCommitNumber());
-            //appNode.setProperty("commit_status", detectorApp.getStatus());
-            //appNode.setProperty("sdk_version", detectorApp.getSdkVersion());
-            //appNode.setProperty("analyzed_module", detectorApp.getModule());
+
             Date date = new Date();
             SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S");
             appNode.setProperty("date_analysis", simpleFormat.format(date));
@@ -109,7 +106,7 @@ public class ModelToGraph {
     public Node insertClass(DetectorClass detectorClass) {
         Node classNode = graphDatabaseService.createNode(classLabel);
         classNodeMap.put(detectorClass, classNode);
-        classNode.setProperty("app_key", key);
+
         classNode.setProperty("name", detectorClass.getName());
         classNode.setProperty("modifier", detectorClass.getModifier().toString().toLowerCase());
         classNode.setProperty("file_path", detectorClass.getPath());
@@ -132,7 +129,7 @@ public class ModelToGraph {
 
     public Node insertLibrary(DetectorLibrary detectorLibrary) {
         Node libraryNode = graphDatabaseService.createNode(libraryLabel);
-        libraryNode.setProperty("app_key", key);
+
         libraryNode.setProperty("name", detectorLibrary.getName());
         libraryNode.setProperty("app_name", appName);
         return libraryNode;
@@ -140,7 +137,7 @@ public class ModelToGraph {
 
     public Node insertExternalClass(DetectorExternalClass detectorClass) {
         Node classNode = graphDatabaseService.createNode(externalClassLabel);
-        classNode.setProperty("app_key", key);
+
         classNode.setProperty("name", detectorClass.getName());
         classNode.setProperty("app_name", appName);
         if (detectorClass.getParentName() != null) {
@@ -158,7 +155,7 @@ public class ModelToGraph {
     public Node insertVariable(DetectorVariable detectorVariable) {
         Node variableNode = graphDatabaseService.createNode(variableLabel);
         variableNodeMap.put(detectorVariable, variableNode);
-        variableNode.setProperty("app_key", key);
+
         variableNode.setProperty("name", detectorVariable.getName());
         variableNode.setProperty("modifier", detectorVariable.getModifier().toString().toLowerCase());
         variableNode.setProperty("type", detectorVariable.getType());
@@ -172,7 +169,7 @@ public class ModelToGraph {
     public Node insertMethod(DetectorMethod detectorMethod) {
         Node methodNode = graphDatabaseService.createNode(methodLabel);
         methodNodeMap.put(detectorMethod, methodNode);
-        methodNode.setProperty("app_key", key);
+
         methodNode.setProperty("name", detectorMethod.getName());
         methodNode.setProperty("modifier", detectorMethod.getModifier().toString().toLowerCase());
         methodNode.setProperty("full_name", detectorMethod.toString());
@@ -201,7 +198,7 @@ public class ModelToGraph {
     public Node insertExternalMethod(DetectorExternalMethod detectorMethod) {
         Node methodNode = graphDatabaseService.createNode(externalMethodLabel);
         methodNodeMap.put(detectorMethod, methodNode);
-        methodNode.setProperty("app_key", key);
+
         methodNode.setProperty("name", detectorMethod.getName());
         methodNode.setProperty("full_name", detectorMethod.toString());
         methodNode.setProperty("return_type", detectorMethod.getReturnType());
@@ -217,7 +214,7 @@ public class ModelToGraph {
 
     public Node insertArgument(DetectorArgument detectorArgument) {
         Node argNode = graphDatabaseService.createNode(argumentLabel);
-        argNode.setProperty("app_key", key);
+
         argNode.setProperty("name", detectorArgument.getName());
         argNode.setProperty("position", detectorArgument.getPosition());
         argNode.setProperty("app_name", appName);
@@ -226,7 +223,7 @@ public class ModelToGraph {
 
     public Node insertExternalArgument(DetectorExternalArgument detectorExternalArgument) {
         Node argNode = graphDatabaseService.createNode(externalArgumentLabel);
-        argNode.setProperty("app_key", key);
+
         argNode.setProperty("name", detectorExternalArgument.getName());
         argNode.setProperty("position", detectorExternalArgument.getPosition());
         argNode.setProperty("app_name", appName);
@@ -257,4 +254,12 @@ public class ModelToGraph {
             }
         }
     }
+
+    public DatabaseManager getDatabaseManager() {
+        return databaseManager;
+    }
+
+
+
+
 }

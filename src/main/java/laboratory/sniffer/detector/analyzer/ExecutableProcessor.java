@@ -153,6 +153,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
                 return super.matches(element) && operators.contains(element.getKind());
             }
         }).size();
+
         int numberOfCatches = ctConstructor.getElements(new TypeFilter<CtCatch>(CtCatch.class)).size();
         int numberOfThrows = ctConstructor.getElements(new TypeFilter<CtThrow>(CtThrow.class)).size();
         int numberOfBreaks = ctConstructor.getElements(new TypeFilter<CtBreak>(CtBreak.class)).size();

@@ -43,22 +43,22 @@ public class Main {
 
     public static void main(String[] args) {
         //testRun();
+        String save=args[0];
+        args=new String[6];
+        args[0]="analyse";
+        args[1]="-n";
+        args[2]="MyApplication";
+        args[3]="-db";
+        args[4]="db";
+        args[5]=save;
+
         ArgumentParser parser = ArgumentParsers.newArgumentParser("detector");
         Subparsers subparsers = parser.addSubparsers().dest("sub_command");
         Subparser analyseParser = subparsers.addParser("analyse").help("Analyse an app");
         analyseParser.addArgument("folder").help("Path of the code source folder");
-        analyseParser.addArgument("-a", "--androidJar").required(false).help("Path to android platform jar");
-        analyseParser.addArgument("-db", "--database").required(true).help("Path to neo4J Database folder");
-        analyseParser.addArgument("-n", "--name").required(true).help("Name of the application");
-        analyseParser.addArgument("-p", "--package").required(false).help("Application main package");
-        analyseParser.addArgument("-k", "--key").required(true).help("sha256 of the apk used as identifier");
-        analyseParser.addArgument("-d", "--dependencies").required(false).help("Path to dependencies");
-        analyseParser.addArgument("-l", "--libs").required(false).help("List of the external libs used by the apps (separated by :)");
-        analyseParser.addArgument("-v", "--version").required(false).help("Version of the apps");
-        analyseParser.addArgument("-cn", "--commitNumber").required(true).help("Real commit number");
-        analyseParser.addArgument("-s", "--status").required(false).help("Commit status");
-        analyseParser.addArgument("-m", "--module").required(false).help("analyzed module folder");
-        analyseParser.addArgument("-sd", "--sdk").required(false).help("Sdk Version");
+        analyseParser.addArgument("-db", "--database").required(false).help("Path to neo4J Database folder");
+        analyseParser.addArgument("-n", "--name").required(false).help("Name of the application");
+
 
         Subparser queryParser = subparsers.addParser("query").help("Query the database");
         queryParser.addArgument("-db", "--database").required(true).help("Path to neo4J Database folder");
@@ -69,12 +69,30 @@ public class Main {
         queryParser.addArgument("-d", "--details").type(Boolean.class).setDefault(false).help("Show the concerned entity in the results");
 
         try {
-            Namespace res = parser.parseArgs(args);
-            if (res.getString("sub_command").equals("analyse")) {
+
+
+            Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
+            runAnalysis(pathOfApplicationToAnalyse);
+
+
+            String[] argumentsQyery=new String[7];
+            argumentsQyery[0]="query";
+            argumentsQyery[1]="-db";
+            argumentsQyery[2]="db";
+            argumentsQyery[3]="-d";
+            argumentsQyery[4]="TRUE";
+            argumentsQyery[5]="-r";
+            argumentsQyery[6]="HAS";
+            Namespace res = parser.parseArgs(argumentsQyery);
+            System.out.println("res=="+res);
+            queryMode(res);
+
+
+            /*if (res.getString("sub_command").equals("analyse")) {
                 runAnalysis(res);
             } else if (res.getString("sub_command").equals("query")) {
                 queryMode(res);
-            }
+            }*/
         } catch (ArgumentParserException e) {
             analyseParser.handleError(e);
         } catch (Exception e) {
@@ -92,22 +110,10 @@ public class Main {
         logger.info("Collecting metrics");
         String path = arg.getString("folder");
         path = new File(path).getAbsolutePath();
-        System.out.println("Path "+path.toString());
         String name = arg.getString("name");
-        int version = arg.getString("version") != null ? Integer.valueOf(arg.getString("version")) : -1;
-        String key = arg.getString("key");
-        String sdkPath = arg.getString("androidJar");
-        String jarsPath = arg.getString("dependencies");
-        int commitNumber = Integer.valueOf(arg.getString("commitNumber"));
-        String status = arg.getString("status") != null ? arg.getString("status") : "NO_STATUS";
-        // The input is unfortunately a String
-        int sdkVersion = arg.getString("sdk") != null ? Integer.valueOf(arg.getString("sdk")) : -1;
-        String module = arg.getString("module") != null ? arg.getString("module") : "NO_MODULE";
-        String[] libs = {};
-        if (arg.getString("libs") != null) {
-            libs = arg.getString("libs").split(":");
-        }
-        MainProcessor mainProcessor = new MainProcessor(name, version, commitNumber, status, key, path, sdkPath, jarsPath, sdkVersion, module);
+
+
+        MainProcessor mainProcessor = new MainProcessor(name, path);
         mainProcessor.process();
         System.out.println("main process ; process");
         GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
@@ -116,13 +122,7 @@ public class Main {
         System.out.println("create class hierarchy");
         graphCreator.createCallGraph();
         System.out.println("create call graph");
-        if (libs != null) {
-            for (String lib : libs) {
-                if (lib != "") {
-                    addLibrary(MainProcessor.currentApp, lib);
-                }
-            }
-        }
+
 
         MetricsCalculator.calculateAppMetrics(MainProcessor.currentApp);
         System.out.println("metrique claculator");
@@ -131,7 +131,8 @@ public class Main {
         System.out.println("Saving into database " + arg.getString("database"));
         logger.info("Saving into database " + arg.getString("database"));
         System.out.println("done");
-        logger.info("Done");
+        modelToGraph.getDatabaseManager().shutDown();
+
     }
 
     public static void queryMode(Namespace arg) throws Exception {

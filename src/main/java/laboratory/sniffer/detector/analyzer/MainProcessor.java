@@ -24,13 +24,12 @@ public class MainProcessor {
     private String jarsPath;
     private String sdkPath;
 
-    public MainProcessor(String appName, int appVersion, int commitNumber, String status, String appKey, String appPath, String sdkPath, String jarsPath, int sdkVersion, String module) {
-        this.currentApp = DetectorApp.createDetectorApp(appName, appVersion, commitNumber, status, appKey, appPath, sdkVersion, module);
+    public MainProcessor(String appName,String appPath) {
+        this.currentApp = DetectorApp.createDetectorApp(appName, appPath);
         currentClass = null;
         currentMethod = null;
         this.appPath = appPath;
-        this.jarsPath = jarsPath;
-        this.sdkPath = sdkPath;
+
     }
 
     public void process() {
