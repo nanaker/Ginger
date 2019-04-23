@@ -1,10 +1,11 @@
 
 *.iml
 out/
+prediction/
 .idea
 *~
 build
 classes
 META-INF
 db/
-prediction/
+
