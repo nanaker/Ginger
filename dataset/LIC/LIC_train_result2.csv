@@ -1,0 +1,55 @@
+classification_methode,path,validation_methode,F_mesure
+Decision Tree,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+Decision Tree,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0
+Decision Tree,dataset/LIC/taken/LIC_AllKNN.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_AllKNN.csv,cross Validation,1.0
+Decision Tree,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,cross Validation,1.0
+Decision Tree,dataset/LIC/taken/LIC_NearMiss.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_NearMiss.csv,cross Validation,1.0
+Decision Tree,dataset/LIC/taken/LIC_OneSidedSelection.csv,Validation_70/30,0.9992193598750976
+Decision Tree,dataset/LIC/taken/LIC_OneSidedSelection.csv,cross Validation,0.9988276670574443
+Decision Tree,dataset/LIC/taken/LIC_TomekLinks.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_TomekLinks.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_AllKNN.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_AllKNN.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_NearMiss.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_NearMiss.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_TomekLinks.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_TomekLinks.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_AllKNN.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_AllKNN.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_NearMiss.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_NearMiss.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_OneSidedSelection.csv,Validation_70/30,0.9992193598750976
+Naive Bayes,dataset/LIC/taken/LIC_OneSidedSelection.csv,cross Validation,0.9988276670574443
+Naive Bayes,dataset/LIC/taken/LIC_TomekLinks.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_TomekLinks.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_CondensedNearestNeighbour.csv,Validation_70/30,0.9992193598750976
+Naive Bayes,dataset/LIC/taken/LIC_CondensedNearestNeighbour.csv,cross Validation,0.9988276670574443
+SVM,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+SVM,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0
+SVM,dataset/LIC/taken/LIC_AllKNN.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_AllKNN.csv,cross Validation,1.0
+SVM,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_InstanceHardnessThreshold.csv,cross Validation,1.0
+SVM,dataset/LIC/taken/LIC_NearMiss.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_NearMiss.csv,cross Validation,1.0
+SVM,dataset/LIC/taken/LIC_TomekLinks.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_TomekLinks.csv,cross Validation,1.0

@@ -1,0 +1,55 @@
+classification_methode,path,validation_methode,F_mesure
+Decision Tree,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,0.9934640522875817
+Decision Tree,dataset/NLMR/taken/NLMR_.csv,cross Validation,0.998019801980198
+Decision Tree,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,1.0
+Decision Tree,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,0.9955555555555555
+Decision Tree,dataset/NLMR/taken/NLMR_AllKNN.csv,Validation_70/30,0.9937106918238994
+Decision Tree,dataset/NLMR/taken/NLMR_AllKNN.csv,cross Validation,0.9980952380952381
+Decision Tree,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Decision Tree,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,cross Validation,0.9980952380952381
+Decision Tree,dataset/NLMR/taken/NLMR_NearMiss.csv,Validation_70/30,1.0
+Decision Tree,dataset/NLMR/taken/NLMR_NearMiss.csv,cross Validation,0.9955555555555555
+Decision Tree,dataset/NLMR/taken/NLMR_TomekLinks.csv,Validation_70/30,1.0
+Decision Tree,dataset/NLMR/taken/NLMR_TomekLinks.csv,cross Validation,0.998019801980198
+Decision Tree,dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv,Validation_70/30,
+Decision Tree,dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv,cross Validation,
+Random Forest,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,1.0
+Random Forest,dataset/NLMR/taken/NLMR_.csv,cross Validation,0.998019801980198
+Random Forest,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,1.0
+Random Forest,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,0.9955555555555555
+Random Forest,dataset/NLMR/taken/NLMR_AllKNN.csv,Validation_70/30,1.0
+Random Forest,dataset/NLMR/taken/NLMR_AllKNN.csv,cross Validation,0.9980952380952381
+Random Forest,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,Validation_70/30,0.9936305732484078
+Random Forest,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,cross Validation,0.9980952380952381
+Random Forest,dataset/NLMR/taken/NLMR_NearMiss.csv,Validation_70/30,0.9870129870129869
+Random Forest,dataset/NLMR/taken/NLMR_NearMiss.csv,cross Validation,0.9955555555555555
+Random Forest,dataset/NLMR/taken/NLMR_TomekLinks.csv,Validation_70/30,1.0
+Random Forest,dataset/NLMR/taken/NLMR_TomekLinks.csv,cross Validation,0.998019801980198
+Random Forest,dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv,Validation_70/30,
+Random Forest,dataset/NLMR/taken/NLMR_CondensedNearestNeighbour.csv,cross Validation,
+Naive Bayes,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,1.0
+Naive Bayes,dataset/NLMR/taken/NLMR_.csv,cross Validation,0.998019801980198
+Naive Bayes,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,1.0
+Naive Bayes,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,0.9955555555555555
+Naive Bayes,dataset/NLMR/taken/NLMR_AllKNN.csv,Validation_70/30,0.9940828402366864
+Naive Bayes,dataset/NLMR/taken/NLMR_AllKNN.csv,cross Validation,0.9980952380952381
+Naive Bayes,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Naive Bayes,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,cross Validation,0.9980952380952381
+Naive Bayes,dataset/NLMR/taken/NLMR_NearMiss.csv,Validation_70/30,1.0
+Naive Bayes,dataset/NLMR/taken/NLMR_NearMiss.csv,cross Validation,0.9955555555555555
+Naive Bayes,dataset/NLMR/taken/NLMR_OneSidedSelection.csv,Validation_70/30,
+Naive Bayes,dataset/NLMR/taken/NLMR_OneSidedSelection.csv,cross Validation,
+Naive Bayes,dataset/NLMR/taken/NLMR_TomekLinks.csv,Validation_70/30,0.9935483870967742
+Naive Bayes,dataset/NLMR/taken/NLMR_TomekLinks.csv,cross Validation,0.998019801980198
+SVM,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_.csv,cross Validation,1.0
+SVM,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,1.0
+SVM,dataset/NLMR/taken/NLMR_AllKNN.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_AllKNN.csv,cross Validation,1.0
+SVM,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_InstanceHardnessThreshold.csv,cross Validation,1.0
+SVM,dataset/NLMR/taken/NLMR_NearMiss.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_NearMiss.csv,cross Validation,1.0
+SVM,dataset/NLMR/taken/NLMR_TomekLinks.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_TomekLinks.csv,cross Validation,1.0

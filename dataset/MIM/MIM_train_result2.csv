@@ -1,0 +1,57 @@
+classification_methode,path,validation_methode,F_mesure
+Decision Tree,dataset/MIM/taken/MIM_.csv,Validation_70/30,
+Decision Tree,dataset/MIM/taken/MIM_.csv,cross Validation,
+Decision Tree,dataset/MIM/taken/MIM_RandomUnderSampler.csv,Validation_70/30,0.9870129870129869
+Decision Tree,dataset/MIM/taken/MIM_RandomUnderSampler.csv,cross Validation,0.9895151383969978
+Decision Tree,dataset/MIM/taken/MIM_AllKNN.csv,Validation_70/30,1.0
+Decision Tree,dataset/MIM/taken/MIM_AllKNN.csv,cross Validation,1.0
+Decision Tree,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Decision Tree,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,cross Validation,1.0
+Decision Tree,dataset/MIM/taken/MIM_NearMiss.csv,Validation_70/30,0.6603260869565217
+Decision Tree,dataset/MIM/taken/MIM_NearMiss.csv,cross Validation,
+Decision Tree,dataset/MIM/taken/MIM_OneSidedSelection.csv,Validation_70/30,
+Decision Tree,dataset/MIM/taken/MIM_OneSidedSelection.csv,cross Validation,
+Decision Tree,dataset/MIM/taken/MIM_TomekLinks.csv,Validation_70/30,
+Decision Tree,dataset/MIM/taken/MIM_TomekLinks.csv,cross Validation,
+Random Forest,dataset/MIM/taken/MIM_.csv,Validation_70/30,
+Random Forest,dataset/MIM/taken/MIM_.csv,cross Validation,
+Random Forest,dataset/MIM/taken/MIM_RandomUnderSampler.csv,Validation_70/30,0.9429951690821257
+Random Forest,dataset/MIM/taken/MIM_RandomUnderSampler.csv,cross Validation,0.9481762784040498
+Random Forest,dataset/MIM/taken/MIM_AllKNN.csv,Validation_70/30,
+Random Forest,dataset/MIM/taken/MIM_AllKNN.csv,cross Validation,
+Random Forest,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,Validation_70/30,
+Random Forest,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,cross Validation,
+Random Forest,dataset/MIM/taken/MIM_NearMiss.csv,Validation_70/30,
+Random Forest,dataset/MIM/taken/MIM_NearMiss.csv,cross Validation,
+Random Forest,dataset/MIM/taken/MIM_OneSidedSelection.csv,Validation_70/30,
+Random Forest,dataset/MIM/taken/MIM_OneSidedSelection.csv,cross Validation,
+Random Forest,dataset/MIM/taken/MIM_TomekLinks.csv,Validation_70/30,
+Random Forest,dataset/MIM/taken/MIM_TomekLinks.csv,cross Validation,
+Naive Bayes,dataset/MIM/taken/MIM_.csv,Validation_70/30,0.5392051557465092
+Naive Bayes,dataset/MIM/taken/MIM_.csv,cross Validation,0.5366365961567602
+Naive Bayes,dataset/MIM/taken/MIM_RandomUnderSampler.csv,Validation_70/30,0.9910979228486646
+Naive Bayes,dataset/MIM/taken/MIM_RandomUnderSampler.csv,cross Validation,0.9895151383969978
+Naive Bayes,dataset/MIM/taken/MIM_AllKNN.csv,Validation_70/30,1.0
+Naive Bayes,dataset/MIM/taken/MIM_AllKNN.csv,cross Validation,1.0
+Naive Bayes,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Naive Bayes,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,cross Validation,1.0
+Naive Bayes,dataset/MIM/taken/MIM_NearMiss.csv,Validation_70/30,
+Naive Bayes,dataset/MIM/taken/MIM_NearMiss.csv,cross Validation,
+Naive Bayes,dataset/MIM/taken/MIM_OneSidedSelection.csv,Validation_70/30,0.5326519023282226
+Naive Bayes,dataset/MIM/taken/MIM_OneSidedSelection.csv,cross Validation,0.5368774228953999
+Naive Bayes,dataset/MIM/taken/MIM_TomekLinks.csv,Validation_70/30,0.5205784204671857
+Naive Bayes,dataset/MIM/taken/MIM_TomekLinks.csv,cross Validation,0.5366365961567602
+SVM,dataset/MIM/taken/MIM_.csv,Validation_70/30,
+SVM,dataset/MIM/taken/MIM_.csv,cross Validation,
+SVM,dataset/MIM/taken/MIM_RandomUnderSampler.csv,Validation_70/30,0.9920159680638723
+SVM,dataset/MIM/taken/MIM_RandomUnderSampler.csv,cross Validation,0.9895151383969978
+SVM,dataset/MIM/taken/MIM_AllKNN.csv,Validation_70/30,1.0
+SVM,dataset/MIM/taken/MIM_AllKNN.csv,cross Validation,1.0
+SVM,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+SVM,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,cross Validation,1.0
+SVM,dataset/MIM/taken/MIM_NearMiss.csv,Validation_70/30,
+SVM,dataset/MIM/taken/MIM_NearMiss.csv,cross Validation,
+SVM,dataset/MIM/taken/MIM_OneSidedSelection.csv,Validation_70/30,
+SVM,dataset/MIM/taken/MIM_OneSidedSelection.csv,cross Validation,
+SVM,dataset/MIM/taken/MIM_TomekLinks.csv,Validation_70/30,
+SVM,dataset/MIM/taken/MIM_TomekLinks.csv,cross Validation,

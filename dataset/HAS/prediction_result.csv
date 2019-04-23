@@ -1,0 +1,16 @@
+cyclomatic_complexity,number_of_instructions,is_asynTask,has_method,full_name,is_code_smell
+4,33,True,False,doInBackground#org.droidtr.deletegapps.Download,True
+19,146,True,False,setChangedFlags#nerd.tuxmobil.fahrplan.congress.parser,True
+4,81,True,False,storeLectureList#nerd.tuxmobil.fahrplan.congress.parser,True
+78,261,True,False,parseFahrplan#nerd.tuxmobil.fahrplan.congress.parser,True
+6,69,True,False,fetchthis#nerd.tuxmobil.fahrplan.congress.fetcher,True
+6,20,True,True,onProgressUpdate#com.markuspage.android.atimetracker.DBBackup,True
+6,34,True,False,doInBackground#com.markuspage.android.atimetracker.DBBackup,True
+10,46,True,False,copyTimes#com.markuspage.android.atimetracker.DBBackup,True
+6,24,True,False,c#com.fairphone.fplauncher3.lc,True
+37,233,True,False,b#com.fairphone.fplauncher3.lc,True
+5,20,True,True,onProgressUpdate#com.fairphone.fplauncher3.iy,True
+5,30,True,False,doInBackground#com.lzx.lock.mvp.p.LockMainPresenter$SearchInfoAsyncTask,True
+7,36,True,False,doInBackground#com.lzx.lock.mvp.p.MainPresenter$LoadLockAsyncTask,True
+6,34,True,False,doInBackground#com.lzx.lock.mvp.p.LockMainPresenter$LoadAppInfo,True
+9,55,True,False,doInBackground#com.lzx.lock.mvp.p.MainPresenter$LoadAppInfoAsyncTask,True

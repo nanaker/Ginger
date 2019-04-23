@@ -1,0 +1,73 @@
+classification_methode,path,validation_methode,F_mesure
+Decision Tree,dataset/HAS/taken/HAS_.csv,Validation_70/30,0.9333333333333333
+Decision Tree,dataset/HAS/taken/HAS_.csv,cross Validation,0.9882352941176471
+Decision Tree,dataset/HAS/taken/HAS_RandomUnderSampler.csv,Validation_70/30,1.0
+Decision Tree,dataset/HAS/taken/HAS_RandomUnderSampler.csv,cross Validation,1.0
+Decision Tree,dataset/HAS/taken/HAS_AllKNN.csv,Validation_70/30,1.0
+Decision Tree,dataset/HAS/taken/HAS_AllKNN.csv,cross Validation,0.9777777777777779
+Decision Tree,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Decision Tree,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,cross Validation,1.0
+Decision Tree,dataset/HAS/taken/HAS_NearMiss.csv,Validation_70/30,0.967741935483871
+Decision Tree,dataset/HAS/taken/HAS_NearMiss.csv,cross Validation,0.9894736842105264
+Decision Tree,dataset/HAS/taken/HAS_OneSidedSelection.csv,Validation_70/30,0.9473684210526316
+Decision Tree,dataset/HAS/taken/HAS_OneSidedSelection.csv,cross Validation,0.9714285714285713
+Decision Tree,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,Validation_70/30,1.0
+Decision Tree,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,cross Validation,1.0
+Decision Tree,dataset/HAS/taken/HAS_TomekLinks.csv,Validation_70/30,1.0
+Decision Tree,dataset/HAS/taken/HAS_TomekLinks.csv,cross Validation,0.9866666666666667
+Decision Tree,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,Validation_70/30,1.0
+Decision Tree,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,cross Validation,1.0
+Random Forest,dataset/HAS/taken/HAS_.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_.csv,cross Validation,0.9574660633484162
+Random Forest,dataset/HAS/taken/HAS_RandomUnderSampler.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_RandomUnderSampler.csv,cross Validation,1.0
+Random Forest,dataset/HAS/taken/HAS_AllKNN.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_AllKNN.csv,cross Validation,0.9482352941176471
+Random Forest,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,cross Validation,1.0
+Random Forest,dataset/HAS/taken/HAS_NearMiss.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_NearMiss.csv,cross Validation,0.9894736842105264
+Random Forest,dataset/HAS/taken/HAS_OneSidedSelection.csv,Validation_70/30,0.9600000000000001
+Random Forest,dataset/HAS/taken/HAS_OneSidedSelection.csv,cross Validation,0.9714285714285713
+Random Forest,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,cross Validation,1.0
+Random Forest,dataset/HAS/taken/HAS_TomekLinks.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_TomekLinks.csv,cross Validation,0.96
+Random Forest,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,Validation_70/30,1.0
+Random Forest,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,cross Validation,1.0
+Naive Bayes,dataset/HAS/taken/HAS_.csv,Validation_70/30,0.56
+Naive Bayes,dataset/HAS/taken/HAS_.csv,cross Validation,0.6749601275917065
+Naive Bayes,dataset/HAS/taken/HAS_RandomUnderSampler.csv,Validation_70/30,0.8695652173913044
+Naive Bayes,dataset/HAS/taken/HAS_RandomUnderSampler.csv,cross Validation,0.8967388167388167
+Naive Bayes,dataset/HAS/taken/HAS_AllKNN.csv,Validation_70/30,0.6666666666666666
+Naive Bayes,dataset/HAS/taken/HAS_AllKNN.csv,cross Validation,0.7108705020469726
+Naive Bayes,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,Validation_70/30,0.8095238095238095
+Naive Bayes,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,cross Validation,0.7304538598656245
+Naive Bayes,dataset/HAS/taken/HAS_NearMiss.csv,Validation_70/30,0.923076923076923
+Naive Bayes,dataset/HAS/taken/HAS_NearMiss.csv,cross Validation,0.9395458342826764
+Naive Bayes,dataset/HAS/taken/HAS_OneSidedSelection.csv,Validation_70/30,0.962962962962963
+Naive Bayes,dataset/HAS/taken/HAS_OneSidedSelection.csv,cross Validation,0.899399585921325
+Naive Bayes,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,Validation_70/30,0.8823529411764706
+Naive Bayes,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,cross Validation,0.8800399806591755
+Naive Bayes,dataset/HAS/taken/HAS_TomekLinks.csv,Validation_70/30,0.6923076923076924
+Naive Bayes,dataset/HAS/taken/HAS_TomekLinks.csv,cross Validation,0.7049019607843138
+Naive Bayes,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,Validation_70/30,1.0
+Naive Bayes,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,cross Validation,1.0
+SVM,dataset/HAS/taken/HAS_.csv,Validation_70/30,0.6086956521739131
+SVM,dataset/HAS/taken/HAS_.csv,cross Validation,0.7139973803286497
+SVM,dataset/HAS/taken/HAS_RandomUnderSampler.csv,Validation_70/30,0.9411764705882353
+SVM,dataset/HAS/taken/HAS_RandomUnderSampler.csv,cross Validation,0.9049019607843137
+SVM,dataset/HAS/taken/HAS_AllKNN.csv,Validation_70/30,1.0
+SVM,dataset/HAS/taken/HAS_AllKNN.csv,cross Validation,0.9684848484848485
+SVM,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,Validation_70/30,0.7142857142857143
+SVM,dataset/HAS/taken/HAS_InstanceHardnessThreshold.csv,cross Validation,0.9712918660287082
+SVM,dataset/HAS/taken/HAS_NearMiss.csv,Validation_70/30,0.8461538461538461
+SVM,dataset/HAS/taken/HAS_NearMiss.csv,cross Validation,0.734733893557423
+SVM,dataset/HAS/taken/HAS_OneSidedSelection.csv,Validation_70/30,0.7826086956521738
+SVM,dataset/HAS/taken/HAS_OneSidedSelection.csv,cross Validation,0.7278328173374613
+SVM,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,Validation_70/30,1.0
+SVM,dataset/HAS/taken/HAS_RandomUnderSampler_default.csv,cross Validation,0.9112299465240643
+SVM,dataset/HAS/taken/HAS_TomekLinks.csv,Validation_70/30,0.7826086956521738
+SVM,dataset/HAS/taken/HAS_TomekLinks.csv,cross Validation,0.7932579185520362
+SVM,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,Validation_70/30,0.8275862068965517
+SVM,dataset/HAS/taken/HAS_CondensedNearestNeighbour.csv,cross Validation,0.7635087719298246

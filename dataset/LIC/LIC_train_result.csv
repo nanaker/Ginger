@@ -1,0 +1,17 @@
+classification_methode,path,validation_methode,F_mesure
+Decision Tree,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+Decision Tree,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+Decision Tree,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+Random Forest,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+Random Forest,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+Naive Bayes,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+Naive Bayes,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0
+SVM,dataset/LIC/taken/LIC_.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_.csv,cross Validation,1.0
+SVM,dataset/LIC/taken/LIC_RandomUnderSampler.csv,Validation_70/30,1.0
+SVM,dataset/LIC/taken/LIC_RandomUnderSampler.csv,cross Validation,1.0

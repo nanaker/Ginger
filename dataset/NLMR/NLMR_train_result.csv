@@ -1,0 +1,17 @@
+classification_methode,path,validation_methode,F_mesure
+Decision Tree,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,0.993939393939394
+Decision Tree,dataset/NLMR/taken/NLMR_.csv,cross Validation,0.998019801980198
+Decision Tree,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,1.0
+Decision Tree,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,0.9955555555555555
+Random Forest,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,1.0
+Random Forest,dataset/NLMR/taken/NLMR_.csv,cross Validation,0.998019801980198
+Random Forest,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,1.0
+Random Forest,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,0.9955555555555555
+Naive Bayes,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,1.0
+Naive Bayes,dataset/NLMR/taken/NLMR_.csv,cross Validation,0.998019801980198
+Naive Bayes,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,0.9879518072289156
+Naive Bayes,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,0.9955555555555555
+SVM,dataset/NLMR/taken/NLMR_.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_.csv,cross Validation,1.0
+SVM,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,Validation_70/30,1.0
+SVM,dataset/NLMR/taken/NLMR_RandomUnderSampler.csv,cross Validation,1.0

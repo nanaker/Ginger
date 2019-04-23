@@ -1,0 +1,65 @@
+classification_methode,path,validation_methode,F_mesure
+Decision Tree,dataset/BLOB/taken/BLOB_del.csv,Validation_70/30,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_del.csv,cross Validation,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,Validation_70/30,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,cross Validation,0.9986754966887418
+Decision Tree,dataset/BLOB/taken/BLOB_AllKNN.csv,Validation_70/30,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_AllKNN.csv,cross Validation,0.997752808988764
+Decision Tree,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,cross Validation,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_NearMiss.csv,Validation_70/30,0.9911504424778761
+Decision Tree,dataset/BLOB/taken/BLOB_NearMiss.csv,cross Validation,0.9986754966887418
+Decision Tree,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,Validation_70/30,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,cross Validation,0.9987878787878788
+Decision Tree,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,Validation_70/30,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,cross Validation,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_TomekLinks.csv,Validation_70/30,1.0
+Decision Tree,dataset/BLOB/taken/BLOB_TomekLinks.csv,cross Validation,0.9987577639751553
+Random Forest,dataset/BLOB/taken/BLOB_del.csv,Validation_70/30,1.0
+Random Forest,dataset/BLOB/taken/BLOB_del.csv,cross Validation,0.9987577639751553
+Random Forest,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,Validation_70/30,0.9957805907172996
+Random Forest,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,cross Validation,0.9986754966887418
+Random Forest,dataset/BLOB/taken/BLOB_AllKNN.csv,Validation_70/30,0.9956331877729258
+Random Forest,dataset/BLOB/taken/BLOB_AllKNN.csv,cross Validation,0.9988826815642458
+Random Forest,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,Validation_70/30,1.0
+Random Forest,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,cross Validation,0.9988826815642458
+Random Forest,dataset/BLOB/taken/BLOB_NearMiss.csv,Validation_70/30,0.9958847736625513
+Random Forest,dataset/BLOB/taken/BLOB_NearMiss.csv,cross Validation,0.9986754966887418
+Random Forest,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,Validation_70/30,1.0
+Random Forest,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,cross Validation,0.9987878787878788
+Random Forest,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,Validation_70/30,1.0
+Random Forest,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,cross Validation,0.9986754966887418
+Random Forest,dataset/BLOB/taken/BLOB_TomekLinks.csv,Validation_70/30,0.9955156950672646
+Random Forest,dataset/BLOB/taken/BLOB_TomekLinks.csv,cross Validation,0.9987577639751553
+Naive Bayes,dataset/BLOB/taken/BLOB_del.csv,Validation_70/30,0.9641434262948207
+Naive Bayes,dataset/BLOB/taken/BLOB_del.csv,cross Validation,0.9760310726397521
+Naive Bayes,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,Validation_70/30,1.0
+Naive Bayes,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,cross Validation,0.9962962259492109
+Naive Bayes,dataset/BLOB/taken/BLOB_AllKNN.csv,Validation_70/30,0.9701492537313433
+Naive Bayes,dataset/BLOB/taken/BLOB_AllKNN.csv,cross Validation,0.9769710948295254
+Naive Bayes,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,Validation_70/30,0.9758454106280194
+Naive Bayes,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,cross Validation,0.9769710948295254
+Naive Bayes,dataset/BLOB/taken/BLOB_NearMiss.csv,Validation_70/30,1.0
+Naive Bayes,dataset/BLOB/taken/BLOB_NearMiss.csv,cross Validation,1.0
+Naive Bayes,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,Validation_70/30,1.0
+Naive Bayes,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,cross Validation,0.9987730061349694
+Naive Bayes,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,Validation_70/30,0.9956331877729258
+Naive Bayes,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,cross Validation,0.9948711544065609
+Naive Bayes,dataset/BLOB/taken/BLOB_TomekLinks.csv,Validation_70/30,0.9774436090225563
+Naive Bayes,dataset/BLOB/taken/BLOB_TomekLinks.csv,cross Validation,0.9760310726397521
+SVM,dataset/BLOB/taken/BLOB_del.csv,Validation_70/30,0.963265306122449
+SVM,dataset/BLOB/taken/BLOB_del.csv,cross Validation,0.9774045776389635
+SVM,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,Validation_70/30,0.9
+SVM,dataset/BLOB/taken/BLOB_RandomUnderSampler.csv,cross Validation,0.8957270893839503
+SVM,dataset/BLOB/taken/BLOB_AllKNN.csv,Validation_70/30,0.9811320754716981
+SVM,dataset/BLOB/taken/BLOB_AllKNN.csv,cross Validation,0.9765203119369659
+SVM,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,Validation_70/30,0.9767441860465117
+SVM,dataset/BLOB/taken/BLOB_InstanceHardnessThreshold.csv,cross Validation,0.9765203119369659
+SVM,dataset/BLOB/taken/BLOB_NearMiss.csv,Validation_70/30,0.8878504672897196
+SVM,dataset/BLOB/taken/BLOB_NearMiss.csv,cross Validation,0.866070112374586
+SVM,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,Validation_70/30,0.9865470852017937
+SVM,dataset/BLOB/taken/BLOB_OneSidedSelection.csv,cross Validation,0.9002751575039751
+SVM,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,Validation_70/30,0.8981481481481481
+SVM,dataset/BLOB/taken/BLOB_RandomUnderSampler_default.csv,cross Validation,0.8957270893839503
+SVM,dataset/BLOB/taken/BLOB_TomekLinks.csv,Validation_70/30,0.986046511627907
+SVM,dataset/BLOB/taken/BLOB_TomekLinks.csv,cross Validation,0.9774045776389635
