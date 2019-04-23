@@ -38,10 +38,11 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
 
 
         String absolutePath= ctType.getPosition().getFile().getAbsolutePath();
-
-
-
-        String relativePath = absolutePath.replaceFirst(MainProcessor.currentApp.getPath(),"");
+        //this step is to solve the problem of Java Regex
+        absolutePath=absolutePath.replaceAll("\\\\","/");
+        String s=MainProcessor.currentApp.getPath();
+        s=s.replaceAll("\\\\","/");
+        String relativePath = absolutePath.replaceFirst(s,"");
 
 
         if (ctType.isAnonymous()) {

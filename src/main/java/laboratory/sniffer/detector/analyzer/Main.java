@@ -58,6 +58,7 @@ public class Main {
 
 
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
+            System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
             runAnalysis(pathOfApplicationToAnalyse);
 
@@ -148,7 +149,7 @@ public class Main {
     }
 
     public static void deteleContenetOfDirectory(String path){
-        File directory = new File("db");
+        File directory = new File(path);
         File[] contents = directory.listFiles();
         for ( File f : contents) {
 
