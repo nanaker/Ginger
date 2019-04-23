@@ -1,2 +1,2 @@
 class_complexity,has_onLowMemory,extend_class,full_name
-16,false,false,ch.blinkenlights.battery.BlinkenlightsBattery
+29,false,false,de.nproth.pin.NoteActivity

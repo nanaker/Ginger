@@ -4,34 +4,17 @@ import laboratory.sniffer.detector.metrics.MetricsCalculator;
 
 import laboratory.sniffer.detector.entities.DetectorApp;
 import laboratory.sniffer.detector.entities.DetectorLibrary;
-import laboratory.sniffer.detector.neo4j.ARGB8888Query;
-import laboratory.sniffer.detector.neo4j.BLOBQuery;
-import laboratory.sniffer.detector.neo4j.CCQuery;
-import laboratory.sniffer.detector.neo4j.CommitSizeQuery;
-import laboratory.sniffer.detector.neo4j.HashMapUsageQuery;
 import laboratory.sniffer.detector.neo4j.HeavyAsyncTaskStepsQuery;
 import laboratory.sniffer.detector.neo4j.HeavyBroadcastReceiverQuery;
-import laboratory.sniffer.detector.neo4j.HeavyServiceStartQuery;
-import laboratory.sniffer.detector.neo4j.IGSQuery;
-import laboratory.sniffer.detector.neo4j.InitOnDrawQuery;
-import laboratory.sniffer.detector.neo4j.InvalidateWithoutRectQuery;
 import laboratory.sniffer.detector.neo4j.LICQuery;
-import laboratory.sniffer.detector.neo4j.LMQuery;
 import laboratory.sniffer.detector.neo4j.MIMQuery;
 import laboratory.sniffer.detector.neo4j.ModelToGraph;
 import laboratory.sniffer.detector.neo4j.NLMRQuery;
-import laboratory.sniffer.detector.neo4j.OverdrawQuery;
-import laboratory.sniffer.detector.neo4j.QuartileCalculator;
 import laboratory.sniffer.detector.neo4j.QueryEngine;
-import laboratory.sniffer.detector.neo4j.SAKQuery;
-import laboratory.sniffer.detector.neo4j.TrackingHardwareIdQuery;
-import laboratory.sniffer.detector.neo4j.UnsuitedLRUCacheSizeQuery;
-import laboratory.sniffer.detector.neo4j.UnsupportedHardwareAccelerationQuery;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -88,7 +71,7 @@ public class Main {
 
 
             Namespace res = parser.parseArgs(argumentsQyery);
-            System.out.println("res=="+res);
+
             queryMode(res);
 
         } catch (ArgumentParserException e) {
@@ -106,7 +89,7 @@ public class Main {
 
 
         deteleContenetOfDirectory("db");
-        System.out.println("Collecting metrics");
+
         logger.info("Collecting metrics");
         String path = arg.getString("folder");
         path = new File(path).getAbsolutePath();
@@ -115,29 +98,29 @@ public class Main {
 
         MainProcessor mainProcessor = new MainProcessor(name, path);
         mainProcessor.process();
-        System.out.println("main process ; process");
+
         GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
 
         graphCreator.createClassHierarchy();
-        System.out.println("create class hierarchy");
+
         graphCreator.createCallGraph();
-        System.out.println("create call graph");
+
 
 
         MetricsCalculator.calculateAppMetrics(MainProcessor.currentApp);
-        System.out.println("metrique claculator");
+
         ModelToGraph modelToGraph = new ModelToGraph(arg.getString("database"));
 
         modelToGraph.insertApp(MainProcessor.currentApp);
-        System.out.println("Saving into database " + arg.getString("database"));
+
         logger.info("Saving into database " + arg.getString("database"));
-        System.out.println("done");
+
         modelToGraph.getDatabaseManager().shutDown();
 
     }
 
     public static void queryMode(Namespace arg) throws Exception {
-        System.out.println("Executing Queries");
+
         logger.info("Executing Queries");
         QueryEngine queryEngine = new QueryEngine(arg.getString("database"));
         String request = arg.get("request");
@@ -145,8 +128,7 @@ public class Main {
         Calendar cal = new GregorianCalendar();
         String csvDate = String.valueOf(cal.get(Calendar.YEAR)) + "_" + String.valueOf(cal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + "_" + String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + "_" + String.valueOf(cal.get(Calendar.MINUTE));
         String csvPrefix = arg.getString("csv") + csvDate;
-        System.out.println("Resulting csv file name will start with prefix");
-        System.out.println("request "+request);
+
 
                 queryEngine.setCsvPrefix(csvPrefix);
                 MIMQuery.createMIMQuery(queryEngine).execute(true);

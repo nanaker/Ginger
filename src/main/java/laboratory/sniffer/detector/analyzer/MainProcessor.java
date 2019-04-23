@@ -33,19 +33,19 @@ public class MainProcessor {
     }
 
     public void process() {
-        System.out.println("process");
+
         Launcher launcher = new Launcher();
         launcher.addInputResource(appPath);
-        System.out.println("add input ressource");
+
         launcher.getEnvironment().setNoClasspath(true);
-        System.out.println("get Environement");
+
         launcher.buildModel();
-        System.out.println("build model");
+
         AbstractProcessor<CtClass> classProcessor = new ClassProcessor();
         AbstractProcessor<CtInterface> interfaceProcessor = new InterfaceProcessor();
         launcher.addProcessor(classProcessor);
         launcher.addProcessor(interfaceProcessor);
-        System.out.println("lunch . process debut ");
+
         launcher.process();
     }
 

@@ -18,7 +18,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     public void process(T ctExecutable) {
         String name = ctExecutable.getSimpleName();
-        System.out.println("name methode "+name);
+
         String returnType = ctExecutable.getType().getQualifiedName();
 
         String visibility = "null";
@@ -60,7 +60,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     private int countEffectiveCodeLines(T ctMethod) {
         try {
-            System.out.println("body    "+ctMethod.getBody().toString());
+
             int numberOfLogicalLines=0;
             int nbCommentwithSemicoloone=0;
             int numbeOfLinesWithSemicolonnes=ctMethod.getBody().toString().split(";").length;
@@ -88,7 +88,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
                     +nbCtForEach+nbCtIf+nbCtTry+nbCtCatch+nbCtWhile-nbCommentwithSemicoloone+1;
             // + 1 pour le prototype de la methode
             // le nombre de block s'ajoute automatiquement 
-            System.out.println("number of instruction   "+numberOfLogicalLines);
+
 
             return numberOfLogicalLines;
 
@@ -144,7 +144,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
     private int getComplexity(T ctConstructor) {
         int numberOfTernaries = ctConstructor.getElements(new TypeFilter<CtConditional>(CtConditional.class)).size();
         int numberOfIfs = ctConstructor.getElements(new TypeFilter<CtIf>(CtIf.class)).size();
-        System.out.print("nb if"+numberOfIfs);
+
         int numberOfCases = ctConstructor.getElements(new TypeFilter<CtCase>(CtCase.class)).size();
         int numberOfReturns = ctConstructor.getElements(new TypeFilter<CtReturn>(CtReturn.class)).size();
         int numberOfLoops = ctConstructor.getElements(new TypeFilter<CtLoop>(CtLoop.class)).size();
@@ -164,7 +164,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         int complexity=numberOfBreaks + numberOfCases + numberOfCatches + numberOfContinues + numberOfIfs + numberOfLoops +
                 numberOfTernaries + numberOfThrows + numberOfBinaryOperators + 1;
 
-        System.out.println("Complexite = "+complexity);
+
         return complexity;
     }
 }

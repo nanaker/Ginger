@@ -49,13 +49,7 @@ public class QueryEngine {
         databaseManager.shutDown();
     }
 
-    public void AnalyzedAppQuery() throws CypherException, IOException {
-        Result result;
-        try (Transaction ignored = graphDatabaseService.beginTx()) {
-            result = graphDatabaseService.execute("MATCH (a:App) RETURN  a.app_key as app_key, a.category as category,a.package as package, a.version_code as version_code, a.date_analysis as date_analysis,a.number_of_classes as number_of_classes,a.size as size,a.rating as rating,a.nb_download as nb_download, a.number_of_methods as number_of_methods, a.number_of_activities as number_of_activities,a.number_of_services as number_of_services,a.number_of_interfaces as number_of_interfaces,a.number_of_abstract_classes as number_of_abstract_classes,a.number_of_broadcast_receivers as number_of_broadcast_receivers,a.number_of_content_providers as number_of_content_providers, a.number_of_variables as number_of_variables, a.number_of_views as number_of_views, a.number_of_inner_classes as number_of_inner_classes, a.number_of_async_tasks as number_of_async_tasks");
-            resultToCSV(toMap(result), "_ANALYZED.csv");
-        }
-    }
+
 
     public void getPropertyForAllApk(String nodeType, String property, String suffix) throws IOException {
         Result result;
@@ -66,21 +60,11 @@ public class QueryEngine {
         }
     }
 
-    public void getAllLCOM() throws IOException {
-        getPropertyForAllApk("Class", "lack_of_cohesion_in_methods", "_ALL_LCOM.csv");
-    }
 
-    public void getAllClassComplexity() throws IOException {
-        getPropertyForAllApk("Class", "class_complexity", "_ALL_CLASS_COMPLEXITY.csv");
-    }
 
-    public void getAllNumberOfMethods() throws IOException {
-        getPropertyForAllApk("Class", "number_of_methods", "_ALL_NUMBER_OF_METHODS.csv");
-    }
 
-    public void getAllCyclomaticComplexity() throws IOException {
-        getPropertyForAllApk("Method", "cyclomatic_complexity", "_ALL_CYCLOMATIC_COMPLEXITY.csv");
-    }
+
+
 
 
     public void resultToCSV(List<Map<String, Object>> result, String csvSuffix) throws IOException {
@@ -89,9 +73,7 @@ public class QueryEngine {
         BufferedWriter writer = new BufferedWriter(fw);
         List<String> columns = result.isEmpty() ? new ArrayList<String>() : new ArrayList<>(result.get(0).keySet());
         Object val;
-        System.out.println("result "+result);
-        System.out.println("column size "+columns.size());
-        System.out.println("column "+columns);
+
         int i;
         int columns_size = columns.size() - 1;
         for (i = 0; i < columns_size; i++) {
@@ -169,14 +151,7 @@ public class QueryEngine {
         fw.close();
     }
 
-    public void deleteQuery(String appKey) throws CypherException, IOException {
-        Result result;
-        try (Transaction tx = graphDatabaseService.beginTx()) {
-            result = graphDatabaseService.execute("MATCH (n {app_key: '" + appKey + "'})-[r]-() DELETE n,r");
-            logger.debug(result.resultAsString());
-            tx.success();
-        }
-    }
+
 
     private void deleteExternalClasses(String appKey) {
         deleteEntityOut(appKey, "ExternalClass", "ExternalMethod", "CLASS_OWNS_METHOD");
@@ -289,54 +264,7 @@ public class QueryEngine {
         return keys;
     }
 
-    public void deleteEntireAppFromPackage(String name) throws IOException {
-        logger.debug("Deleting app with package :" + name);
-        List<String> keys = findKeysFromPackageName(name);
-        for (String key : keys) {
-            logger.debug("Deleting app with app_key :" + key);
-            deleteEntireApp(key);
-        }
-    }
 
-    public void countVariables() throws CypherException, IOException {
-        Result result;
-        try (Transaction ignored = graphDatabaseService.beginTx()) {
-            result = graphDatabaseService.execute("MATCH (n:Variable) return n.app_key as app_key, count(n) as nb_variables");
-            resultToCSV(toMap(result), "_COUNT_VARIABLE.csv");
-        }
-    }
-
-    public void countInnerClasses() throws CypherException, IOException {
-        Result result;
-        try (Transaction ignored = graphDatabaseService.beginTx()) {
-            result = graphDatabaseService.execute("MATCH (n:Class) WHERE exists(n.is_inner_class) return n.app_key as app_key,count(n) as nb_inner_classes");
-            resultToCSV(toMap(result), "_COUNT_INNER.csv");
-        }
-    }
-
-    public void countAsyncClasses() throws CypherException, IOException {
-        Result result;
-        try (Transaction ignored = graphDatabaseService.beginTx()) {
-            result = graphDatabaseService.execute("MATCH (n:Class{is_async_task:true}) return n.app_key as app_key,count(n) as number_of_async");
-            resultToCSV(toMap(result), "_COUNT_ASYNC.csv");
-        }
-    }
-
-    public void countViews() throws CypherException, IOException {
-        Result result;
-        try (Transaction ignored = graphDatabaseService.beginTx()) {
-            result = graphDatabaseService.execute("MATCH (n:Class{is_view:true}) return n.app_key as app_key,count(n) as number_of_views");
-            resultToCSV(toMap(result), "_COUNT_VIEWS.csv");
-        }
-    }
-
-    public void executeRequest(String request) throws CypherException, IOException {
-        Result result;
-        try (Transaction ignored = graphDatabaseService.beginTx()) {
-            result = graphDatabaseService.execute(request);
-            resultToCSV(toMap(result), "_CUSTOM.csv");
-        }
-    }
 
     public List<Map<String, Object>> toMap(Result result) {
         List<Map<String, Object>> output = new ArrayList<>();

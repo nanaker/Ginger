@@ -36,41 +36,40 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
     public void process(CtClass ctType) {
         String qualifiedName = ctType.getQualifiedName();
 
-        System.out.println("qualifiedName: "+ ctType.getQualifiedName());
+
         String absolutePath= ctType.getPosition().getFile().getAbsolutePath();
 
-       System.out.println("absolute path "+absolutePath);
-        System.out.println("get path "+MainProcessor.currentApp.getPath());
+
 
         String relativePath = absolutePath.replaceFirst(MainProcessor.currentApp.getPath(),"");
-        System.out.println("relativepath "+relativePath);
+
 
         if (ctType.isAnonymous()) {
-            System.out.println("is anonymos");
+
             String[] splitName = qualifiedName.split("\\$");
             qualifiedName = splitName[0] + "$" +
                     ((CtNewClass) ctType.getParent()).getType().getQualifiedName() + splitName[1];
-            System.out.println("qualifiedName anonymos: "+ qualifiedName);
+
         }
         String visibility = ctType.getVisibility() == null ? "null" : ctType.getVisibility().toString();
-        System.out.println("visibility: "+ visibility);
+
         DetectorModifiers detectorModifiers = DataConverter.convertTextToModifier(visibility);
-        System.out.println("detector modifier : "+ detectorModifiers);
+
         if (detectorModifiers == null) {
             detectorModifiers = DetectorModifiers.DEFAULT;
         }
         DetectorClass detectorClass = DetectorClass.createDetectorClass(qualifiedName, MainProcessor.currentApp, detectorModifiers, relativePath);
 
         MainProcessor.currentClass = detectorClass;
-        System.out.println("handle proprieties: ");
+
         handleProperties(ctType, detectorClass);
-        System.out.println("handle attachment : ");
+
         handleAttachments(ctType, detectorClass);
         if (ctType.getQualifiedName().contains("$")) {
-            System.out.println("contain $: ");
+
             detectorClass.setInnerClass(true);
         }
-        System.out.println("process methods: ");
+
         processMethods(ctType);
     }
 
@@ -85,12 +84,12 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         MethodProcessor methodProcessor = new MethodProcessor();
         ConstructorProcessor constructorProcessor = new ConstructorProcessor();
         for (Object o : ctClass.getMethods()) {
-            System.out.println("methode process: ");
+
             methodProcessor.process((CtMethod) o);
         }
         CtConstructor ctConstructor;
         for (Object o : ctClass.getConstructors()) {
-            System.out.println("constructor: ");
+
             ctConstructor = (CtConstructor) o;
             constructorProcessor.process(ctConstructor);
         }
@@ -100,11 +99,11 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
     @Override
     public void handleAttachments(CtClass ctClass, DetectorClass detectorClass) {
         if (ctClass.getSuperclass() != null) {
-            System.out.println("super class not null: "+ctClass.getSuperclass().getQualifiedName());
+
             detectorClass.setParentName(ctClass.getSuperclass().getQualifiedName());
         }
         for (CtTypeReference<?> ctTypeReference : ctClass.getSuperInterfaces()) {
-            System.out.println("interface: "+ctTypeReference.getQualifiedName());
+
             detectorClass.getInterfacesNames().add(ctTypeReference.getQualifiedName());
         }
 
@@ -113,7 +112,7 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         DetectorModifiers detectorModifiers1;
         boolean isStatic;
         for (CtField<?> ctField : (List<CtField>) ctClass.getFields()) {
-            System.out.println("");
+
             modifierText = ctField.getVisibility() == null ? "null" : ctField.getVisibility().toString();
             detectorModifiers1 = DataConverter.convertTextToModifier(modifierText);
             if (detectorModifiers1 == null) {
@@ -151,7 +150,7 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
                 break;
             }
         }
-        System.out.println("ctClass "+ctClass.getModifiers());
+
         CtTypeReference reference = findSuperClass(ctClass, doi);
 
 
