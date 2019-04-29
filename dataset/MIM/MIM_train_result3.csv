@@ -1,5 +1,0 @@
-classification_methode,path,validation_methode,F_mesure
-Random Forest,dataset/MIM/taken/MIM_AllKNN.csv,Validation_70/30,
-Random Forest,dataset/MIM/taken/MIM_AllKNN.csv,cross Validation,
-Random Forest,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,Validation_70/30,
-Random Forest,dataset/MIM/taken/MIM_InstanceHardnessThreshold.csv,cross Validation,

@@ -71,7 +71,7 @@ public class QueryEngine {
         String name = csvSuffix;
         FileWriter fw = new FileWriter(name);
         BufferedWriter writer = new BufferedWriter(fw);
-        System.out.println("Emty result "+result.isEmpty()+"  "+csvSuffix);
+
         List<String> columns = result.isEmpty() ? null : new ArrayList<>(result.get(0).keySet());
         Object val;
 

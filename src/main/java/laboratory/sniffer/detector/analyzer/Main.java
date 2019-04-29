@@ -1,5 +1,6 @@
 package laboratory.sniffer.detector.analyzer;
 
+import laboratory.sniffer.detector.detector.classifier;
 import laboratory.sniffer.detector.metrics.MetricsCalculator;
 
 import laboratory.sniffer.detector.entities.DetectorApp;
@@ -15,6 +16,7 @@ import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
 
 import java.io.File;
+import java.nio.file.FileSystems;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -74,6 +76,14 @@ public class Main {
             Namespace res = parser.parseArgs(argumentsQyery);
 
             queryMode(res);
+
+            // Detection des defauts de code
+            String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
+            classifier classifier=new classifier(base_path);
+            String result=classifier.exec();
+            logger.info(result);
+            System.out.println(result);
+
 
         } catch (ArgumentParserException e) {
             analyseParser.handleError(e);

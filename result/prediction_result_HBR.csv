@@ -1,5 +1,0 @@
-number_of_instructions,cyclomatic_complexity,has_methode_onReceive,full_name,is_code_smell
-21,8,True,onReceive#de.nproth.pin.DeleteNoteReceiver,True
-25,8,True,onReceive#de.nproth.pin.SnoozeNoteReceiver,True
-9,4,True,onReceive#de.nproth.pin.BootReceiver,True
-4,1,True,onReceive#de.nproth.pin.AlarmReceiver,True
