@@ -73,12 +73,14 @@ public class QueryEngine {
         BufferedWriter writer = new BufferedWriter(fw);
 
         List<String> columns = result.isEmpty() ? null : new ArrayList<>(result.get(0).keySet());
+
         Object val;
 
         int i;
         if (columns!=null) {
             int columns_size = columns.size() - 1;
             for (i = 0; i < columns_size; i++) {
+                System.out.println(" coloo "+csvSuffix +" "+ i+" "+columns.get(i));
                 writer.write(columns.get(i));
                 writer.write(',');
             }

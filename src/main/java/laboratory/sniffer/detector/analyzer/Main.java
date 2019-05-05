@@ -1,6 +1,7 @@
 package laboratory.sniffer.detector.analyzer;
 
 import laboratory.sniffer.detector.detector.classifier;
+import laboratory.sniffer.detector.entities.DetectorClass;
 import laboratory.sniffer.detector.metrics.MetricsCalculator;
 
 import laboratory.sniffer.detector.entities.DetectorApp;
@@ -12,6 +13,7 @@ import laboratory.sniffer.detector.neo4j.MIMQuery;
 import laboratory.sniffer.detector.neo4j.ModelToGraph;
 import laboratory.sniffer.detector.neo4j.NLMRQuery;
 import laboratory.sniffer.detector.neo4j.QueryEngine;
+import laboratory.sniffer.detector.corrector.MIMProcessor;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
 
@@ -19,10 +21,14 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spoon.Launcher;
+import spoon.reflect.declaration.CtType;
 
 
 public class Main {
@@ -38,6 +44,7 @@ public class Main {
         args[3]="-db";
         args[4]="db";
         args[5]=save;
+        List<DetectorClass> classes;
 
         ArgumentParser parser = ArgumentParsers.newArgumentParser("detector");
         Subparsers subparsers = parser.addSubparsers().dest("sub_command");
@@ -62,7 +69,7 @@ public class Main {
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
             System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
-            runAnalysis(pathOfApplicationToAnalyse);
+            classes=runAnalysis(pathOfApplicationToAnalyse);
 
 
             String[] argumentsQyery=new String[5];
@@ -75,14 +82,16 @@ public class Main {
 
             Namespace res = parser.parseArgs(argumentsQyery);
 
-            queryMode(res);
+            //queryMode(res);
 
             // Detection des defauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
             classifier classifier=new classifier(base_path);
-            String result=classifier.exec();
-            logger.info(result);
-            System.out.println(result);
+            //String result=classifier.exec();
+            //logger.info(result);
+            //System.out.println(result);
+
+            runRefactor(classes);
 
 
         } catch (ArgumentParserException e) {
@@ -96,7 +105,7 @@ public class Main {
 
 
 
-    public static void runAnalysis(Namespace arg) throws Exception {
+    public static List<DetectorClass> runAnalysis(Namespace arg) throws Exception {
 
 
         deteleContenetOfDirectory("db");
@@ -108,7 +117,10 @@ public class Main {
 
 
         MainProcessor mainProcessor = new MainProcessor(name, path);
+
         mainProcessor.process();
+
+        List<DetectorClass> classes=mainProcessor.getCurrentApp().getDetectorClasses();
 
         GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
 
@@ -128,6 +140,60 @@ public class Main {
 
         modelToGraph.getDatabaseManager().shutDown();
 
+        return classes;
+
+    }
+    public static void runRefactor(List<DetectorClass> classes){
+        logger.info("Refactoring ...  " );
+        for(DetectorClass item:classes)
+        {
+            System.out.println("class name "+item.getName());
+        }
+
+
+        Launcher run = new Launcher();
+        run.getEnvironment().setNoClasspath(true);
+        //run.getEnvironment().setSourceClasspath(sourceClassPatch);
+
+        run.getEnvironment().setShouldCompile(false);
+       // run.getEnvironment().setAutoImports(false);
+        run.setOutputFilter();
+        final String MIM = "result/classification_result_MIM2";
+        System.out.println("add processeur ");
+
+        //run.addProcessor(new MethodLogProcessorMIM(MIM));
+
+        run.addProcessor(new MIMProcessor(MIM));
+        //run.addProcessor(new ImportPackages());
+
+        HashSet<String> classPath = new HashSet<>();
+
+        for(DetectorClass element:classes)
+        {
+            //System.out.println("class name "+item.getName());
+            CtType ctClass=element.getClasse();
+            String absPath = ctClass.getPosition().getFile().getAbsolutePath();
+            System.out.println("abs path "+absPath);
+
+            classPath.add(absPath);
+
+        }
+
+
+
+        for (String e : classPath)
+        {
+            System.out.println("in main "+e);
+            run.addInputResource(e);
+
+        }
+
+
+        //Process now
+        run.run();
+
+        System.out.println("fin refactor");
+
     }
 
     public static void queryMode(Namespace arg) throws Exception {
@@ -141,12 +207,12 @@ public class Main {
         String csvPrefix = arg.getString("csv") + csvDate;
 
 
-                queryEngine.setCsvPrefix(csvPrefix);
-                MIMQuery.createMIMQuery(queryEngine).execute(true);
-                LICQuery.createLICQuery(queryEngine).execute(true);
-                NLMRQuery.createNLMRQuery(queryEngine).execute(true);
-                HeavyBroadcastReceiverQuery.createHeavyBroadcastReceiverQuery(queryEngine).execute(true);
-                HeavyAsyncTaskStepsQuery.createHeavyAsyncTaskStepsQuery(queryEngine).execute(true);
+        queryEngine.setCsvPrefix(csvPrefix);
+        MIMQuery.createMIMQuery(queryEngine).execute(true);
+        LICQuery.createLICQuery(queryEngine).execute(true);
+        NLMRQuery.createNLMRQuery(queryEngine).execute(true);
+        HeavyBroadcastReceiverQuery.createHeavyBroadcastReceiverQuery(queryEngine).execute(true);
+        HeavyAsyncTaskStepsQuery.createHeavyAsyncTaskStepsQuery(queryEngine).execute(true);
 
 
         queryEngine.shutDown();
