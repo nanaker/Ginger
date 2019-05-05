@@ -1,6 +1,1 @@
 is_static,call_external_methode,full_name,is_override,cyclomatic_complexity,number_of_callers_not_null,is_init,uses_variables,is_code_smell
-True,False,isUserWarned#de.nproth.pin.util.LifecycleWatcher,False,1,False,False,False,True
-True,False,reset#de.nproth.pin.util.LifecycleWatcher,False,1,False,False,False,True
-True,False,hasBootReceived#de.nproth.pin.util.LifecycleWatcher,False,1,False,False,False,True
-True,False,informUserWarned#de.nproth.pin.util.LifecycleWatcher,False,1,False,False,False,True
-True,False,informBootReceived#de.nproth.pin.util.LifecycleWatcher,False,1,False,False,False,True
