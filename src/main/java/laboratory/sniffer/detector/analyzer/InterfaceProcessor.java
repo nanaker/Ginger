@@ -40,7 +40,7 @@ public class InterfaceProcessor extends TypeProcessor<CtInterface> {
         if (detectorModifiers == null) {
             detectorModifiers = DetectorModifiers.DEFAULT;
         }
-        DetectorClass detectorClass = DetectorClass.createDetectorClass(qualifiedName, MainProcessor.currentApp, detectorModifiers,relativePath);
+        DetectorClass detectorClass = DetectorClass.createDetectorClass(qualifiedName, MainProcessor.currentApp, detectorModifiers,relativePath,ctType);
         MainProcessor.currentClass = detectorClass;
         handleProperties(ctType, detectorClass);
         handleAttachments(ctType, detectorClass);

@@ -2,6 +2,9 @@
 
 package laboratory.sniffer.detector.entities;
 
+import spoon.reflect.declaration.CtClass;
+import spoon.reflect.declaration.CtType;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +13,7 @@ import java.util.Set;
 public class DetectorClass extends Entity{
     private DetectorApp detectorApp;
     private DetectorClass parent;
+    private CtType classe;
     //parent name to cover library case
     private String parentName;
     private int children;
@@ -32,6 +36,10 @@ public class DetectorClass extends Entity{
     private int depthOfInheritance;
     private ArrayList<String> interfacesNames;
     private String path;
+
+    public CtType getClasse() {
+        return classe;
+    }
 
     public String getPath() {
         return path;
@@ -85,8 +93,9 @@ public class DetectorClass extends Entity{
         this.complexity=0;
     }
 
-    private DetectorClass(String name, DetectorApp detectorApp, DetectorModifiers modifier, String path) {
+    private DetectorClass(String name, DetectorApp detectorApp, DetectorModifiers modifier, String path,CtType classe) {
         this.setName(name);
+        this.classe=classe;
         this.path=path;
         this.detectorApp = detectorApp;
         this.children = 0;
@@ -117,9 +126,10 @@ public class DetectorClass extends Entity{
         return detectorClass;
     }
 
-    public static DetectorClass createDetectorClass(String name, DetectorApp detectorApp, DetectorModifiers modifier, String path) {
-        DetectorClass detectorClass = new DetectorClass(name, detectorApp, modifier, path);
+    public static DetectorClass createDetectorClass(String name, DetectorApp detectorApp, DetectorModifiers modifier, String path,CtType classe) {
+        DetectorClass detectorClass = new DetectorClass(name, detectorApp, modifier, path,classe);
         detectorApp.addDetectorClass(detectorClass);
+
         return detectorClass;
     }
 

@@ -24,7 +24,11 @@ public class MainProcessor {
     private String jarsPath;
     private String sdkPath;
 
-    public MainProcessor(String appName,String appPath) {
+    public static DetectorApp getCurrentApp() {
+        return currentApp;
+    }
+
+    public MainProcessor(String appName, String appPath) {
         this.currentApp = DetectorApp.createDetectorApp(appName, appPath);
         currentClass = null;
         currentMethod = null;
@@ -35,6 +39,7 @@ public class MainProcessor {
     public void process() {
 
         Launcher launcher = new Launcher();
+
         launcher.addInputResource(appPath);
 
         launcher.getEnvironment().setNoClasspath(true);

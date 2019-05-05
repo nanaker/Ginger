@@ -53,7 +53,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
     /**
      * Define the process behavior specific to the current element.
      *
-     * @param ctExecutable  The processed spoon executable.
+     * @param ctExecutable  The processed corrector executable.
      * @param detectorMethod The processed output so far.
      */
     protected abstract void process(T ctExecutable, DetectorMethod detectorMethod);
@@ -118,7 +118,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         String targetName;
         String executable;
         String type = "Unknown";
-        // Thanks to spoon we have to use a CtAbstractInvocation
+        // Thanks to corrector we have to use a CtAbstractInvocation
         List<CtAbstractInvocation> invocations = ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));
         for (CtAbstractInvocation invocation : invocations) {
             executable = invocation.getExecutable().getSimpleName();

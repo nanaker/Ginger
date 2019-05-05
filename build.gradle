@@ -5,9 +5,9 @@ buildscript {
         }
     }
     dependencies {
-        
-        
-        
+
+
+
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.0"
     }
 }
@@ -16,22 +16,23 @@ group 'laboratory.sniffer.detector'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 
 repositories {
     mavenCentral()
     maven {
-        url "http://spoon.gforge.inria.fr/repositories/snapshots/"
+
+        url "https://img.shields.io/maven-central/v/fr.inria.gforge.spoon/spoon-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22fr.inria.gforge.spoon%22%20AND%20a:%22spoon-core%22"
     }
 }
 
 
 
 dependencies {
-    
-    compile "fr.inria.gforge.spoon:spoon-core:7.0.0"
+
+    compile "fr.inria.gforge.spoon:spoon-core:7.4.0-beta-19"
     compile "org.neo4j:neo4j-cypher:3.4.1"
     compile "net.sourceforge.argparse4j:argparse4j:0.7.0"
     compile fileTree(dir: 'libs', include: '*.jar')

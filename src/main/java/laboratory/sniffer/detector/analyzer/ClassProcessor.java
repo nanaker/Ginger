@@ -37,12 +37,19 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         String qualifiedName = ctType.getQualifiedName();
 
 
-        String absolutePath= ctType.getPosition().getFile().getAbsolutePath();
+        System.out.println("ctType=" + ctType);
+        System.out.println(".getPosition()=" + ctType.getPosition());
+        System.out.println(".getFile()=" + ctType.getPosition().getFile());
+       // System.out.println(".getAbsolutePath()=" + ctType.getPosition().getFile().getAbsolutePath());
+        if (ctType.getPosition().getFile() != null) {
+
+
+        String absolutePath = ctType.getPosition().getFile().getAbsolutePath();
         //this step is to solve the problem of Java Regex
-        absolutePath=absolutePath.replaceAll("\\\\","/");
-        String s=MainProcessor.currentApp.getPath();
-        s=s.replaceAll("\\\\","/");
-        String relativePath = absolutePath.replaceFirst(s,"");
+        absolutePath = absolutePath.replaceAll("\\\\", "/");
+        String s = MainProcessor.currentApp.getPath();
+        s = s.replaceAll("\\\\", "/");
+        String relativePath = absolutePath.replaceFirst(s, "");
 
 
         if (ctType.isAnonymous()) {
@@ -59,7 +66,7 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         if (detectorModifiers == null) {
             detectorModifiers = DetectorModifiers.DEFAULT;
         }
-        DetectorClass detectorClass = DetectorClass.createDetectorClass(qualifiedName, MainProcessor.currentApp, detectorModifiers, relativePath);
+        DetectorClass detectorClass = DetectorClass.createDetectorClass(qualifiedName, MainProcessor.currentApp, detectorModifiers, relativePath, ctType);
 
         MainProcessor.currentClass = detectorClass;
 
@@ -72,6 +79,8 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         }
 
         processMethods(ctType);
+
+    }
     }
 
     @Override
