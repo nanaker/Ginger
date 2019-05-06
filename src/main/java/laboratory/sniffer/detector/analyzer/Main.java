@@ -6,13 +6,7 @@ import laboratory.sniffer.detector.metrics.MetricsCalculator;
 
 import laboratory.sniffer.detector.entities.DetectorApp;
 import laboratory.sniffer.detector.entities.DetectorLibrary;
-import laboratory.sniffer.detector.neo4j.HeavyAsyncTaskStepsQuery;
-import laboratory.sniffer.detector.neo4j.HeavyBroadcastReceiverQuery;
-import laboratory.sniffer.detector.neo4j.LICQuery;
-import laboratory.sniffer.detector.neo4j.MIMQuery;
-import laboratory.sniffer.detector.neo4j.ModelToGraph;
-import laboratory.sniffer.detector.neo4j.NLMRQuery;
-import laboratory.sniffer.detector.neo4j.QueryEngine;
+import laboratory.sniffer.detector.neo4j.*;
 import laboratory.sniffer.detector.corrector.MIMProcessor;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
@@ -25,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 
 
+import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.Launcher;
@@ -82,7 +77,7 @@ public class Main {
 
             Namespace res = parser.parseArgs(argumentsQyery);
 
-            //queryMode(res);
+            queryMode(res);
 
             // Detection des defauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
@@ -138,12 +133,15 @@ public class Main {
 
         logger.info("Saving into database " + arg.getString("database"));
 
+
+
         modelToGraph.getDatabaseManager().shutDown();
 
         return classes;
 
     }
     public static void runRefactor(List<DetectorClass> classes){
+
         logger.info("Refactoring ...  " );
         for(DetectorClass item:classes)
         {
@@ -173,7 +171,7 @@ public class Main {
             //System.out.println("class name "+item.getName());
             CtType ctClass=element.getClasse();
             String absPath = ctClass.getPosition().getFile().getAbsolutePath();
-            System.out.println("abs path "+absPath);
+            //System.out.println("abs path "+absPath);
 
             classPath.add(absPath);
 
@@ -183,7 +181,7 @@ public class Main {
 
         for (String e : classPath)
         {
-            System.out.println("in main "+e);
+            //System.out.println("in main "+e);
             run.addInputResource(e);
 
         }
@@ -200,6 +198,29 @@ public class Main {
 
         logger.info("Executing Queries");
         QueryEngine queryEngine = new QueryEngine(arg.getString("database"));
+
+
+        String query="\n" +
+                "MATCH (v1:Method)\n" +
+                "WITH v1, \n" +
+                "     CASE WHEN v1.is_static=true THEN true ELSE false END AS static     \n" +
+                "SET v1.is_static=static\n" +
+                "RETURN v1.is_static\n";
+
+
+        String query1="\n" +
+                "MATCH (v1:Variable)\n" +
+                "WITH v1, \n" +
+                "     CASE WHEN v1.is_static=true THEN true ELSE false END AS static     \n" +
+                "SET v1.is_static=static\n" +
+                "RETURN v1.is_static\n";
+
+        Pretraitement pretraitement=new Pretraitement(queryEngine,query);
+        pretraitement.exec();
+        pretraitement.setQuery(query1);
+        pretraitement.exec();
+
+
         String request = arg.get("request");
 
         Calendar cal = new GregorianCalendar();

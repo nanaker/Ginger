@@ -32,6 +32,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         }
         int position = 0;
         String qualifiedName;
+
         DetectorMethod detectorMethod = DetectorMethod.createDetectorMethod(name, detectorModifiers, returnType,
                 MainProcessor.currentClass);
         MainProcessor.currentMethod = detectorMethod;
@@ -42,6 +43,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         }
         int numberOfDeclaredLocals = ctExecutable.getElements(new TypeFilter<CtLocalVariable>(CtLocalVariable.class)).size();
         detectorMethod.setNumberOfLines(countEffectiveCodeLines(ctExecutable));
+        //System.out.println("detectorMethod= "+detectorMethod+" "+ctExecutable);
         handleUsedVariables(ctExecutable, detectorMethod);
         handleInvocations(ctExecutable, detectorMethod);
         detectorMethod.setComplexity(getComplexity(ctExecutable));
@@ -87,7 +89,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
                     +nbCtSwitch+nbCtConditional+nbCtDo
                     +nbCtForEach+nbCtIf+nbCtTry+nbCtCatch+nbCtWhile-nbCommentwithSemicoloone+1;
             // + 1 pour le prototype de la methode
-            // le nombre de block s'ajoute automatiquement 
+            // le nombre de block s'ajoute automatiquement
 
 
             return numberOfLogicalLines;
@@ -99,16 +101,32 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     private void handleUsedVariables(T ctExecutable, DetectorMethod detectorMethod) {
         List<CtFieldAccess> elements = ctExecutable.getElements(new TypeFilter<CtFieldAccess>(CtFieldAccess.class));
+        //System.out.println("ctExecutable in handleUsedVariables "+ctExecutable.getSimpleName());
+        //System.out.println("List<CtFieldAccess> elements "+elements);
+
         String variableTarget = null;
         String variableName;
 
         CtTypeMember member = ctExecutable instanceof CtTypeMember ? (CtTypeMember) ctExecutable : null;
+        //System.out.println("member "+member);
+
         for (CtFieldAccess ctFieldAccess : elements) {
+
+
             if (ctFieldAccess.getTarget() != null && ctFieldAccess.getTarget().getType() != null) {
+
                 if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
+
                     variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
                     variableName = ctFieldAccess.getVariable().getSimpleName();
                     detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+                }
+                //in case of static variable
+                else  if(member != null && ctFieldAccess.getVariable().getDeclaringType()!=null && ctFieldAccess.getVariable().getDeclaringType().getDeclaration()==member.getDeclaringType()) {
+                    variableTarget = ctFieldAccess.getTarget().toString();
+                    variableName = ctFieldAccess.getVariable().getSimpleName();
+                    detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+
                 }
             }
         }

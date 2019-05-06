@@ -27,7 +27,7 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
         System.out.println("Processor MIMProcessor Start ... ");
         // Get applications information from the CSV - output
         meth_toStatic = CsvReader.formatCsv(file);
-        System.out.println("method to static "+meth_toStatic);
+        //System.out.println("method to static "+meth_toStatic);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
 
 
         Boolean chek=checkValidToCsv(candidate) && checkAnnotation(candidate);
-        System.out.println("check result "+chek);
+        //System.out.println("check result "+chek);
         return checkValidToCsv(candidate) && checkAnnotation(candidate);
     }
 

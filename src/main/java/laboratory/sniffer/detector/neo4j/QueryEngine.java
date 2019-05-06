@@ -80,7 +80,7 @@ public class QueryEngine {
         if (columns!=null) {
             int columns_size = columns.size() - 1;
             for (i = 0; i < columns_size; i++) {
-                System.out.println(" coloo "+csvSuffix +" "+ i+" "+columns.get(i));
+                //System.out.println(" coloo "+csvSuffix +" "+ i+" "+columns.get(i));
                 writer.write(columns.get(i));
                 writer.write(',');
             }
