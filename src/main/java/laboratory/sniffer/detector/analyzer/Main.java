@@ -62,7 +62,7 @@ public class Main {
 
 
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
-            System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
+            //System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
             classes=runAnalysis(pathOfApplicationToAnalyse);
 
@@ -79,11 +79,11 @@ public class Main {
 
             queryMode(res);
 
-            // Detection des defauts de code
+            // Detection des défauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
             classifier classifier=new classifier(base_path);
-            //String result=classifier.exec();
-            //logger.info(result);
+            String result=classifier.exec();
+            logger.info(result);
             //System.out.println(result);
 
             runRefactor(classes);
@@ -145,7 +145,7 @@ public class Main {
         logger.info("Refactoring ...  " );
         for(DetectorClass item:classes)
         {
-            System.out.println("class name "+item.getName());
+           // System.out.println("class name "+item.getName());
         }
 
 
@@ -157,7 +157,7 @@ public class Main {
        // run.getEnvironment().setAutoImports(false);
         run.setOutputFilter();
         final String MIM = "result/classification_result_MIM2";
-        System.out.println("add processeur ");
+        //System.out.println("add processeur ");
 
         //run.addProcessor(new MethodLogProcessorMIM(MIM));
 

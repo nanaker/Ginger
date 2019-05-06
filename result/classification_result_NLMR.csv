@@ -1,2 +1,3 @@
 class_complexity,has_onLowMemory,extend_class,full_name,is_code_smell
-16,False,False,ch.blinkenlights.battery.BlinkenlightsBattery,True
+18,False,False,net.ktnx.mobileledger.ui.activity.AppCompatPreferenceActivity,True
+2,False,False,net.ktnx.mobileledger.ui.activity.CrashReportingActivity,True

@@ -1,13 +1,1 @@
-cyclomatic_complexity,number_of_instructions,has_method,full_name,is_code_smell
-68,184,False,retrieveTransactionListLegacy#net.ktnx.mobileledger.async.RetrieveTransactionsTask,True
-21,68,False,retrieveTransactionList#net.ktnx.mobileledger.async.RetrieveTransactionsTask,True
-19,60,False,retrieveAccountList#net.ktnx.mobileledger.async.RetrieveTransactionsTask,True
-14,60,False,legacySendOK#net.ktnx.mobileledger.async.SendTransactionTask,True
-11,54,True,onProgressUpdate#net.ktnx.mobileledger.ui.transaction_list.TransactionListAdapter$TransactionLoader,True
-8,24,False,doInBackground#net.ktnx.mobileledger.async.RetrieveTransactionsTask,True
-8,42,False,doInBackground#net.ktnx.mobileledger.async.UpdateTransactionsTask,True
-7,30,False,sendOK#net.ktnx.mobileledger.async.SendTransactionTask,True
-6,23,False,doInBackground#net.ktnx.mobileledger.async.CommitAccountsTask,True
-6,16,False,doInBackground#net.ktnx.mobileledger.async.SendTransactionTask,True
-4,25,False,doInBackground#net.ktnx.mobileledger.async.RefreshDescriptionsTask,True
-4,23,False,doInBackground#net.ktnx.mobileledger.async.UpdateAccountsTask,True
+has_method,number_of_instructions,cyclomatic_complexity,full_name,is_code_smell

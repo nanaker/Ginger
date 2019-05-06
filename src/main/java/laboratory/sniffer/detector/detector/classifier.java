@@ -57,7 +57,7 @@ public class classifier {
             //System.exit(0);
         }
         catch (IOException e) {
-            System.out.println("exception happened - here's what I know: ");
+            //System.out.println("exception happened - here's what I know: ");
             e.printStackTrace();
             System.exit(-1);
         }

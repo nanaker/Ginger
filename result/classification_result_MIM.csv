@@ -1,1 +1,5 @@
 is_static,call_external_methode,full_name,is_override,cyclomatic_complexity,number_of_callers_not_null,is_init,uses_variables,is_code_smell
+True,False,setupTheme#net.ktnx.mobileledger.utils.Colors,False,2,False,False,False,True
+True,False,getPrimaryColorForHue#net.ktnx.mobileledger.utils.Colors,False,2,False,False,False,True
+True,False,update#net.ktnx.mobileledger.ui.transaction_list.TransactionListFragment,False,1,False,False,False,True
+True,False,hsvColor#net.ktnx.mobileledger.utils.Colors,False,1,False,False,False,True

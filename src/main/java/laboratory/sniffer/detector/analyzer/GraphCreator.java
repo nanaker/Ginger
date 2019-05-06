@@ -43,8 +43,10 @@ public class GraphCreator {
             for (VariableData variableData : detectorMethod.getUsedVariablesData()) {
                 detectorClass = detectorApp.getDetectorInternalClass(variableData.getClassName());
                 if (detectorClass != null) {
+                   // System.out.println("variableData.getVariableName() "+variableData.getVariableName());
                     detectorVariable = detectorClass.findVariable(variableData.getVariableName());
                     if (detectorVariable != null) {
+
                         detectorMethod.useVariable(detectorVariable);
                     }
                 }

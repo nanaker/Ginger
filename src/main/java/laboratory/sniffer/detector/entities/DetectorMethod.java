@@ -84,8 +84,10 @@ public class DetectorMethod extends Entity{
         return this.getName() + "#" + detectorClass;
     }
 
+
     public void useVariable(DetectorVariable detectorVariable) {
         usedVariables.add(detectorVariable);
+//        System.out.println("mouna in DetectorMethod variable="+detectorVariable.getDetectorClass()+" "+detectorVariable.name+" "+detectorVariable.isStatic());
     }
 
     public Set<DetectorVariable> getUsedVariables(){
@@ -120,25 +122,16 @@ public class DetectorMethod extends Entity{
         this.numberOfLines = numberOfLines;
     }
 
-    public void setUsedVariables(Set<DetectorVariable> usedVariables) {
-        this.usedVariables = usedVariables;
-    }
 
     public ArrayList<InvocationData> getInvocationData() {
         return invocationData;
-    }
-
-    public void setInvocationData(ArrayList<InvocationData> invocationData) {
-        this.invocationData = invocationData;
     }
 
     public ArrayList<VariableData> getUsedVariablesData() {
         return usedVariablesData;
     }
 
-    public void setUsedVariablesData(ArrayList<VariableData> usedVariablesData) {
-        this.usedVariablesData = usedVariablesData;
-    }
+
 
     public int getComplexity() {
         return complexity;

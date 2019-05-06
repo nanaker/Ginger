@@ -202,6 +202,8 @@ public class DetectorClass extends Entity{
 
     public void addDetectorVariable(DetectorVariable detectorVariable) {
         detectorVariables.add(detectorVariable);
+        //System.out.println("mouna in DetectorClass variable="+detectorVariable.getDetectorClass()+" "+detectorVariable.name+" "+detectorVariable.isStatic());
+
     }
 
     public DetectorVariable findVariable(String name){
