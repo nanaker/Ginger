@@ -37,9 +37,9 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         String qualifiedName = ctType.getQualifiedName();
 
 
-        System.out.println("ctType=" + ctType);
-        System.out.println(".getPosition()=" + ctType.getPosition());
-        System.out.println(".getFile()=" + ctType.getPosition().getFile());
+        //System.out.println("ctType=" + ctType);
+        //System.out.println(".getPosition()=" + ctType.getPosition());
+        //System.out.println(".getFile()=" + ctType.getPosition().getFile());
        // System.out.println(".getAbsolutePath()=" + ctType.getPosition().getFile().getAbsolutePath());
         if (ctType.getPosition().getFile() != null) {
 
