@@ -1,5 +1,11 @@
-is_static,call_external_methode,full_name,is_override,cyclomatic_complexity,number_of_callers_not_null,is_init,uses_variables,is_code_smell
-True,False,setupTheme#net.ktnx.mobileledger.utils.Colors,False,2,False,False,False,True
-True,False,getPrimaryColorForHue#net.ktnx.mobileledger.utils.Colors,False,2,False,False,False,True
-True,False,update#net.ktnx.mobileledger.ui.transaction_list.TransactionListFragment,False,1,False,False,False,True
-True,False,hsvColor#net.ktnx.mobileledger.utils.Colors,False,1,False,False,False,True
+number_of_callers_not_null,is_init,is_static,is_override,uses_variables,call_methode,call_external_methode,cyclomatic_complexity,full_name,is_code_smell
+True,False,False,False,False,False,False,1,finish#net.ktnx.mobileledger.ui.activity.NewTransactionActivity,True
+True,False,False,False,False,False,False,1,onStart#net.ktnx.mobileledger.ui.activity.ProfileThemedActivity,True
+True,False,False,False,False,False,False,1,drawMarker#net.ktnx.mobileledger.ui.HueRing,True
+True,False,False,False,False,False,False,1,onSwipeDown#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
+True,False,False,False,False,False,False,1,onSwipeUp#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
+True,False,False,False,False,False,False,1,onSwipeRight#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
+True,False,False,False,False,False,False,1,test_method#net.ktnx.mobileledger.utils.LockHolder,True
+True,False,False,False,False,False,False,1,done#net.ktnx.mobileledger.async.TaskCallback,True
+True,False,False,False,False,False,False,1,onLongClickItem#net.ktnx.mobileledger.ui.RecyclerItemListener$RecyclerTouchListener,True
+True,False,False,False,False,False,False,1,onClickItem#net.ktnx.mobileledger.ui.RecyclerItemListener$RecyclerTouchListener,True

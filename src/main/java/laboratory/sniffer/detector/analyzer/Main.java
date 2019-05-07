@@ -86,6 +86,8 @@ public class Main {
             logger.info(result);
             //System.out.println(result);
 
+
+            //Correction des défauts de code
             runRefactor(classes);
 
 
@@ -156,7 +158,7 @@ public class Main {
         run.getEnvironment().setShouldCompile(false);
        // run.getEnvironment().setAutoImports(false);
         run.setOutputFilter();
-        final String MIM = "result/classification_result_MIM2";
+        final String MIM = "result/classification_result_MIM";
         //System.out.println("add processeur ");
 
         //run.addProcessor(new MethodLogProcessorMIM(MIM));

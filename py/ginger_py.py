@@ -205,6 +205,11 @@ def predict(argv):
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
+            columnsTitles = ['cyclomatic_complexity', 'number_of_instructions', 'has_methode_onReceive', 'full_name']
+            data_full_name = pd.read_csv(HAS_prediction_path)
+            data_full_name = data_full_name.reindex(columns=columnsTitles)
+            data_full_name.to_csv(HAS_prediction_path, index=False)
+
             data_full_name = pd.read_csv(HBR_prediction_path)
             data = pd.read_csv(HBR_prediction_path)
         except FileNotFoundError:
@@ -241,6 +246,11 @@ def predict(argv):
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
+            columnsTitles = ['cyclomatic_complexity', 'number_of_instructions', 'has_method', 'full_name']
+            data_full_name = pd.read_csv(HAS_prediction_path)
+            data_full_name = data_full_name.reindex(columns=columnsTitles)
+            data_full_name.to_csv(HAS_prediction_path, index=False)
+
             data_full_name = pd.read_csv(HAS_prediction_path)
             data = pd.read_csv(HAS_prediction_path)
         except FileNotFoundError:
@@ -271,6 +281,11 @@ def predict(argv):
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
+            columnsTitles = ['is_static', 'class_complexity','full_name']
+            data_full_name = pd.read_csv(LIC_prediction_path)
+            data_full_name = data_full_name.reindex(columns=columnsTitles)
+            data_full_name.to_csv(LIC_prediction_path, index=False)
+
             data_full_name = pd.read_csv(LIC_prediction_path)
             data = pd.read_csv(LIC_prediction_path)
         except FileNotFoundError:
@@ -302,8 +317,16 @@ def predict(argv):
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
+            columnsTitles = ['number_of_callers_not_null', 'is_init', 'is_static', 'is_override', 'uses_variables','call_methode',
+                             'call_external_methode','cyclomatic_complexity', 'full_name']
+            data_full_name = pd.read_csv(MIM_prediction_path)
+            print(data_full_name.head(3))
+            data_full_name = data_full_name.reindex(columns=columnsTitles)
+            data_full_name.to_csv(MIM_prediction_path, index=False)
+
             data_full_name = pd.read_csv(MIM_prediction_path)
             data = pd.read_csv(MIM_prediction_path)
+
         except FileNotFoundError:
             print('  File or file path not found ', MIM_prediction_path)
             sys.exit(2)
@@ -334,6 +357,10 @@ def predict(argv):
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
+            columnsTitles = ['has_onLowMemory', 'extend_class', 'class_complexity', 'full_name']
+            data_full_name = pd.read_csv(NLMR_prediction_path)
+            data_full_name = data_full_name.reindex(columns=columnsTitles)
+            data_full_name.to_csv(NLMR_prediction_path, index=False)
             data_full_name = pd.read_csv(NLMR_prediction_path)
             data = pd.read_csv(NLMR_prediction_path)
         except FileNotFoundError:
