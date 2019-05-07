@@ -21,10 +21,8 @@ False,2,net.ktnx.mobileledger.ui.profiles.ProfileDetailFragment$<unknown>,True
 False,2,net.ktnx.mobileledger.ui.transaction_list.TransactionListFragment$java.util.Observer1,True
 False,2,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.view.View$OnClickListener4,True
 False,2,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.content.DialogInterface$OnShowListener4,True
-False,2,net.ktnx.mobileledger.ui.RecyclerItemListener$android.view.GestureDetector$SimpleOnGestureListener1,True
 False,2,net.ktnx.mobileledger.utils.Globals$java.lang.ThreadLocal1,True
 False,2,net.ktnx.mobileledger.utils.Globals$java.lang.ThreadLocal2,True
-False,2,net.ktnx.mobileledger.ui.RecyclerItemListener$RecyclerTouchListener,True
 False,1,net.ktnx.mobileledger.async.RetrieveTransactionsTask$DetectedTransactionOrder,True
 False,1,net.ktnx.mobileledger.async.RetrieveTransactionsTask$ParserState,True
 False,1,net.ktnx.mobileledger.async.RetrieveTransactionsTask$TransactionParserException,True

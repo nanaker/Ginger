@@ -170,7 +170,7 @@ public class Main {
 
         for(DetectorClass element:classes)
         {
-            //System.out.println("class name "+item.getName());
+
             CtType ctClass=element.getClasse();
             String absPath = ctClass.getPosition().getFile().getAbsolutePath();
             //System.out.println("abs path "+absPath);
@@ -192,6 +192,7 @@ public class Main {
         //Process now
         run.run();
 
+        logger.info("fin refactor");
         System.out.println("fin refactor");
 
     }

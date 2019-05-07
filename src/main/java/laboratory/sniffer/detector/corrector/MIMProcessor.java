@@ -3,6 +3,7 @@ package laboratory.sniffer.detector.corrector;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.declaration.CtAnnotation;
 
+import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.ModifierKind;
 import utils.CsvReader;
@@ -24,7 +25,7 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
     {
         System.out.println("Processor MIMProcessor Start ... ");
         // Get applications information from the CSV - output
-        meth_toStatic = CsvReader.formatCsv(file);
+        meth_toStatic = CsvReader.formatCsv_MIM(file);
 
         //System.out.println("method to static "+meth_toStatic);
 
@@ -38,7 +39,7 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
 
         Boolean chek=checkValidToCsv(candidate) && checkAnnotation(candidate);
 
-        //System.out.println("check result "+chek);
+
 
         return checkValidToCsv(candidate) && checkAnnotation(candidate);
     }
@@ -46,6 +47,9 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
     public void process(CtMethod element) {
 
         element.addModifier(ModifierKind.STATIC);
+
+
+
 
         SaverOfTheFile fileSaver=new SaverOfTheFile();
         fileSaver.reWriteFile(this,element);
@@ -57,10 +61,10 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
         String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
 
 
+
         for(String occurence : meth_toStatic){
             String csvClassName = occurence.substring(occurence.lastIndexOf(".")+1);
-
-            if(class_file.equals(csvClassName) &&
+            if(csvClassName.contains(class_file) &&
                     occurence.split("#")[0].equals(candidate.getSimpleName().split("\\(")[0])){
                 return true;
             }
@@ -70,6 +74,7 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
     }
 
     private boolean checkAnnotation(CtMethod candidate){
+
         for(CtAnnotation annotation : candidate.getAnnotations()){
             if(annotation.toString().trim().matches("(.*)@Override(.*)")){
                 return false;

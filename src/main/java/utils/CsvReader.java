@@ -33,13 +33,13 @@ public class CsvReader {
         return smell_list;
     }
 
-    public static HashSet<String> formatCsv(String file_name){
+    public static HashSet<String> formatCsv_MIM(String file_name){
         HashSet<String> toFill = new HashSet<>();
 
         ArrayList<String> csv_reader = CsvReader.csv(file_name);
         for (String e : csv_reader) {
             String [] split = e.split(",");
-            toFill.add(split[7]);
+            toFill.add(split[8]);
         }
 
         return toFill;
