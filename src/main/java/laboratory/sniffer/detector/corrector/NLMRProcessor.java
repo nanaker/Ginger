@@ -55,7 +55,7 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
 
 
         CtAnnotation<Annotation> annotation = getFactory().Core().createAnnotation();
-        annotation.addValue("Override", "@Override");
+        annotation.addValue("@Override", "");
         
 
         System.out.println("this is the method: "+onLowMemory);
