@@ -2,6 +2,8 @@ package laboratory.sniffer.detector.corrector;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtBlock;
+import spoon.reflect.code.CtCodeSnippetStatement;
+import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.*;
 import spoon.reflect.factory.TypeFactory;
 import spoon.reflect.reference.CtTypeReference;
@@ -54,12 +56,15 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
         CtBlock body = getFactory().Core().createBlock();
         body.setParent(onLowMemory);
         onLowMemory.setBody(body);
+        final CtCodeSnippetStatement statement = getFactory().Code().createCodeSnippetStatement("super.onLowMemory()");
+        body.addStatement(statement);
 
         CtTypeReference ref = getFactory().Core().createTypeReference();
         ref.setSimpleName("Override");
 
         final CtAnnotation<Annotation> annotation = getFactory().Code().createAnnotation(ref);
         onLowMemory.addAnnotation(annotation);
+
 
 
 
