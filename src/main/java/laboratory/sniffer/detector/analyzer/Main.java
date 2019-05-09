@@ -1,5 +1,6 @@
 package laboratory.sniffer.detector.analyzer;
 
+import laboratory.sniffer.detector.corrector.NLMRProcessor;
 import laboratory.sniffer.detector.detector.classifier;
 import laboratory.sniffer.detector.entities.DetectorClass;
 import laboratory.sniffer.detector.metrics.MetricsCalculator;
@@ -77,7 +78,7 @@ public class Main {
 
             Namespace res = parser.parseArgs(argumentsQyery);
 
-            queryMode(res);
+            //queryMode(res);
 
             // Detection des défauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
@@ -159,12 +160,13 @@ public class Main {
        // run.getEnvironment().setAutoImports(false);
         run.setOutputFilter();
         final String MIM = "result/classification_result_MIM";
+        final String NLMR = "result/classification_result_NLMR";
         //System.out.println("add processeur ");
 
         //run.addProcessor(new MethodLogProcessorMIM(MIM));
 
-        run.addProcessor(new MIMProcessor(MIM));
-        //run.addProcessor(new ImportPackages());
+        //run.addProcessor(new MIMProcessor(MIM));
+        run.addProcessor(new NLMRProcessor(NLMR));
 
         HashSet<String> classPath = new HashSet<>();
 

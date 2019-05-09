@@ -45,6 +45,19 @@ public class CsvReader {
         return toFill;
     }
 
+
+    public static HashSet<String> formatCsv_NLMR(String file_name){
+        HashSet<String> toFill = new HashSet<>();
+
+        ArrayList<String> csv_reader = CsvReader.csv(file_name);
+        for (String e : csv_reader) {
+            String [] split = e.split(",");
+            toFill.add(split[3]);
+        }
+
+        return toFill;
+    }
+
     public static HashSet<String> formatCsvHahs(String file_name){
         HashSet<String> toFill = new HashSet<>();
 
