@@ -4,6 +4,8 @@ import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtBlock;
 import spoon.reflect.declaration.*;
 import spoon.reflect.factory.TypeFactory;
+import spoon.reflect.reference.CtTypeReference;
+import spoon.reflect.visitor.filter.TypeFilter;
 import spoon.support.reflect.declaration.CtAnnotationImpl;
 import utils.CsvReader;
 import utils.SaverOfTheFile;
@@ -53,10 +55,14 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
         body.setParent(onLowMemory);
         onLowMemory.setBody(body);
 
+        CtTypeReference ref = getFactory().Core().createTypeReference();
+        ref.setSimpleName("Override");
 
-        CtAnnotation<Annotation> annotation = getFactory().Core().createAnnotation();
-        annotation.addValue("@Override", "");
-        
+        final CtAnnotation<Annotation> annotation = getFactory().Code().createAnnotation(ref);
+        onLowMemory.addAnnotation(annotation);
+
+
+
 
         System.out.println("this is the method: "+onLowMemory);
         System.out.println("this is the method body"+onLowMemory.getBody());
@@ -65,8 +71,8 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
 
 
 
-        //SaverOfTheFile fileSaver=new SaverOfTheFile();
-        //fileSaver.reWriteFile(this,element);
+        SaverOfTheFile fileSaver=new SaverOfTheFile();
+        fileSaver.reWriteFile(this,element);
 
 
     }
