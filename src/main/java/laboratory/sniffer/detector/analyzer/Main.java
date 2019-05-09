@@ -11,19 +11,22 @@ import laboratory.sniffer.detector.corrector.MIMProcessor;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.file.FileSystems;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 
+import org.apache.log4j.Level;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.Launcher;
+import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtType;
+import utils.CsvReader;
+
+import static utils.CsvReader.readAllDataAtOnce;
 
 
 public class Main {
@@ -39,7 +42,7 @@ public class Main {
         args[3]="-db";
         args[4]="db";
         args[5]=save;
-        List<DetectorClass> classes;
+
 
         ArgumentParser parser = ArgumentParsers.newArgumentParser("detector");
         Subparsers subparsers = parser.addSubparsers().dest("sub_command");
@@ -64,7 +67,8 @@ public class Main {
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
             //System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
-            classes=runAnalysis(pathOfApplicationToAnalyse);
+            runAnalysis(pathOfApplicationToAnalyse);
+
 
 
             String[] argumentsQyery=new String[5];
@@ -77,18 +81,18 @@ public class Main {
 
             Namespace res = parser.parseArgs(argumentsQyery);
 
-            queryMode(res);
+            //queryMode(res);
 
             // Detection des défauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
-            classifier classifier=new classifier(base_path);
-            String result=classifier.exec();
-            logger.info(result);
+           classifier classifier=new classifier(base_path);
+            //String result=classifier.exec();
+            //logger.info(result);
             //System.out.println(result);
 
 
             //Correction des défauts de code
-            runRefactor(classes);
+            runRefactor();
 
 
         } catch (ArgumentParserException e) {
@@ -102,7 +106,7 @@ public class Main {
 
 
 
-    public static List<DetectorClass> runAnalysis(Namespace arg) throws Exception {
+    public static void runAnalysis(Namespace arg) throws Exception {
 
 
         deteleContenetOfDirectory("db");
@@ -118,6 +122,7 @@ public class Main {
         mainProcessor.process();
 
         List<DetectorClass> classes=mainProcessor.getCurrentApp().getDetectorClasses();
+        write_classes(classes);
 
         GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
 
@@ -134,21 +139,18 @@ public class Main {
         modelToGraph.insertApp(MainProcessor.currentApp);
 
         logger.info("Saving into database " + arg.getString("database"));
-
+        System.out.println("saving into database");
 
 
         modelToGraph.getDatabaseManager().shutDown();
 
-        return classes;
+       
 
     }
-    public static void runRefactor(List<DetectorClass> classes){
+    public static void runRefactor(){
 
         logger.info("Refactoring ...  " );
-        for(DetectorClass item:classes)
-        {
-           // System.out.println("class name "+item.getName());
-        }
+
 
 
         Launcher run = new Launcher();
@@ -166,15 +168,16 @@ public class Main {
         run.addProcessor(new MIMProcessor(MIM));
         //run.addProcessor(new ImportPackages());
 
-        HashSet<String> classPath = new HashSet<>();
 
-        for(DetectorClass element:classes)
+
+        HashSet<String> classPath = new HashSet<>();
+        List<String[]> abs_Path_classes=readAllDataAtOnce("classes/classes.csv");
+        for(String[] element:abs_Path_classes)
         {
 
-            CtType ctClass=element.getClasse();
-            String absPath = ctClass.getPosition().getFile().getAbsolutePath();
-            //System.out.println("abs path "+absPath);
 
+            String absPath = element[0];
+            System.out.println("abs path "+absPath);
             classPath.add(absPath);
 
         }
@@ -262,6 +265,27 @@ public class Main {
                 f.delete();
             }
         }
+    }
+
+    public static void write_classes(List<DetectorClass> classes){
+
+        List<String[]> data = new ArrayList<String[]>();
+
+
+
+        for(DetectorClass element:classes)
+        {
+
+            CtType ctClass=element.getClasse();
+            String absPath = ctClass.getPosition().getFile().getAbsolutePath();
+            absPath = absPath.replaceAll("\\\\", "/");
+            data.add(new String[] { absPath});
+
+        }
+        CsvReader.writeData("classes/classes.csv",data);
+
+
+
     }
 
 
