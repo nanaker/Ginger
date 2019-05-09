@@ -26,6 +26,7 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
         System.out.println("Processor NLMRProcessor Start ... ");
         // Get applications information from the CSV - output
         nlmr_classes= CsvReader.formatCsv_NLMR(file);
+        System.out.println("nlmr_classes ="+nlmr_classes);
 
         //System.out.println("method to static "+meth_toStatic);
 
@@ -46,7 +47,7 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
 
     public void process(CtClass element) {
 
-        System.out.println("inProcess "+element.getSimpleName());
+        System.out.println("inProcess CtClass"+element.getSimpleName());
         CtMethod onLowMemory=getFactory().Core().createMethod();
         onLowMemory.setSimpleName("onLowMemory");
         onLowMemory.addModifier(ModifierKind.PUBLIC);
@@ -68,8 +69,8 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
 
 
 
-
-        System.out.println("this is the method: "+onLowMemory);
+        System.out.println("this is the element: "+isToBeProcessed(element)+"###"+element.getSimpleName()+"###"+element.getQualifiedName());
+        //System.out.println("this is the method: "+onLowMemory);
 
 
         element.addMethod(onLowMemory);
@@ -83,16 +84,14 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
     }
 
     private boolean checkValidToCsv(CtClass candidate){
-        String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
+
+            for (String occurence : nlmr_classes) {
 
 
-
-        for(String occurence :nlmr_classes ){
-            String csvClassName = occurence.substring(occurence.lastIndexOf(".")+1);
-            if(csvClassName.contains(class_file)){
-                return true;
+                if (occurence.equals(candidate.getQualifiedName())) {
+                    return true;
+                }
             }
-        }
 
         return false;
     }
