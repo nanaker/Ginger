@@ -145,7 +145,7 @@ public class Main {
 
         modelToGraph.getDatabaseManager().shutDown();
 
-       
+
 
     }
     public static void runRefactor(){
@@ -173,7 +173,7 @@ public class Main {
 
 
         HashSet<String> classPath = new HashSet<>();
-        List<String[]> abs_Path_classes=readAllDataAtOnce("classes/classes.csv");
+        List<String[]> abs_Path_classes=readAllDataAtOnce("classes_path/classes.csv");
         for(String[] element:abs_Path_classes)
         {
 
@@ -284,7 +284,7 @@ public class Main {
             data.add(new String[] { absPath});
 
         }
-        CsvReader.writeData("classes/classes.csv",data);
+        CsvReader.writeData("classes_path/classes.csv",data);
 
 
 
