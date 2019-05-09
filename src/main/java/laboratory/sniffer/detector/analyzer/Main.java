@@ -179,7 +179,7 @@ public class Main {
 
 
             String absPath = element[0];
-            System.out.println("abs path "+absPath);
+
             classPath.add(absPath);
 
         }

@@ -64,7 +64,9 @@ public class SaverOfTheFile {
 
 
     public void reWriteFile(AbstractProcessor processor, CtClass element){
+        System.out.println("in reWriteFile CtClass: "+element.getSimpleName());
         try {
+
             ArrayList<String> classFile = new ArrayList<>();
 
 
@@ -84,7 +86,6 @@ public class SaverOfTheFile {
                         writer.newLine();
                     }else {
                         writer.write(element+"");
-
                         writer.newLine();
                         writer.close();
                         processor.getEnvironment().report(processor, Level.WARN, element, "INFO :" + element.getReference());

@@ -70,12 +70,12 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
 
 
         System.out.println("this is the method: "+onLowMemory);
-        System.out.println("this is the method body"+onLowMemory.getBody());
+
 
         element.addMethod(onLowMemory);
 
 
-
+        System.out.println("isToBeProcessed "+isToBeProcessed(element));
         SaverOfTheFile fileSaver=new SaverOfTheFile();
         fileSaver.reWriteFile(this,element);
 
