@@ -53,7 +53,7 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
 
     public void process(CtClass element) {
 
-        System.out.println("inProcess CtClass"+element.getSimpleName());
+
         CtMethod onLowMemory=getFactory().Core().createMethod();
         onLowMemory.setSimpleName("onLowMemory");
         onLowMemory.addModifier(ModifierKind.PUBLIC);
@@ -66,16 +66,7 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
         final CtCodeSnippetStatement statement = getFactory().Code().createCodeSnippetStatement("super.onLowMemory()");
         body.addStatement(statement);
 
-        //final CtCodeSnippetStatement comment = getFactory().Code().createCodeSnippetStatement("/* You should implement this method to release any caches or other unnecessary resources you may\n be holding on to. The system will perform a garbage collection for you after returning from this\n method.*/");
-        //body.addStatement(comment);
-
-
-
         CtComment comment=getFactory().Core().createComment().setContent("You should implement this method to release any caches or other unnecessary resources you may\n be holding on to. The system will perform a garbage collection for you after returning from this\n method.").setCommentType(CtComment.CommentType.BLOCK);
-
-
-
-        //CtBlock b=getFactory().Code().createCtBlock(comment2);
         body.insertEnd(comment);
 
 
@@ -86,16 +77,8 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
         onLowMemory.addAnnotation(annotation);
 
 
-
-
-        System.out.println("this is the element: "+isToBeProcessed(element)+"###"+element.getSimpleName()+"###"+element.getQualifiedName());
-        //System.out.println("this is the method: "+onLowMemory);
-
-
         element.addMethod(onLowMemory);
 
-
-        System.out.println("isToBeProcessed "+isToBeProcessed(element));
         SaverOfTheFile fileSaver=new SaverOfTheFile();
         fileSaver.reWriteFile(this,element);
 
