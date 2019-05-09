@@ -1,21 +1,27 @@
 package laboratory.sniffer.detector.corrector;
 
 import spoon.processing.AbstractProcessor;
-import spoon.reflect.code.CtBlock;
-import spoon.reflect.code.CtCodeSnippetStatement;
-import spoon.reflect.code.CtStatement;
+import spoon.reflect.code.*;
+import spoon.reflect.cu.SourcePosition;
 import spoon.reflect.declaration.*;
+import spoon.reflect.factory.Factory;
 import spoon.reflect.factory.TypeFactory;
+import spoon.reflect.path.CtPath;
+import spoon.reflect.path.CtRole;
 import spoon.reflect.reference.CtTypeReference;
+import spoon.reflect.visitor.CtVisitor;
+import spoon.reflect.visitor.Filter;
+import spoon.reflect.visitor.chain.CtConsumableFunction;
+import spoon.reflect.visitor.chain.CtFunction;
+import spoon.reflect.visitor.chain.CtQuery;
 import spoon.reflect.visitor.filter.TypeFilter;
+import spoon.support.reflect.code.CtCommentImpl;
 import spoon.support.reflect.declaration.CtAnnotationImpl;
 import utils.CsvReader;
 import utils.SaverOfTheFile;
 
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class NLMRProcessor extends AbstractProcessor<CtClass> {
 
@@ -60,6 +66,19 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
         final CtCodeSnippetStatement statement = getFactory().Code().createCodeSnippetStatement("super.onLowMemory()");
         body.addStatement(statement);
 
+        //final CtCodeSnippetStatement comment = getFactory().Code().createCodeSnippetStatement("/* You should implement this method to release any caches or other unnecessary resources you may\n be holding on to. The system will perform a garbage collection for you after returning from this\n method.*/");
+        //body.addStatement(comment);
+
+
+
+        CtComment comment=getFactory().Core().createComment().setContent("You should implement this method to release any caches or other unnecessary resources you may\n be holding on to. The system will perform a garbage collection for you after returning from this\n method.").setCommentType(CtComment.CommentType.BLOCK);
+
+
+
+        //CtBlock b=getFactory().Code().createCtBlock(comment2);
+        body.insertEnd(comment);
+
+
         CtTypeReference ref = getFactory().Core().createTypeReference();
         ref.setSimpleName("Override");
 
@@ -86,7 +105,6 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
     private boolean checkValidToCsv(CtClass candidate){
 
             for (String occurence : nlmr_classes) {
-
 
                 if (occurence.equals(candidate.getQualifiedName())) {
                     return true;
