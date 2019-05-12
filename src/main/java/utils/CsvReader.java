@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Created by Mehdi on 16-05-31.
+ * Created by  on 16-05-31.
  */
 public class CsvReader {
 
@@ -37,30 +37,27 @@ public class CsvReader {
         return smell_list;
     }
 
-    public static HashSet<String> formatCsv_MIM(String file_name){
+    /*
+    position= la position de l'attribut full_name dans le fichier result.csv
+    position=8--->MIM
+    position=3--->NLMR
+    position=2--->LIC
+
+     */
+    public static HashSet<String> formatCsv(String file_name, int position){
         HashSet<String> toFill = new HashSet<>();
 
         ArrayList<String> csv_reader = CsvReader.csv(file_name);
         for (String e : csv_reader) {
             String [] split = e.split(",");
-            toFill.add(split[8]);
+            toFill.add(split[position]);
         }
 
         return toFill;
     }
 
 
-    public static HashSet<String> formatCsv_NLMR(String file_name){
-        HashSet<String> toFill = new HashSet<>();
 
-        ArrayList<String> csv_reader = CsvReader.csv(file_name);
-        for (String e : csv_reader) {
-            String [] split = e.split(",");
-            toFill.add(split[3]);
-        }
-
-        return toFill;
-    }
 
     public static List<String[]> readAllDataAtOnce(String file)
     {

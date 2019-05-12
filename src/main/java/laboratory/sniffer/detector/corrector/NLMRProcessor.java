@@ -31,7 +31,7 @@ public class NLMRProcessor extends AbstractProcessor<CtClass> {
     {
         System.out.println("Processor NLMRProcessor Start ... ");
         // Get applications information from the CSV - output
-        nlmr_classes= CsvReader.formatCsv_NLMR(file);
+        nlmr_classes= CsvReader.formatCsv(file,3);
         System.out.println("nlmr_classes ="+nlmr_classes);
 
         //System.out.println("method to static "+meth_toStatic);

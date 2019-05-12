@@ -101,21 +101,32 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     private void handleUsedVariables(T ctExecutable, DetectorMethod detectorMethod) {
         List<CtFieldAccess> elements = ctExecutable.getElements(new TypeFilter<CtFieldAccess>(CtFieldAccess.class));
-        //System.out.println("ctExecutable in handleUsedVariables "+ctExecutable.getSimpleName());
-        //System.out.println("List<CtFieldAccess> elements "+elements);
+        System.out.println("ctExecutable in handleUsedVariables "+ctExecutable.getSimpleName());
+        System.out.println("List<CtFieldAccess> elements "+elements);
 
         String variableTarget = null;
         String variableName;
 
         CtTypeMember member = ctExecutable instanceof CtTypeMember ? (CtTypeMember) ctExecutable : null;
-        //System.out.println("member "+member);
+
 
         for (CtFieldAccess ctFieldAccess : elements) {
 
 
             if (ctFieldAccess.getTarget() != null && ctFieldAccess.getTarget().getType() != null) {
 
-                if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
+                //in case of an inner class
+                if(detectorMethod.getDetectorClass().isInnerClass()){
+
+                    if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null&&
+                            ctFieldAccess.getTarget().getType().getDeclaration().equals(detectorMethod.getDetectorClass().getClasse().getParent())){
+                        variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
+                        variableName = ctFieldAccess.getVariable().getSimpleName();
+                        detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+                    }
+                }
+                else if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
+
 
                     variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
                     variableName = ctFieldAccess.getVariable().getSimpleName();

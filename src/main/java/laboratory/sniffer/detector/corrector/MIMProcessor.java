@@ -25,7 +25,7 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
     {
         System.out.println("Processor MIMProcessor Start ... ");
         // Get applications information from the CSV - output
-        meth_toStatic = CsvReader.formatCsv_MIM(file);
+        meth_toStatic = CsvReader.formatCsv(file,8);
 
         //System.out.println("method to static "+meth_toStatic);
 
@@ -44,23 +44,18 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
         return checkValidToCsv(candidate) && checkAnnotation(candidate);
     }
 
+
     public void process(CtMethod element) {
 
         element.addModifier(ModifierKind.STATIC);
-
-
-
-
         SaverOfTheFile fileSaver=new SaverOfTheFile();
         fileSaver.reWriteFile(this,element);
 
-
     }
+
 
     private boolean checkValidToCsv(CtMethod candidate){
         String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
-
-
 
         for(String occurence : meth_toStatic){
             String csvClassName = occurence.substring(occurence.lastIndexOf(".")+1);
@@ -69,18 +64,16 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
                 return true;
             }
         }
-
         return false;
     }
 
-    private boolean checkAnnotation(CtMethod candidate){
 
+    private boolean checkAnnotation(CtMethod candidate){
         for(CtAnnotation annotation : candidate.getAnnotations()){
             if(annotation.toString().trim().matches("(.*)@Override(.*)")){
                 return false;
             }
         }
-
         return true;
     }
 

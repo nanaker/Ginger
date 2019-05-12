@@ -1,5 +1,6 @@
 package laboratory.sniffer.detector.analyzer;
 
+import laboratory.sniffer.detector.corrector.LICProcessor;
 import laboratory.sniffer.detector.corrector.NLMRProcessor;
 import laboratory.sniffer.detector.detector.classifier;
 import laboratory.sniffer.detector.entities.DetectorClass;
@@ -8,22 +9,17 @@ import laboratory.sniffer.detector.metrics.MetricsCalculator;
 import laboratory.sniffer.detector.entities.DetectorApp;
 import laboratory.sniffer.detector.entities.DetectorLibrary;
 import laboratory.sniffer.detector.neo4j.*;
-import laboratory.sniffer.detector.corrector.MIMProcessor;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.util.*;
 
 
-import org.apache.log4j.Level;
-import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.Launcher;
-import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtType;
 import utils.CsvReader;
 
@@ -68,7 +64,7 @@ public class Main {
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
             //System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
-            //runAnalysis(pathOfApplicationToAnalyse);
+            runAnalysis(pathOfApplicationToAnalyse);
 
 
 
@@ -123,7 +119,7 @@ public class Main {
         mainProcessor.process();
 
         List<DetectorClass> classes=mainProcessor.getCurrentApp().getDetectorClasses();
-        write_classes(classes);
+        writeClasses(classes);
 
         GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
 
@@ -163,12 +159,14 @@ public class Main {
         run.setOutputFilter();
         final String MIM = "result/classification_result_MIM";
         final String NLMR = "result/classification_result_NLMR";
-        //System.out.println("add processeur ");
+        final String LIC = "result/classification_result_LIC";
 
-        //run.addProcessor(new MethodLogProcessorMIM(MIM));
+
+
 
         //run.addProcessor(new MIMProcessor(MIM));
-        run.addProcessor(new NLMRProcessor(NLMR));
+        //run.addProcessor(new NLMRProcessor(NLMR));
+        run.addProcessor(new LICProcessor(LIC));
 
 
 
@@ -269,7 +267,7 @@ public class Main {
         }
     }
 
-    public static void write_classes(List<DetectorClass> classes){
+    public static void writeClasses(List<DetectorClass> classes){
 
         List<String[]> data = new ArrayList<String[]>();
 
