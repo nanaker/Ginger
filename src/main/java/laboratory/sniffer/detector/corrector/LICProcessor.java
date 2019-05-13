@@ -1,10 +1,14 @@
 package laboratory.sniffer.detector.corrector;
 
 import spoon.processing.AbstractProcessor;
-import spoon.reflect.code.CtNewClass;
+import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
+import spoon.support.reflect.code.CtConstructorCallImpl;
+import spoon.support.reflect.code.CtExpressionImpl;
+import spoon.support.reflect.code.CtInvocationImpl;
 import spoon.support.reflect.code.CtNewClassImpl;
 import spoon.support.reflect.declaration.CtClassImpl;
+import spoon.support.reflect.declaration.CtFieldImpl;
 import utils.CsvReader;
 import utils.SaverOfTheFile;
 
@@ -31,8 +35,13 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
         if(element.isAnonymous()){
             System.out.println("Classe anonyme getQualifiedName "+element.getQualifiedName());
             System.out.println("Classe anonyme "+element.getParent().getParent());
+            List<CtElement> ctElements=element.getParent().getParent().getElements(new MatchAllFilter<CtElement>());
+           /* for(CtElement item:ctElements){
+                System.out.println("    ELEMENT: " + item.getClass().getSimpleName() + " item: " + item);
+            }*/
 
-            if(element.getParent().getParent() instanceof CtAnonymousExecutable){
+           System.out.println("getClass "+element.getParent().getParent().getClass().getSimpleName());
+            /*if(element.getParent().getParent() instanceof CtAnonymousExecutable){
                 System.out.println("CtAnonymousExecutable");
             }else if(element.getParent().getParent() instanceof CtMethod){
                 System.out.println("CtMethod");
@@ -40,7 +49,29 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
                 System.out.println("CtClass");
             } else if(element.getParent().getParent() instanceof CtVariable){
                 System.out.println("CtVariable");
+            }else if(element.getParent().getParent() instanceof CtFieldImpl){
+                System.out.println("CtFieldImpl");
             }
+            else if(element.getParent().getParent() instanceof CtInvocationImpl){
+                System.out.println("CtInvocationImpl");
+            }
+            else if(element.getParent().getParent() instanceof CtInvocation){
+                System.out.println("CtInvocation");
+            }
+            else if(element.getParent().getParent() instanceof CtConstructorCallImpl){
+                System.out.println("CtConstructorCallImpl");
+            }*/
+            if((element.getParent().getParent() instanceof CtConstructorCallImpl)||(element.getParent().getParent() instanceof CtInvocationImpl)){
+                //CtField variable=getFactory().createField();
+                //variable.setSimpleName("variableTest");
+                //CtExpression expression=getFactory().createFieldRead();
+                CtType type=null;
+                CtCodeSnippetStatement getterStatement = getFactory().Code().createCodeSnippetStatement("variableName= " + element.getParent());
+
+                //variable.setAssignment(expression);
+               System.out.println("hi here "+getterStatement);
+            }
+
         }else{
             element.addModifier(ModifierKind.STATIC);
             SaverOfTheFile fileSaver=new SaverOfTheFile();
