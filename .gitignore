@@ -8,5 +8,8 @@ build
 classes
 META-INF
 db/
-
+class_path/
+analyse_spoon.bat
+result/
+prediction/
 
