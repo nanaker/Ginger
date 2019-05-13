@@ -1,0 +1,27 @@
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\1"
+
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\2"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\3"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\4"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\5"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\6"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\7"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\8"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\9"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\10"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\11"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\12"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\13"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\14"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\15"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\16"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\17"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\18"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\19"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\20"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\21"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\22"
+java   -jar codeSourceRefactor-1.0-SNAPSHOT-all.jar "D:\test\done\23"
+
+
+
