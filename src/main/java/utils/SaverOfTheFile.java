@@ -90,7 +90,7 @@ public class SaverOfTheFile {
                         writer.write(s);
                         writer.newLine();
                     }else {
-
+                        System.out.println("in write file "+element);
                         writer.write(element+"");
                         writer.newLine();
                         writer.close();
