@@ -1,6 +1,7 @@
 package utils;
 
 import org.apache.log4j.Level;
+import spoon.reflect.code.CtNewClass;
 import spoon.reflect.declaration.CtClass;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtMethod;
+import spoon.support.reflect.code.CtNewClassImpl;
 
 public class SaverOfTheFile {
 
@@ -64,19 +66,22 @@ public class SaverOfTheFile {
 
 
     public void reWriteFile(AbstractProcessor processor, CtClass element){
-        System.out.println("in reWriteFile CtClass: "+element.getSimpleName());
+
         try {
 
+
+            processor.getEnvironment().setAutoImports(true);
             ArrayList<String> classFile = new ArrayList<>();
 
 
             BufferedReader readFile = new BufferedReader(new FileReader(element.getPosition().getFile()));
+
             String line = "";
             while ((line = readFile.readLine()) != null) {
 
                 classFile.add(line);
             }
-            processor.getEnvironment().setAutoImports(true);
+            //processor.getEnvironment().setAutoImports(true);
 
             BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(element.getPosition().getFile()));
 
@@ -85,6 +90,7 @@ public class SaverOfTheFile {
                         writer.write(s);
                         writer.newLine();
                     }else {
+
                         writer.write(element+"");
                         writer.newLine();
                         writer.close();
@@ -102,5 +108,18 @@ public class SaverOfTheFile {
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

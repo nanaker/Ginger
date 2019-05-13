@@ -35,13 +35,13 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
     @Override
     public void process(CtClass ctType) {
         String qualifiedName = ctType.getQualifiedName();
-
+        System.out.println("class here "+qualifiedName);
 
         //System.out.println("ctType=" + ctType);
         //System.out.println(".getPosition()=" + ctType.getPosition());
         //System.out.println(".getFile()=" + ctType.getPosition().getFile());
        // System.out.println(".getAbsolutePath()=" + ctType.getPosition().getFile().getAbsolutePath());
-        if (ctType.getPosition().getFile() != null) {
+        if ((ctType.getPosition().getFile() != null)&&(!qualifiedName.contains("unknown")) ){
 
 
         String absolutePath = ctType.getPosition().getFile().getAbsolutePath();
