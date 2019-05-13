@@ -12,7 +12,6 @@ False,False,False,3,net.ktnx.mobileledger.ui.profiles.ProfilesRecyclerViewAdapte
 False,False,False,3,net.ktnx.mobileledger.ui.transaction_list.TransactionListFragment$androidx.recyclerview.widget.RecyclerView$OnScrollListener2,True
 False,False,False,3,net.ktnx.mobileledger.ui.transaction_list.TransactionListFragment$java.util.Observer3,True
 False,False,False,2,net.ktnx.mobileledger.ui.activity.CrashReportingActivity$java.lang.Thread$UncaughtExceptionHandler1,True
-False,False,False,2,net.ktnx.mobileledger.ui.profiles.ProfileDetailFragment$<unknown>,True
 False,False,False,2,net.ktnx.mobileledger.ui.transaction_list.TransactionListFragment$java.util.Observer1,True
 False,False,False,2,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.view.View$OnClickListener4,True
 False,False,False,2,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.content.DialogInterface$OnShowListener4,True
