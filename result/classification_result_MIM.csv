@@ -1,9 +1,7 @@
 number_of_callers_not_null,is_init,is_static,is_override,uses_variables,call_methode,call_external_methode,cyclomatic_complexity,full_name,is_code_smell
 True,False,False,False,False,False,False,2,update_account_table#net.ktnx.mobileledger.ui.account_summary.AccountSummaryFragment,True
 True,False,False,False,False,False,False,1,drawMarker#net.ktnx.mobileledger.ui.HueRing,True
-True,False,False,False,False,False,False,1,onSwipeDown#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
-True,False,False,False,False,False,False,1,onSwipeRight#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
 True,False,False,False,False,False,False,1,onSwipeUp#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
+True,False,False,False,False,False,False,1,onSwipeRight#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
+True,False,False,False,False,False,False,1,onSwipeDown#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
 True,False,False,False,False,False,False,1,done#net.ktnx.mobileledger.async.TaskCallback,True
-True,False,False,False,False,False,False,1,onClickItem#net.ktnx.mobileledger.ui.RecyclerItemListener$RecyclerTouchListener,True
-True,False,False,False,False,False,False,1,onLongClickItem#net.ktnx.mobileledger.ui.RecyclerItemListener$RecyclerTouchListener,True

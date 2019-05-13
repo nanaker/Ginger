@@ -182,11 +182,12 @@ public class ModelToGraph {
         Node variableNode;
 
         for (DetectorVariable detectorVariable : detectorMethod.getUsedVariables()) {
+
             variableNode = variableNodeMap.get(detectorVariable);
             if(variableNode==null)
             {
                 variableNode = insertVariable(detectorVariable);
-              //  System.out.println("variable node "+variableNode);
+
 
             }
             //System.out.println("method "+detectorMethod.getName()+"  "+detectorMethod.getUsedVariables());
@@ -194,7 +195,7 @@ public class ModelToGraph {
             if (variableNode != null) {
 
                 methodNode.createRelationshipTo(variableNode, RelationTypes.USES);
-               // System.out.println("variable name "+detectorVariable.getName()+"  "+detectorMethod.getName());
+                //System.out.println("variable name "+detectorVariable.getName()+"  "+detectorMethod.getName());
             } else {
                 logger.warn("problem");
             }

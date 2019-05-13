@@ -35,7 +35,8 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
     @Override
     public void process(CtClass ctType) {
         String qualifiedName = ctType.getQualifiedName();
-        System.out.println("class here "+qualifiedName);
+
+
 
         //System.out.println("ctType=" + ctType);
         //System.out.println(".getPosition()=" + ctType.getPosition());

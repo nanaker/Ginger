@@ -115,6 +115,8 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
             if (ctFieldAccess.getTarget() != null && ctFieldAccess.getTarget().getType() != null) {
 
+
+
                 //in case of an inner class
 
                  if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
@@ -132,6 +134,19 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
                 }
                 else  if(detectorMethod.getDetectorClass().isInnerClass()){
+
+
+
+
+                     if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null &&
+                             detectorMethod.getDetectorClass().getClasse().getParent().getParent().getParent()!=null&&
+                             ctFieldAccess.getTarget().getType().getDeclaration().equals(detectorMethod.getDetectorClass().getClasse().getParent().getParent().getParent())){
+                         variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
+                         variableName = ctFieldAccess.getVariable().getSimpleName();
+
+
+                         detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+                     }
 
                     if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null&&
                             ctFieldAccess.getTarget().getType().getDeclaration().equals(detectorMethod.getDetectorClass().getClasse().getParent())){
