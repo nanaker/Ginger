@@ -96,8 +96,8 @@ public class CsvReader {
             CSVWriter writer = new CSVWriter(outputfile);
 
             //adding header to csv
-            //String[] header = { "Path" };
-            //writer.writeNext(header);
+            String[] header = { "Path" };
+            writer.writeNext(header);
 
             // add data to csv
 

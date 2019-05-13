@@ -61,3 +61,11 @@ apply plugin: "com.github.johnrengelman.shadow"
 shadowJar {
     mergeServiceFiles()
 }
+
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'laboratory.sniffer.detector.analyzer.Main'
+    }
+}
+

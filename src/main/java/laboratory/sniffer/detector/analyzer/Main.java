@@ -78,18 +78,18 @@ public class Main {
 
             Namespace res = parser.parseArgs(argumentsQyery);
 
-            //queryMode(res);
+            queryMode(res);
 
             // Detection des défauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
            classifier classifier=new classifier(base_path);
-            //String result=classifier.exec();
+            String result=classifier.exec();
             //logger.info(result);
-            //System.out.println(result);
+            System.out.println(result);
 
 
             //Correction des défauts de code
-            runRefactor();
+           // runRefactor();
 
 
         } catch (ArgumentParserException e) {

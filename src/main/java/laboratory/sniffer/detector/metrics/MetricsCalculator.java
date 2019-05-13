@@ -102,6 +102,10 @@ public class MetricsCalculator {
             {
                 IsStatic.createIsStatic(detectorClass,true);
             }
+            if(detectorClass.getClasse().isEnum()){
+                IsEnum.createIsEnum(detectorClass,true);
+            }
+            else IsEnum.createIsEnum(detectorClass,false);
             NumberOfChildren.createNumberOfChildren(detectorClass);
             for(DetectorMethod detectorMethod : detectorClass.getDetectorMethods()){
                 calculateMethodMetrics(detectorMethod);
