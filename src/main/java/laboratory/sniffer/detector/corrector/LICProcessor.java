@@ -2,11 +2,14 @@ package laboratory.sniffer.detector.corrector;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.CtNewClass;
-import spoon.reflect.declaration.CtClass;
-import spoon.reflect.declaration.ModifierKind;
+import spoon.reflect.declaration.*;
+import spoon.support.reflect.code.CtNewClassImpl;
+import spoon.support.reflect.declaration.CtClassImpl;
 import utils.CsvReader;
+import utils.SaverOfTheFile;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class LICProcessor extends AbstractProcessor<CtClass> {
 
@@ -16,19 +19,33 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     {
         System.out.println("Processor LICProcessor Start ... ");
         // Get applications information from the CSV - output
-        lic_classes= CsvReader.formatCsv(file,2);
+        lic_classes= CsvReader.formatCsv(file,4);
 
     }
 
 
     @Override
     public void process(CtClass element) {
+
         System.out.println("in LIC process");
         if(element.isAnonymous()){
-            //System.out.println("Classe anonyme "+element.getSimpleName());
+            System.out.println("Classe anonyme getQualifiedName "+element.getQualifiedName());
+            System.out.println("Classe anonyme "+element.getParent().getParent());
+
+            if(element.getParent().getParent() instanceof CtAnonymousExecutable){
+                System.out.println("CtAnonymousExecutable");
+            }else if(element.getParent().getParent() instanceof CtMethod){
+                System.out.println("CtMethod");
+            }else if(element.getParent().getParent() instanceof CtClass){
+                System.out.println("CtClass");
+            } else if(element.getParent().getParent() instanceof CtVariable){
+                System.out.println("CtVariable");
+            }
         }else{
             element.addModifier(ModifierKind.STATIC);
-           // System.out.println("body"+element);
+            SaverOfTheFile fileSaver=new SaverOfTheFile();
+            fileSaver.reWriteFile(this,(element.getParent(CtClass.class)));
+
         }
 
     }
@@ -60,7 +77,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
                 qualifiedName = splitName[0] + "$" +
                         ((CtNewClass) candidate.getParent()).getType().getQualifiedName() + splitName[1];
                 if (occurence.contains(qualifiedName)) {
-                    System.out.println("candidate.isAnonymous()");
+                    //System.out.println("candidate.isAnonymous()");
                     return true;
                 }
             }else{

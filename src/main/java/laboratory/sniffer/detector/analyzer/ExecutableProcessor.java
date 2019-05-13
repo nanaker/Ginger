@@ -150,6 +150,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         String targetName;
         String executable;
         String type = "Unknown";
+
         // Thanks to corrector we have to use a CtAbstractInvocation
         List<CtAbstractInvocation> invocations = ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));
         for (CtAbstractInvocation invocation : invocations) {
@@ -157,9 +158,16 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
             targetName = getTarget(invocation);
             if (invocation.getExecutable().getType() != null) {
                 type = invocation.getExecutable().getType().getQualifiedName();
+
+
             }
+
             if (targetName != null) {
-                detectorMethod.getInvocationData().add(new InvocationData(targetName, executable, type));
+
+
+                    detectorMethod.getInvocationData().add(new InvocationData(targetName, executable, type));
+
+
             }
         }
     }
