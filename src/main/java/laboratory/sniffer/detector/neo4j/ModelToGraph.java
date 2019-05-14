@@ -247,8 +247,10 @@ public class ModelToGraph {
 
     public void createHierarchy(DetectorApp detectorApp) {
         for (DetectorClass detectorClass : detectorApp.getDetectorClasses()) {
+
             DetectorClass parent = detectorClass.getParent();
             if (parent != null) {
+
                 classNodeMap.get(detectorClass).createRelationshipTo(classNodeMap.get(parent), RelationTypes.EXTENDS);
             }
             for (DetectorClass pInterface : detectorClass.getInterfaces()) {

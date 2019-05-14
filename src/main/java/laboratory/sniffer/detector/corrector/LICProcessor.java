@@ -27,7 +27,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     {
         System.out.println("Processor LICProcessor Start ... ");
         // Get applications information from the CSV - output
-        lic_classes= CsvReader.formatCsv(file,4);
+        lic_classes= CsvReader.formatCsv(file,5);
 
     }
 

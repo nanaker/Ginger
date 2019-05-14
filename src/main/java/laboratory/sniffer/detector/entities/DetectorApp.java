@@ -32,6 +32,15 @@ public class DetectorApp extends Entity{
         return detectorExternalClasses;
     }
 
+    public DetectorClass findClass(String class_name){
+
+        for (DetectorClass detectorClass : detectorClasses){
+                       if (detectorClass.getName().equals(class_name)) return detectorClass;
+        }
+        //otherwise we return null
+        return null;
+
+    }
 
     public void addDetectorExternalClass(DetectorExternalClass detectorExternalClass){
         detectorExternalClasses.add(detectorExternalClass);

@@ -151,6 +151,8 @@ public class DetectorClass extends Entity{
         return detectorApp;
     }
 
+
+
     public void setDetectorApp(DetectorApp detectorApp) {
         this.detectorApp = detectorApp;
     }

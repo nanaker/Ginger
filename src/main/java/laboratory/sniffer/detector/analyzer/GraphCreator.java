@@ -7,6 +7,7 @@ import laboratory.sniffer.detector.entities.DetectorExternalClass;
 import laboratory.sniffer.detector.entities.DetectorExternalMethod;
 import laboratory.sniffer.detector.entities.DetectorMethod;
 import laboratory.sniffer.detector.entities.DetectorVariable;
+import spoon.reflect.declaration.CtClass;
 
 import java.util.ArrayList;
 
@@ -26,33 +27,73 @@ public class GraphCreator {
         DetectorVariable detectorVariable;
         ArrayList<DetectorMethod> detectorMethods = detectorApp.getMethods();
         for (DetectorMethod detectorMethod : detectorMethods) {
-            for (InvocationData invocationData : detectorMethod.getInvocationData()) {
-                targetClass = detectorApp.getDetectorClass(invocationData.getTarget());
-                if (targetClass instanceof DetectorClass) {
-                    targetMethod = ((DetectorClass) targetClass).getCalledDetectorMethod(invocationData.getMethod());
-                    detectorMethod.getDetectorClass().coupledTo((DetectorClass) targetClass);
-                } else {
+            addUsedVariableAndCallMethod(detectorMethod);
+        }
 
-                    targetMethod = DetectorExternalMethod.createDetectorExternalMethod(invocationData.getMethod(), invocationData.getType(),
-                            (DetectorExternalClass) targetClass);
-                }
-                detectorMethod.callMethod(targetMethod);
+    }
 
+    public void addUsedVariableAndCallMethod(DetectorMethod detectorMethod) {
+        Entity targetClass;
+        Entity targetMethod;
+        DetectorClass detectorClass;
+        DetectorVariable detectorVariable;
+        for (InvocationData invocationData : detectorMethod.getInvocationData()) {
+            targetClass = detectorApp.getDetectorClass(invocationData.getTarget());
+            if (targetClass instanceof DetectorClass) {
+                targetMethod = ((DetectorClass) targetClass).getCalledDetectorMethod(invocationData.getMethod());
+                detectorMethod.getDetectorClass().coupledTo((DetectorClass) targetClass);
+            } else {
+
+                targetMethod = DetectorExternalMethod.createDetectorExternalMethod(invocationData.getMethod(), invocationData.getType(),
+                        (DetectorExternalClass) targetClass);
             }
+            detectorMethod.callMethod(targetMethod);
 
-            for (VariableData variableData : detectorMethod.getUsedVariablesData()) {
-                detectorClass = detectorApp.getDetectorInternalClass(variableData.getClassName());
-                if (detectorClass != null) {
-                   // System.out.println("variableData.getVariableName() "+variableData.getVariableName());
-                    detectorVariable = detectorClass.findVariable(variableData.getVariableName());
-                    if (detectorVariable != null) {
+        }
 
-                        detectorMethod.useVariable(detectorVariable);
+        addUsedVariable(detectorMethod);
+    }
+
+    public void addUsedVariable(DetectorMethod detectorMethod) {
+        DetectorClass detectorClass;
+        DetectorVariable detectorVariable;
+        for (VariableData variableData : detectorMethod.getUsedVariablesData()) {
+            detectorClass = detectorApp.getDetectorInternalClass(variableData.getClassName());
+            if (detectorClass != null) {
+                //System.out.println("detector class non null ");
+                 //System.out.println("method name "+detectorMethod.getName());
+                //System.out.println("variableData.getVariableName() "+variableData.getVariableName());
+                detectorVariable = detectorClass.findVariable(variableData.getVariableName());
+
+                if (detectorVariable != null) {
+                   // System.out.println("detector variable non null ");
+                    detectorMethod.useVariable(detectorVariable);
+                }
+                else{
+
+                    DetectorClass parent_Class=detectorMethod.getDetectorClass().getDetectorApp().findClass(variableData.getClassName()).getParent();
+                    if(parent_Class!=null) {
+                        detectorVariable=parent_Class.findVariable(variableData.getVariableName());
+                        if (detectorVariable != null) {
+                            detectorMethod.useVariable(detectorVariable);
+                        }
                     }
                 }
             }
         }
+    }
 
+    public String getClassName(String child){
+        String[] classes_name=child.split("\\.");
+
+        String class_name="";
+        for (int i=0;i<classes_name.length-1;i++ ){
+
+            class_name=class_name+classes_name[i]+".";
+        }
+
+        class_name=class_name.substring(0,class_name.length()-1);
+        return class_name;
     }
 
     public void createClassHierarchy() {

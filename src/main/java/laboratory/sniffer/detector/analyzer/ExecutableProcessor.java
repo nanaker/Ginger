@@ -110,51 +110,70 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         CtTypeMember member = ctExecutable instanceof CtTypeMember ? (CtTypeMember) ctExecutable : null;
 
 
+        searchUsedVariable(detectorMethod, elements, member);
+    }
+
+    private void searchUsedVariable(DetectorMethod detectorMethod, List<CtFieldAccess> elements, CtTypeMember member) {
+        String variableTarget;
+        String variableName;
         for (CtFieldAccess ctFieldAccess : elements) {
+            variableUsedInMethod(detectorMethod, member, ctFieldAccess);
+        }
+    }
+
+    private void variableUsedInMethod(DetectorMethod detectorMethod, CtTypeMember member, CtFieldAccess ctFieldAccess) {
+        String variableTarget;
+        String variableName;
+        if (ctFieldAccess.getTarget() != null && ctFieldAccess.getTarget().getType() != null) {
+
+             if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
 
 
-            if (ctFieldAccess.getTarget() != null && ctFieldAccess.getTarget().getType() != null) {
+                variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
+                variableName = ctFieldAccess.getVariable().getSimpleName();
+                detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+            }
+            //in case of static variable
+            else  if(member != null && ctFieldAccess.getVariable().getDeclaringType()!=null && ctFieldAccess.getVariable().getDeclaringType().getDeclaration()==member.getDeclaringType()) {
+                variableTarget = ctFieldAccess.getTarget().toString();
+                variableName = ctFieldAccess.getVariable().getSimpleName();
+                detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+
+            }
+            else  if(detectorMethod.getDetectorClass().isInnerClass()){
+                //Chercher si la methode utilise des variable de la classe mère
+
+
+                 CtElement parent=detectorMethod.getDetectorClass().getClasse();
+
+                    // System.out.println("method name "+detectorMethod.getName());
+                    // System.out.println("ctFieldAccess.getTarget().getType().getDeclaration() "+ctFieldAccess.getTarget().getType().getDeclaration());
+
+
+                 while (parent.getParent()!=null){
 
 
 
-                //in case of an inner class
-
-                 if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
+                       //  System.out.println("parent "+parent.getParent());
 
 
-                    variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
-                    variableName = ctFieldAccess.getVariable().getSimpleName();
-                    detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
-                }
-                //in case of static variable
-                else  if(member != null && ctFieldAccess.getVariable().getDeclaringType()!=null && ctFieldAccess.getVariable().getDeclaringType().getDeclaration()==member.getDeclaringType()) {
-                    variableTarget = ctFieldAccess.getTarget().toString();
-                    variableName = ctFieldAccess.getVariable().getSimpleName();
-                    detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+                     if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null &&
+                             ctFieldAccess.getTarget().getType().getDeclaration().equals(parent.getParent())){
+                         variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
+                         variableName = ctFieldAccess.getVariable().getSimpleName();
+                       //  System.out.println("method name "+detectorMethod.getName());
+                        // System.out.println("variable name "+variableName);
 
-                }
-                else  if(detectorMethod.getDetectorClass().isInnerClass()){
-                    //Chercher si la methode utilise des variable de la classe mère
+                         detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
 
-                     CtElement parent=detectorMethod.getDetectorClass().getClasse();
-
-                     while (parent.getParent()!=null){
-
-                         if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null &&
-                                 ctFieldAccess.getTarget().getType().getDeclaration().equals(parent.getParent())){
-                             variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
-                             variableName = ctFieldAccess.getVariable().getSimpleName();
-                             detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
-
-                             break;
-                         }
-
-                         parent=parent.getParent();
-
+                         break;
                      }
 
+                     parent=parent.getParent();
 
-                }
+                 }
+
+
             }
         }
     }
