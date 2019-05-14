@@ -89,7 +89,7 @@ public class Main {
 
 
             //Correction des défauts de code
-            //runRefactor();
+            runRefactor();
 
 
         } catch (ArgumentParserException e) {

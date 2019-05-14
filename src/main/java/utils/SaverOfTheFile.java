@@ -69,19 +69,19 @@ public class SaverOfTheFile {
 
         try {
 
-
-            processor.getEnvironment().setAutoImports(true);
             ArrayList<String> classFile = new ArrayList<>();
 
 
             BufferedReader readFile = new BufferedReader(new FileReader(element.getPosition().getFile()));
+
 
             String line = "";
             while ((line = readFile.readLine()) != null) {
 
                 classFile.add(line);
             }
-            //processor.getEnvironment().setAutoImports(true);
+
+            processor.getEnvironment().setAutoImports(true);
 
             BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(element.getPosition().getFile()));
 
@@ -90,8 +90,8 @@ public class SaverOfTheFile {
                         writer.write(s);
                         writer.newLine();
                     }else {
-                        System.out.println("in write file "+element);
-                        writer.write(element+"");
+
+                       writer.write(element+"");
                         writer.newLine();
                         writer.close();
                         processor.getEnvironment().report(processor, Level.WARN, element, "INFO :" + element.getReference());
@@ -105,6 +105,9 @@ public class SaverOfTheFile {
 
         }catch (IOException e) {
             e.printStackTrace();
+        }catch (Exception e){
+            System.out.println("Spoon can't refactor this");
+
         }
 
     }
@@ -113,10 +116,53 @@ public class SaverOfTheFile {
 
 
 
+    public void reWriteFileTest(AbstractProcessor processor, CtClass element){
+
+        try {
+
+            ArrayList<String> classFile = new ArrayList<>();
+
+
+            BufferedReader readFile = new BufferedReader(new FileReader(element.getPosition().getFile()));
+
+
+            String line = "";
+            while ((line = readFile.readLine()) != null) {
+
+                classFile.add(line);
+            }
+
+            processor.getEnvironment().setAutoImports(true);
+            String contenu=element.toString();
+
+            BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(element.getPosition().getFile()));
+
+            for (String s : classFile) {
+                if(!s.matches(".*"+element.getSimpleName()+".*")) {
+                    writer.write(s);
+                    writer.newLine();
+                }else {
+
+                    writer.write(element+"");
+                    writer.newLine();
+                    writer.close();
+                    processor.getEnvironment().report(processor, Level.WARN, element, "INFO :" + element.getReference());
+                    return;
+
+                }
+            }
 
 
 
 
+        }catch (IOException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            System.out.println("Spoon can't refactor this");
+
+        }
+
+    }
 
 
 

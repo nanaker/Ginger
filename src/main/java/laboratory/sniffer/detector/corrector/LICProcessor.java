@@ -5,15 +5,9 @@ import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtTypeReference;
 import spoon.support.reflect.code.CtConstructorCallImpl;
-import spoon.support.reflect.code.CtExpressionImpl;
 import spoon.support.reflect.code.CtInvocationImpl;
-import spoon.support.reflect.code.CtNewClassImpl;
-import spoon.support.reflect.declaration.CtClassImpl;
-import spoon.support.reflect.declaration.CtFieldImpl;
 import utils.CsvReader;
 import utils.SaverOfTheFile;
-
-import java.beans.Visibility;
 import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,7 +21,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     {
         System.out.println("Processor LICProcessor Start ... ");
         // Get applications information from the CSV - output
-        lic_classes= CsvReader.formatCsv(file,5);
+        lic_classes= CsvReader.formatCsv(file,6);
 
     }
 
@@ -35,7 +29,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     @Override
     public void process(CtClass element) {
 
-        System.out.println("in LIC process");
+
         if(element.isAnonymous()){
             //System.out.println("Classe anonyme getQualifiedName "+element.getQualifiedName());
             //System.out.println("Classe anonyme "+element.getParent().getParent());
@@ -67,68 +61,28 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
             }*/
 
             if(element.getParent().getParent() instanceof CtInvocationImpl){
-                //System.out.println("Classe anonyme getQualifiedName "+element.getQualifiedName());
-                //System.out.println("CtInvocationImpl*** "+element.getParent().getParent().getParent(CtClass.class).getQualifiedName());
-                System.out.println("CtInvocationImpl*** test getClassMere"+getClassMere(element));
-
+               System.out.println("CtInvocationImpl  ");
+              RefactorCtInvocationImpl(element);
 
 
             }
-            if((element.getParent().getParent() instanceof CtConstructorCallImpl)){
+            else if((element.getParent().getParent() instanceof CtConstructorCallImpl)){
+                System.out.println("CtConstructorCallImpl  ");
 
-                System.out.println("CtConstructorCallImpl*** test getClassMere"+getClassMere(element));
-                /*Pour refactoiser un LIC avec une classe anonyme, on extrait cette classe dans une variable*/
-
-                String variableName=element.getQualifiedName();
-                String[] splitName = variableName.split("\\$");
-                variableName = splitName[0] + "$" +
-                        ((CtNewClass) element.getParent()).getType().getQualifiedName() + splitName[1];
-                variableName= variableName.substring(variableName.lastIndexOf("$")+1);
-                variableName=Character.toLowerCase(variableName.charAt(0)) + variableName.substring(1);//la declaration d'une variable commence toujours par une miniscule
-
-                CtTypeReference ref = getFactory().Core().createTypeReference();//C'est le type de la nouvelle variable
-                ref.setSimpleName(getType(element.getParent().toString()));
-
-                ModifierKind[] k=new ModifierKind[3];
-                k[0]=ModifierKind.PRIVATE;
-                k[1]=ModifierKind.STATIC;
-                k[2]=ModifierKind.FINAL;
-                CtField variable=getFactory().createCtField(variableName,ref,element.getParent().toString(),k);
-
-                CtClass classeMere=element.getParent().getParent().getParent(CtClass.class);
-                classeMere.addFieldAtTop(variable);//on declare la nouvelle variable en haut de la classe
-
-                //On remplace la classe anonyme par l'utilisation de la variable deja declarée
-                List<CtExpression> listeOfArguments=((CtConstructorCallImpl) element.getParent().getParent()).getArguments();
-                // System.out.println("liste des arg: "+listeOfArguments);
-                int argumentPosition=getArgumentPosition(listeOfArguments,element.getParent().toString());
-                if(argumentPosition!=-1){
-                    ((CtConstructorCallImpl) element.getParent().getParent()).removeArgument(listeOfArguments.get(argumentPosition));
-                    CtExpression e=getFactory().createCodeSnippetExpression(variableName);
-                    ((CtConstructorCallImpl) element.getParent().getParent()).addArgument(e);
-
-                }
-
-
-                //System.out.println("hi here "+classeMere);
-                SaverOfTheFile fileSaver=new SaverOfTheFile();
-                // fileSaver.reWriteFile(this,classeMere);
+               refactorCtConstructorCallImpl(element);
 
             }else if((element.getParent().getParent() instanceof CtVariable)){
-
-                CtVariable variableDeclaration=(CtVariable)element.getParent().getParent();
-                variableDeclaration.addModifier(ModifierKind.STATIC);
-
-                CtClass classeMere=element.getParent().getParent().getParent(CtClass.class);
-                SaverOfTheFile fileSaver=new SaverOfTheFile();
-                // fileSaver.reWriteFile(this,classeMere);
+                System.out.println("CtVariable  ");
+               refactorCtVariable(element);
 
             }
 
-        }else{
+        }else if(!element.isAnonymous()){
+
+            System.out.println("!element.isAnonymous()  ");
             element.addModifier(ModifierKind.STATIC);
             SaverOfTheFile fileSaver=new SaverOfTheFile();
-            //fileSaver.reWriteFile(this,(element.getParent(CtClass.class)));
+            fileSaver.reWriteFile(this,(element.getParent(CtClass.class)));
 
         }
 
@@ -221,4 +175,101 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
 
         return classeMere;
     }
+
+    public int refactorCtConstructorCallImpl(CtClass element){
+        /*Pour refactoiser un LIC avec une classe anonyme, on extrait cette classe dans une variable*/
+
+        String variableName=element.getQualifiedName();
+        String[] splitName = variableName.split("\\$");
+        variableName = splitName[0] + "$" +
+                ((CtNewClass) element.getParent()).getType().getQualifiedName() + splitName[1];
+        variableName= variableName.substring(variableName.lastIndexOf("$")+1);
+        variableName=Character.toLowerCase(variableName.charAt(0)) + variableName.substring(1);//la declaration d'une variable commence toujours par une miniscule
+
+        CtTypeReference ref = getFactory().Core().createTypeReference();//C'est le type de la nouvelle variable
+        ref.setSimpleName(getType(element.getParent().toString()));
+
+        ModifierKind[] k=new ModifierKind[3];
+        k[0]=ModifierKind.PRIVATE;
+        k[1]=ModifierKind.STATIC;
+        k[2]=ModifierKind.FINAL;
+        CtField variable=getFactory().createCtField(variableName,ref,element.getParent().toString(),k);
+
+        CtClass classeMere=element.getParent().getParent().getParent(CtClass.class);
+        classeMere.addFieldAtTop(variable);//on declare la nouvelle variable en haut de la classe
+
+        //On remplace la classe anonyme par l'utilisation de la variable deja declarée
+        List<CtExpression> listeOfArguments=((CtConstructorCallImpl) element.getParent().getParent()).getArguments();
+        int argumentPosition=getArgumentPosition(listeOfArguments,element.getParent().toString());
+        if(argumentPosition!=-1){
+            ((CtConstructorCallImpl) element.getParent().getParent()).removeArgument(listeOfArguments.get(argumentPosition));
+            CtExpression e=getFactory().createCodeSnippetExpression(variableName);
+            ((CtConstructorCallImpl) element.getParent().getParent()).addArgument(e);
+
+        }
+
+
+        SaverOfTheFile fileSaver=new SaverOfTheFile();
+        fileSaver.reWriteFile(this,classeMere);
+        return 1;
+    }
+
+
+    public int refactorCtVariable(CtClass element){
+
+        CtVariable variableDeclaration=(CtVariable)element.getParent().getParent();
+        variableDeclaration.addModifier(ModifierKind.STATIC);
+
+        CtClass classeMere=element.getParent().getParent().getParent(CtClass.class);
+        SaverOfTheFile fileSaver=new SaverOfTheFile();
+        fileSaver.reWriteFile(this,classeMere);
+        return 1;
+    }
+
+
+    public int RefactorCtInvocationImpl(CtClass element){
+        /*Pour refactoiser un LIC avec une classe anonyme, on extrait cette classe dans une variable*/
+
+        String variableName=element.getQualifiedName();
+        String[] splitName = variableName.split("\\$");
+        variableName = splitName[0] + "$" +
+                ((CtNewClass) element.getParent()).getType().getQualifiedName() + splitName[1];
+        variableName= variableName.substring(variableName.lastIndexOf("$")+1);
+        variableName=Character.toLowerCase(variableName.charAt(0)) + variableName.substring(1);//la declaration d'une variable commence toujours par une miniscule
+
+
+        CtTypeReference ref = getFactory().Core().createTypeReference();//C'est le type de la nouvelle variable
+        ref.setSimpleName(getType(element.getParent().toString()));
+
+        ModifierKind[] k=new ModifierKind[3];
+        k[0]=ModifierKind.PRIVATE;
+        k[1]=ModifierKind.STATIC;
+        k[2]=ModifierKind.FINAL;
+        CtField variable=getFactory().createCtField(variableName,ref,element.getParent().toString(),k);
+
+        CtClass classeMere=element.getParent().getParent().getParent(CtClass.class);
+        classeMere.addFieldAtTop(variable);//on declare la nouvelle variable en haut de la classe
+
+        //On remplace la classe anonyme par l'utilisation de la variable deja declarée
+        List<CtExpression> listeOfArguments=((CtInvocationImpl) element.getParent().getParent()).getArguments();
+        int argumentPosition=getArgumentPosition(listeOfArguments,element.getParent().toString());
+        if(argumentPosition!=-1){
+            ((CtInvocationImpl) element.getParent().getParent()).removeArgument(listeOfArguments.get(argumentPosition));
+            CtExpression e=getFactory().createCodeSnippetExpression(variableName);
+            ((CtInvocationImpl) element.getParent().getParent()).addArgument(e);
+
+        }
+
+
+
+        SaverOfTheFile fileSaver=new SaverOfTheFile();
+
+        //this.getEnvironment().setShouldCompile(false);
+
+        fileSaver.reWriteFileTest(this,classeMere);
+        return 1;
+    }
+
+
+
 }
