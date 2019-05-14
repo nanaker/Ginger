@@ -39,7 +39,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
         if(element.isAnonymous()){
             System.out.println("Classe anonyme getQualifiedName "+element.getQualifiedName());
             System.out.println("Classe anonyme "+element.getParent().getParent());
-            List<CtElement> ctElements=element.getParent().getElements(new MatchAllFilter<CtElement>());
+          //  List<CtElement> ctElements=element.getParent().getElements(new MatchAllFilter<CtElement>());
            /*for(CtElement item:ctElements){
                 System.out.println("    ELEMENT: " + item.getClass().getSimpleName() + " item: " + item);
             }*/

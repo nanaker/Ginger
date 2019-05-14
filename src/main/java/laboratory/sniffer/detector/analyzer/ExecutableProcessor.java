@@ -134,28 +134,26 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
                 }
                 else  if(detectorMethod.getDetectorClass().isInnerClass()){
+                    //Chercher si la methode utilise des variable de la classe mère
 
+                     CtElement parent=detectorMethod.getDetectorClass().getClasse();
 
+                     while (parent.getParent()!=null){
 
+                         if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null &&
+                                 ctFieldAccess.getTarget().getType().getDeclaration().equals(parent.getParent())){
+                             variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
+                             variableName = ctFieldAccess.getVariable().getSimpleName();
+                             detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
 
-                     if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null &&
-                             detectorMethod.getDetectorClass().getClasse().getParent().getParent().getParent()!=null&&
-                             ctFieldAccess.getTarget().getType().getDeclaration().equals(detectorMethod.getDetectorClass().getClasse().getParent().getParent().getParent())){
-                         variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
-                         variableName = ctFieldAccess.getVariable().getSimpleName();
+                             break;
+                         }
 
+                         parent=parent.getParent();
 
-                         detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
                      }
 
-                    if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null&&
-                            ctFieldAccess.getTarget().getType().getDeclaration().equals(detectorMethod.getDetectorClass().getClasse().getParent())){
-                        variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
-                        variableName = ctFieldAccess.getVariable().getSimpleName();
-                       // System.out.println("inner class var "+variableName);
-                        //System.out.println("inner class target "+variableTarget);
-                        detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
-                    }
+
                 }
             }
         }

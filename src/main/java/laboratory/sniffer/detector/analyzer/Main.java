@@ -82,8 +82,8 @@ public class Main {
 
             // Detection des défauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
-           //classifier classifier=new classifier(base_path);
-            //String result=classifier.exec();
+            classifier classifier=new classifier(base_path);
+            String result=classifier.exec();
             //logger.info(result);
           //  System.out.println(result);
 

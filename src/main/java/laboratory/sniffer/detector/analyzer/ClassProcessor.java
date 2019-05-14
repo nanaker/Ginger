@@ -6,18 +6,15 @@ import laboratory.sniffer.detector.entities.DetectorVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.reflect.code.CtNewClass;
-import spoon.reflect.declaration.CtClass;
-import spoon.reflect.declaration.CtConstructor;
-import spoon.reflect.declaration.CtField;
-import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.declaration.ModifierKind;
+import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtTypeReference;
+import spoon.support.reflect.declaration.CtFieldImpl;
 import spoon.support.reflect.declaration.CtInterfaceImpl;
 
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
-
+import java.util.Set;
 
 
 public class ClassProcessor extends TypeProcessor<CtClass> {
@@ -155,6 +152,31 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         boolean isBroadcastReceiver = false;
         boolean isInterface = ctClass.isInterface();
         boolean isStatic = false;
+
+        if (ctClass.isAnonymous()) {
+
+            if (ctClass.getParent().getParent() instanceof CtVariable) {
+                CtVariable var = (CtVariable) ctClass.getParent().getParent();
+
+                for (ModifierKind modifierKind : var.getModifiers()) {
+                    if (modifierKind.toString().toLowerCase().equals("static")) {
+                        isStatic = true;
+                    }
+                }
+            }
+//            } else if (ctClass.getParent().getParent() instanceof CtFieldImpl) {
+//                System.out.println("CtFieldImpl");
+//                CtFieldImpl var2 = (CtFieldImpl) ctClass.getParent().getParent();
+//
+//
+//                for (Object modifierKind : var2.getModifiers()) {
+//                    if (modifierKind.toString().toLowerCase().equals("static")) {
+//                        isStatic = true;
+//                    }
+//                }
+//            }
+        }
+
         for (ModifierKind modifierKind : ctClass.getModifiers()) {
             if (modifierKind.toString().toLowerCase().equals("static")) {
                 isStatic = true;
