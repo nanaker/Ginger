@@ -85,7 +85,7 @@ public class Main {
             classifier classifier=new classifier(base_path);
             String result=classifier.exec();
             //logger.info(result);
-          //  System.out.println(result);
+           //System.out.println(result);
 
 
             //Correction des défauts de code
