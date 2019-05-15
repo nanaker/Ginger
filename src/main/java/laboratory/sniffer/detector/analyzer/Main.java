@@ -1,7 +1,8 @@
 package laboratory.sniffer.detector.analyzer;
 
-import laboratory.sniffer.detector.corrector.LICProcessor;
-import laboratory.sniffer.detector.corrector.NLMRProcessor;
+import laboratory.sniffer.detector.corrector.Correction.LICProcessor;
+import laboratory.sniffer.detector.corrector.Recommandation.HASProcessor;
+import laboratory.sniffer.detector.corrector.Recommandation.HBRProcessor;
 import laboratory.sniffer.detector.detector.classifier;
 import laboratory.sniffer.detector.entities.DetectorClass;
 import laboratory.sniffer.detector.metrics.MetricsCalculator;
@@ -83,13 +84,13 @@ public class Main {
             // Detection des défauts de code
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
             classifier classifier=new classifier(base_path);
-            //String result=classifier.exec();
+            String result=classifier.exec();
             //logger.info(result);
            //System.out.println(result);
 
 
             //Correction des défauts de code
-            //runRefactor();
+            runRefactor();
 
 
         } catch (ArgumentParserException e) {
@@ -160,13 +161,17 @@ public class Main {
         final String MIM = "result/classification_result_MIM";
         final String NLMR = "result/classification_result_NLMR";
         final String LIC = "result/classification_result_LIC";
+        final String HBR = "result/classification_result_HBR";
+        final String HAS = "result/classification_result_HAS";
 
 
 
 
         //run.addProcessor(new MIMProcessor(MIM));
         //run.addProcessor(new NLMRProcessor(NLMR));
-        run.addProcessor(new LICProcessor(LIC));
+        //run.addProcessor(new LICProcessor(LIC));
+        //run.addProcessor(new HBRProcessor(HBR));
+        run.addProcessor(new HASProcessor(HAS));
 
 
 
