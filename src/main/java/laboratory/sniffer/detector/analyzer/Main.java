@@ -79,18 +79,23 @@ public class Main {
 
             Namespace res = parser.parseArgs(argumentsQyery);
 
+
             queryMode(res);
 
             // Detection des défauts de code
+
+            System.out.println("Detecting code smells...");
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
             classifier classifier=new classifier(base_path);
             String result=classifier.exec();
             //logger.info(result);
-           System.out.println(result);
+            System.out.println(result);
+            System.out.println("Done");
+
 
 
             //Correction des défauts de code
-            runRefactor();
+          //  runRefactor();
 
 
         } catch (ArgumentParserException e) {
@@ -110,6 +115,7 @@ public class Main {
         deteleContenetOfDirectory("db");
 
         logger.info("Collecting metrics");
+        System.out.println("Collecting metrics...");
         String path = arg.getString("folder");
         path = new File(path).getAbsolutePath();
         String name = arg.getString("name");
@@ -120,6 +126,7 @@ public class Main {
         mainProcessor.process();
 
         List<DetectorClass> classes=mainProcessor.getCurrentApp().getDetectorClasses();
+        System.out.println("Save classes path ... ");
         writeClasses(classes);
 
         GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
@@ -201,13 +208,14 @@ public class Main {
         run.run();
 
         logger.info("fin refactor");
-        System.out.println("fin refactor");
+        System.out.println(" Refactor done ");
 
     }
 
     public static void queryMode(Namespace arg) throws Exception {
 
         logger.info("Executing Queries");
+        System.out.println("Executing Queries");
         QueryEngine queryEngine = new QueryEngine(arg.getString("database"));
 
 
@@ -240,15 +248,21 @@ public class Main {
 
 
         queryEngine.setCsvPrefix(csvPrefix);
+        System.out.println("Execute MIM query ");
         MIMQuery.createMIMQuery(queryEngine).execute(true);
+        System.out.println("Execute LIC query ");
         LICQuery.createLICQuery(queryEngine).execute(true);
+        System.out.println("Execute NLMR query ");
         NLMRQuery.createNLMRQuery(queryEngine).execute(true);
+        System.out.println("Execute HBR query ");
         HeavyBroadcastReceiverQuery.createHeavyBroadcastReceiverQuery(queryEngine).execute(true);
+        System.out.println("Execute HAS query ");
         HeavyAsyncTaskStepsQuery.createHeavyAsyncTaskStepsQuery(queryEngine).execute(true);
 
 
         queryEngine.shutDown();
         logger.info("Done");
+        System.out.println("Done ");
     }
 
 
