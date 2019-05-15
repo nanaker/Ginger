@@ -18,12 +18,13 @@ public class HBRProcessor extends AbstractProcessor<CtMethod> {
         System.out.println("Processor HBRProcessor Start ... ");
         // Get applications information from the CSV - output
         hbr_methods= CsvReader.formatCsv(file,3);
+        System.out.println("hbr_methods "+hbr_methods.size());
 
     }
 
     @Override
     public void process(CtMethod element) {
-        CtComment comment=getFactory().Core().createComment().setContent("Commentaire de recommandation").setCommentType(CtComment.CommentType.BLOCK);
+        CtComment comment=getFactory().Core().createComment().setContent("You should never perform long-running operations in the onReceive method (there is a timeout\n of 10 seconds that the system allows before considering the receiver to be blocked and\n a candidate to be killed). for more information please visit\n https://developer.android.com/reference/android/content/BroadcastReceiver").setCommentType(CtComment.CommentType.BLOCK);
         //element.addComment(comment);
         element.getBody().insertEnd(comment);
         System.out.println("in process HBR "+element);
@@ -37,6 +38,7 @@ public class HBRProcessor extends AbstractProcessor<CtMethod> {
     }
 
     private boolean checkValidToCsv(CtMethod candidate){
+        System.out.println("candidate"+candidate);
         String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
 
         for(String occurence : hbr_methods){

@@ -170,8 +170,8 @@ public class Main {
         //run.addProcessor(new MIMProcessor(MIM));
         //run.addProcessor(new NLMRProcessor(NLMR));
         //run.addProcessor(new LICProcessor(LIC));
-        //run.addProcessor(new HBRProcessor(HBR));
-        run.addProcessor(new HASProcessor(HAS));
+        run.addProcessor(new HBRProcessor(HBR));
+        //run.addProcessor(new HASProcessor(HAS));
 
 
 

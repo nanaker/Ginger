@@ -24,8 +24,10 @@ public class CsvReader {
             e.printStackTrace();
             System.exit(1);
         }
+        if(scanner.hasNext()){
+            scanner.next();
+        }
 
-        scanner.next();
 
         while (scanner.hasNext())
         {

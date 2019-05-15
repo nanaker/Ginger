@@ -1,0 +1,2 @@
+number_of_instructions,cyclomatic_complexity,has_methode_onReceive,full_name,is_code_smell
+19,7,True,onReceive#net.ktnx.mobileledger.ui.transaction_list.TransactionListAdapter$DownloadInstallCoreResponseReceiver,True

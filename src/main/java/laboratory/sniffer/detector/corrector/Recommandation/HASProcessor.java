@@ -23,7 +23,7 @@ public class HASProcessor extends AbstractProcessor<CtMethod> {
 
     @Override
     public void process(CtMethod element) {
-        CtComment comment=getFactory().Core().createComment().setContent("AsyncTasks should ideally be used for short operations ").setCommentType(CtComment.CommentType.BLOCK);
+        CtComment comment=getFactory().Core().createComment().setContent("AsyncTasks should ideally be used for short operations (a few seconds at the most.)\n If you need to keep threads running for long periods of time, it is highly recommended\n you use the various APIs provided by the java.util.concurrent package such as Executor,\n ThreadPoolExecutor and FutureTask.\n For more information please visit https://developer.android.com/reference/android/os/AsyncTask.html").setCommentType(CtComment.CommentType.BLOCK);
         //element.addComment(comment);
         element.getBody().insertEnd(comment);
         System.out.println("in process HAS "+element);
