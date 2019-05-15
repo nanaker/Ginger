@@ -1,0 +1,1 @@
+pyinstaller --onefile ginger_py.py --hidden-import sklearn.neighbors.typedefs --hidden-import sklearn.neighbors.quad_tree --hidden-import sklearn.tree._utils
