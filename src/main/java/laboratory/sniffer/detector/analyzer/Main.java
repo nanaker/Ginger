@@ -1,6 +1,8 @@
 package laboratory.sniffer.detector.analyzer;
 
 import laboratory.sniffer.detector.corrector.Correction.LICProcessor;
+import laboratory.sniffer.detector.corrector.Correction.MIMProcessor;
+import laboratory.sniffer.detector.corrector.Correction.NLMRProcessor;
 import laboratory.sniffer.detector.corrector.Recommandation.HASProcessor;
 import laboratory.sniffer.detector.corrector.Recommandation.HBRProcessor;
 import laboratory.sniffer.detector.detector.classifier;
@@ -65,7 +67,7 @@ public class Main {
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
             //System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
-            //runAnalysis(pathOfApplicationToAnalyse);
+            runAnalysis(pathOfApplicationToAnalyse);
 
 
 
@@ -80,16 +82,16 @@ public class Main {
             Namespace res = parser.parseArgs(argumentsQyery);
 
 
-            //queryMode(res);
+            queryMode(res);
 
             // Detection des défauts de code
 
             System.out.println("Detecting code smells...");
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
-            //classifier classifier=new classifier(base_path);
-           //String result=classifier.exec();
+            classifier classifier=new classifier(base_path);
+           String result=classifier.exec();
             //logger.info(result);
-           // System.out.println(result);
+            System.out.println(result);
             System.out.println("Done");
 
 
@@ -155,16 +157,35 @@ public class Main {
     public static void runRefactor(){
 
         logger.info("Refactoring ...  " );
-
-
-
         Launcher run = new Launcher();
+        Launcher run1 = new Launcher();
+        Launcher run2 = new Launcher();
+        Launcher run3 = new Launcher();
+        Launcher run4 = new Launcher();
         run.getEnvironment().setNoClasspath(true);
+        run1.getEnvironment().setNoClasspath(true);
+        run2.getEnvironment().setNoClasspath(true);
+        run3.getEnvironment().setNoClasspath(true);
+        run4.getEnvironment().setNoClasspath(true);
+
         //run.getEnvironment().setSourceClasspath(sourceClassPatch);
 
         run.getEnvironment().setShouldCompile(false);
-       // run.getEnvironment().setAutoImports(false);
+        run1.getEnvironment().setShouldCompile(false);
+
+        run2.getEnvironment().setShouldCompile(false);
+
+        run3.getEnvironment().setShouldCompile(false);
+
+        run4.getEnvironment().setShouldCompile(false);
+
+
+        // run.getEnvironment().setAutoImports(false);
         run.setOutputFilter();
+        run1.setOutputFilter();
+        run2.setOutputFilter();
+        run3.setOutputFilter();
+        run4.setOutputFilter();
         final String MIM = "result/classification_result_MIM";
         final String NLMR = "result/classification_result_NLMR";
         final String LIC = "result/classification_result_LIC";
@@ -174,11 +195,11 @@ public class Main {
 
 
 
-        //run.addProcessor(new MIMProcessor(MIM));
-        //run.addProcessor(new NLMRProcessor(NLMR));
-        //run.addProcessor(new LICProcessor(LIC));
-        run.addProcessor(new HBRProcessor(HBR));
-        run.addProcessor(new HASProcessor(HAS));
+        run.addProcessor(new MIMProcessor(MIM));
+        run1.addProcessor(new NLMRProcessor(NLMR));
+        run2.addProcessor(new LICProcessor(LIC));
+        run3.addProcessor(new HBRProcessor(HBR));
+        run4.addProcessor(new HASProcessor(HAS));
 
 
 
@@ -200,12 +221,21 @@ public class Main {
         {
             //System.out.println("in main "+e);
             run.addInputResource(e);
+            run1.addInputResource(e);
+            run2.addInputResource(e);
+            run3.addInputResource(e);
+            run4.addInputResource(e);
 
         }
 
 
         //Process now
+
         run.run();
+        run1.run();
+        run2.run();
+        run3.run();
+        run4.run();
 
         logger.info("fin refactor");
         System.out.println(" Refactor done ");

@@ -16,7 +16,7 @@ public class MethodProcessor extends ExecutableProcessor<CtMethod> {
     protected void process(CtMethod ctMethod, DetectorMethod detectorMethod) {
         detectorMethod.setSetter(checkSetter(ctMethod));
         detectorMethod.setGetter(checkGetter(ctMethod));
-        detectorMethod.setOverride(isOverride(ctMethod));
+        detectorMethod.setOverride(isOverride(ctMethod,detectorMethod));
 
         for (ModifierKind modifierKind : ctMethod.getModifiers()) {
             if (modifierKind.toString().toLowerCase().equals("static")) {
@@ -26,9 +26,12 @@ public class MethodProcessor extends ExecutableProcessor<CtMethod> {
         }
     }
 
-    private boolean isOverride(CtMethod element){
+    private boolean isOverride(CtMethod element, DetectorMethod detectorMethod){
 
         if(element.getAnnotations().toString().trim().matches("(.*)Override(.*)")){
+            return true;
+        }
+        if(detectorMethod.getDetectorClass().isInterface()){
             return true;
         }
         else return false;

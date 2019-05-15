@@ -4,6 +4,3 @@ True,False,False,False,False,False,False,1,drawMarker#net.ktnx.mobileledger.ui.H
 True,False,False,False,False,False,False,1,onSwipeRight#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
 True,False,False,False,False,False,False,1,onSwipeUp#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
 True,False,False,False,False,False,False,1,onSwipeDown#net.ktnx.mobileledger.ui.OnSwipeTouchListener,True
-True,False,False,False,False,False,False,1,done#net.ktnx.mobileledger.async.TaskCallback,True
-True,False,False,False,False,False,False,1,onLongClickItem#net.ktnx.mobileledger.ui.RecyclerItemListener$RecyclerTouchListener,True
-True,False,False,False,False,False,False,1,onClickItem#net.ktnx.mobileledger.ui.RecyclerItemListener$RecyclerTouchListener,True
