@@ -1,4 +1,4 @@
-package laboratory.sniffer.detector.corrector;
+package laboratory.sniffer.detector.corrector.Correction;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.declaration.CtAnnotation;

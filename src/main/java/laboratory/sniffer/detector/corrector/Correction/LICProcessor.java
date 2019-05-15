@@ -1,4 +1,4 @@
-package laboratory.sniffer.detector.corrector;
+package laboratory.sniffer.detector.corrector.Correction;
 
 import spoon.processing.AbstractProcessor;
 import spoon.reflect.code.*;
@@ -21,7 +21,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     {
         System.out.println("Processor LICProcessor Start ... ");
         // Get applications information from the CSV - output
-        lic_classes= CsvReader.formatCsv(file,6);
+        lic_classes= CsvReader.formatCsv(file,7);
 
     }
 
@@ -79,10 +79,13 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
 
         }else if(!element.isAnonymous()){
 
-            System.out.println("!element.isAnonymous()  ");
-            element.addModifier(ModifierKind.STATIC);
-            SaverOfTheFile fileSaver=new SaverOfTheFile();
-            fileSaver.reWriteFile(this,(element.getParent(CtClass.class)));
+
+                System.out.println("element.getParent() instanceof CtClass");
+                element.addModifier(ModifierKind.STATIC);
+                SaverOfTheFile fileSaver=new SaverOfTheFile();
+                fileSaver.reWriteFile(this,(element.getParent(CtClass.class)));
+
+
 
         }
 
@@ -269,6 +272,9 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
         fileSaver.reWriteFileTest(this,classeMere);
         return 1;
     }
+
+
+
 
 
 

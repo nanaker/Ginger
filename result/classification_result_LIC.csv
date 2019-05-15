@@ -1,6 +1,6 @@
-is_static,is_enum,uses_variables,call_method,is_interface,is_local_class,class_complexity,full_name,is_code_smell
-False,False,False,False,False,False,3,net.ktnx.mobileledger.ui.activity.NewTransactionActivity$AsyncCrasher,True
-False,False,False,False,False,False,3,net.ktnx.mobileledger.ui.profiles.ProfileDetailFragment$android.text.TextWatcher1,True
-False,False,False,False,False,False,1,net.ktnx.mobileledger.async.RetrieveTransactionsTask$TransactionParserException,True
-False,False,False,False,False,False,1,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.content.DialogInterface$OnClickListener2,True
-False,False,False,False,False,False,1,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.content.DialogInterface$OnClickListener1,True
+is_static,is_enum,uses_variables,call_method,is_interface,class_complexity,full_name,is_code_smell
+False,False,False,False,False,3,net.ktnx.mobileledger.ui.activity.NewTransactionActivity$AsyncCrasher,True
+False,False,False,False,False,3,net.ktnx.mobileledger.ui.profiles.ProfileDetailFragment$android.text.TextWatcher1,True
+False,False,False,False,False,1,net.ktnx.mobileledger.async.RetrieveTransactionsTask$TransactionParserException,True
+False,False,False,False,False,1,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.content.DialogInterface$OnClickListener2,True
+False,False,False,False,False,1,net.ktnx.mobileledger.ui.CrashReportDialogFragment$android.content.DialogInterface$OnClickListener1,True

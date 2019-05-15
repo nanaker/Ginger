@@ -41,7 +41,9 @@ public class CsvReader {
     position= la position de l'attribut full_name dans le fichier result.csv
     position=8--->MIM
     position=3--->NLMR
-    position=6--->LIC
+    position=7--->LIC
+    position=3--->HBR
+    position=3--->HAS
 
      */
     public static HashSet<String> formatCsv(String file_name, int position){
