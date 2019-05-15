@@ -4,6 +4,7 @@ import laboratory.sniffer.detector.entities.Entity;
 import laboratory.sniffer.detector.entities.DetectorApp;
 import laboratory.sniffer.detector.entities.DetectorMethod;
 import laboratory.sniffer.detector.entities.DetectorVariable;
+import spoon.reflect.declaration.CtClass;
 
 import java.util.HashMap;
 
@@ -106,6 +107,17 @@ public class MetricsCalculator {
                 IsEnum.createIsEnum(detectorClass,true);
             }
             else IsEnum.createIsEnum(detectorClass,false);
+
+            if(!(detectorClass.getClasse().isAnonymous())&&(detectorClass.isInnerClass())){
+
+
+                if(!(detectorClass.getClasse().getParent() instanceof CtClass)){
+                    IsLocalClass.createisLocalClass(detectorClass,true);
+
+                }
+                else IsLocalClass.createisLocalClass(detectorClass,false);
+            }
+            else IsLocalClass.createisLocalClass(detectorClass,false);
             NumberOfChildren.createNumberOfChildren(detectorClass);
             for(DetectorMethod detectorMethod : detectorClass.getDetectorMethods()){
                 calculateMethodMetrics(detectorMethod);
