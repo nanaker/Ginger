@@ -1,2 +1,0 @@
-number_of_instructions,cyclomatic_complexity,has_methode_onReceive,full_name,is_code_smell
-10,2,True,onReceive#ch.blinkenlights.battery.BlinkenlightsBatteryService$android.content.BroadcastReceiver1,True

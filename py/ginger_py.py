@@ -228,6 +228,11 @@ def predict(argv):
         HBR_result_path=os.path.join(result_path, 'classification_result_HBR.csv')
 
         data2.to_csv(HBR_result_path, index=False)
+    else:
+        HBR_result_path = os.path.join(result_path, 'classification_result_HBR.csv')
+        with open(HBR_result_path, 'w'):
+            pass
+
 
         # if the file containing dataset is not empty then create the model
     #HAS
@@ -267,6 +272,10 @@ def predict(argv):
         HAS_result_path = os.path.join(result_path, 'classification_result_HAS.csv')
 
         data2.to_csv(HAS_result_path, index=False)
+    else:
+        HAS_result_path = os.path.join(result_path, 'classification_result_HAS.csv')
+        with open(HAS_result_path, 'w'):
+            pass
     #LIC
     try:
         size = os.stat(LIC_prediction_path).st_size
@@ -281,7 +290,7 @@ def predict(argv):
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
-            columnsTitles = ['is_static','is_enum','uses_variables', 'call_method','is_interface','class_complexity','full_name']
+            columnsTitles = ['is_static','is_enum','uses_variables', 'call_method','is_interface','is_local_class','class_complexity','full_name']
             data_full_name = pd.read_csv(LIC_prediction_path)
             data_full_name = data_full_name.reindex(columns=columnsTitles)
             data_full_name.to_csv(LIC_prediction_path, index=False)
@@ -303,6 +312,10 @@ def predict(argv):
         LIC_result_path = os.path.join(result_path, 'classification_result_LIC.csv')
 
         data2.to_csv(LIC_result_path, index=False)
+    else:
+        LIC_result_path = os.path.join(result_path, 'classification_result_LIC.csv')
+        with open(LIC_result_path, 'w'):
+            pass
     #MIM
     try:
         size = os.stat(MIM_prediction_path).st_size
@@ -342,6 +355,10 @@ def predict(argv):
         MIM_result_path = os.path.join(result_path, 'classification_result_MIM.csv')
 
         data2.to_csv(MIM_result_path, index=False)
+    else:
+        MIM_result_path = os.path.join(result_path, 'classification_result_MIM.csv')
+        with open(MIM_result_path, 'w'):
+            pass
     #NLMR
     try:
         size = os.stat(NLMR_prediction_path).st_size
@@ -378,6 +395,10 @@ def predict(argv):
         NLMR_result_path = os.path.join(result_path, 'classification_result_NLMR.csv')
 
         data2.to_csv(NLMR_result_path, index=False)
+    else:
+        NLMR_result_path = os.path.join(result_path, 'classification_result_NLMR.csv')
+        with open(NLMR_result_path, 'w'):
+            pass
 
 
 if __name__ == "__main__":

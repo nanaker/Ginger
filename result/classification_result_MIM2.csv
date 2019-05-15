@@ -1,3 +1,0 @@
-number_of_callers_not_null,is_init,is_static,is_override,uses_variables,call_external_methode,cyclomatic_complexity,full_name,is_code_smell
-True,False,False,False,False,False,2,update_account_table#net.ktnx.mobileledger.ui.account_summary.AccountSummaryFragment,True
-True,False,False,False,False,False,1,loadAccount#net.ktnx.mobileledger.model.MobileLedgerProfile,True
