@@ -55,15 +55,17 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
 
 
     private boolean checkValidToCsv(CtMethod candidate){
-        String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
+            String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
 
-        for(String occurence : meth_toStatic){
-            String csvClassName = occurence.substring(occurence.lastIndexOf(".")+1);
-            if(csvClassName.contains(class_file) &&
-                    occurence.split("#")[0].equals(candidate.getSimpleName().split("\\(")[0])){
-                return true;
+            for(String occurence : meth_toStatic){
+                String csvClassName = occurence.substring(occurence.lastIndexOf(".")+1);
+                if(csvClassName.contains(class_file) &&
+                        occurence.split("#")[0].equals(candidate.getSimpleName().split("\\(")[0])){
+                    return true;
+                }
             }
-        }
+
+
         return false;
     }
 
@@ -77,8 +79,5 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
         return true;
     }
 
-    @Override
-    public void processingDone() {
-        System.out.println("processingDone in staticProcessor");
-    }
+
 }

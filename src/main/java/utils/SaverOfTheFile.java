@@ -17,7 +17,6 @@ import spoon.support.reflect.code.CtNewClassImpl;
 public class SaverOfTheFile {
 
 
-
     public void reWriteFile(AbstractProcessor processor, CtClass element){
 
         try {
@@ -64,9 +63,6 @@ public class SaverOfTheFile {
         }
 
     }
-
-
-
 
 
     public void reWriteFileInvocationImpl(AbstractProcessor processor, CtClass element){
@@ -163,6 +159,7 @@ public class SaverOfTheFile {
 
 
     public CtClass getClassMere(CtMethod element){
+
         String theClassName=element.getParent(CtClass.class).getQualifiedName();
         String[] splitName = theClassName.split("\\$");
 

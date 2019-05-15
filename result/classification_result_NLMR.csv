@@ -1,3 +1,1 @@
 has_onLowMemory,extend_class,class_complexity,full_name,is_code_smell
-False,False,18,net.ktnx.mobileledger.ui.activity.AppCompatPreferenceActivity,True
-False,False,2,net.ktnx.mobileledger.ui.activity.CrashReportingActivity,True
