@@ -269,7 +269,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
 
         //this.getEnvironment().setShouldCompile(false);
 
-        fileSaver.reWriteFileTest(this,classeMere);
+        fileSaver.reWriteFileInvocationImpl(this,classeMere);
         return 1;
     }
 
