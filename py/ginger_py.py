@@ -212,9 +212,9 @@ def predict(argv):
         try:
             print("Detecting HBR code smells...")
             columnsTitles = ['cyclomatic_complexity', 'number_of_instructions', 'has_methode_onReceive', 'full_name']
-            data_full_name = pd.read_csv(HAS_prediction_path)
+            data_full_name = pd.read_csv(HBR_prediction_path)
             data_full_name = data_full_name.reindex(columns=columnsTitles)
-            data_full_name.to_csv(HAS_prediction_path, index=False)
+            data_full_name.to_csv(HBR_prediction_path, index=False)
 
             data_full_name = pd.read_csv(HBR_prediction_path)
             data = pd.read_csv(HBR_prediction_path)
