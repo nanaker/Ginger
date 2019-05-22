@@ -43,7 +43,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         }
         int numberOfDeclaredLocals = ctExecutable.getElements(new TypeFilter<CtLocalVariable>(CtLocalVariable.class)).size();
         detectorMethod.setNumberOfLines(countEffectiveCodeLines(ctExecutable));
-        //System.out.println("detectorMethod= "+detectorMethod+" "+ctExecutable);
+
         handleUsedVariables(ctExecutable, detectorMethod);
         handleInvocations(ctExecutable, detectorMethod);
         detectorMethod.setComplexity(getComplexity(ctExecutable));
@@ -101,8 +101,6 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     private void handleUsedVariables(T ctExecutable, DetectorMethod detectorMethod) {
         List<CtFieldAccess> elements = ctExecutable.getElements(new TypeFilter<CtFieldAccess>(CtFieldAccess.class));
-        //System.out.println("ctExecutable in handleUsedVariables "+ctExecutable.getSimpleName());
-        //System.out.println("List<CtFieldAccess> elements "+elements);
 
         String variableTarget = null;
         String variableName;
@@ -146,23 +144,15 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
                  CtElement parent=detectorMethod.getDetectorClass().getClasse();
 
-                    // System.out.println("method name "+detectorMethod.getName());
-                    // System.out.println("ctFieldAccess.getTarget().getType().getDeclaration() "+ctFieldAccess.getTarget().getType().getDeclaration());
-
 
                  while (parent.getParent()!=null){
 
-
-
-                       //  System.out.println("parent "+parent.getParent());
 
 
                      if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null &&
                              ctFieldAccess.getTarget().getType().getDeclaration().equals(parent.getParent())){
                          variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
                          variableName = ctFieldAccess.getVariable().getSimpleName();
-                       //  System.out.println("method name "+detectorMethod.getName());
-                        // System.out.println("variable name "+variableName);
 
                          detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
 

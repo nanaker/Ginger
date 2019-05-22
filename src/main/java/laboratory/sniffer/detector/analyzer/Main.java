@@ -18,13 +18,19 @@ import net.sourceforge.argparse4j.inf.*;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spoon.IncrementalLauncher;
 import spoon.Launcher;
 import spoon.reflect.declaration.CtType;
 import utils.CsvReader;
+
+import javax.security.auth.callback.LanguageCallback;
 
 import static utils.CsvReader.readAllDataAtOnce;
 
@@ -89,15 +95,15 @@ public class Main {
             System.out.println("Detecting code smells...");
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
             classifier classifier=new classifier(base_path);
-           String result=classifier.exec();
+            String result=classifier.exec();
             //logger.info(result);
-            System.out.println(result);
+            // System.out.println(result);
             System.out.println("Done");
 
 
 
             //Correction des défauts de code
-           runRefactor();
+            runRefactor();
 
 
         } catch (ArgumentParserException e) {
@@ -157,49 +163,16 @@ public class Main {
     public static void runRefactor(){
 
         logger.info("Refactoring ...  " );
-        Launcher run = new Launcher();
-        Launcher run1 = new Launcher();
-        Launcher run2 = new Launcher();
-        Launcher run3 = new Launcher();
-        Launcher run4 = new Launcher();
-        run.getEnvironment().setNoClasspath(true);
-        run1.getEnvironment().setNoClasspath(true);
-        run2.getEnvironment().setNoClasspath(true);
-        run3.getEnvironment().setNoClasspath(true);
-        run4.getEnvironment().setNoClasspath(true);
-
-        //run.getEnvironment().setSourceClasspath(sourceClassPatch);
-
-        run.getEnvironment().setShouldCompile(false);
-        run1.getEnvironment().setShouldCompile(false);
-
-        run2.getEnvironment().setShouldCompile(false);
-
-        run3.getEnvironment().setShouldCompile(false);
-
-        run4.getEnvironment().setShouldCompile(false);
 
 
-        // run.getEnvironment().setAutoImports(false);
-        run.setOutputFilter();
-        run1.setOutputFilter();
-        run2.setOutputFilter();
-        run3.setOutputFilter();
-        run4.setOutputFilter();
+
+
         final String MIM = "result/classification_result_MIM";
         final String NLMR = "result/classification_result_NLMR";
         final String LIC = "result/classification_result_LIC";
         final String HBR = "result/classification_result_HBR";
         final String HAS = "result/classification_result_HAS";
 
-
-
-
-        run.addProcessor(new MIMProcessor(MIM));
-        run1.addProcessor(new NLMRProcessor(NLMR));
-        run2.addProcessor(new LICProcessor(LIC));
-        run3.addProcessor(new HBRProcessor(HBR));
-        run4.addProcessor(new HASProcessor(HAS));
 
 
 
@@ -217,25 +190,130 @@ public class Main {
 
 
 
-        for (String e : classPath)
-        {
-            //System.out.println("in main "+e);
-            run.addInputResource(e);
-            run1.addInputResource(e);
-            run2.addInputResource(e);
-            run3.addInputResource(e);
-            run4.addInputResource(e);
 
-        }
 
 
         //Process now
+        Runnable Rmim = new Runnable() {
 
-        run.run();
-        run1.run();
-        run2.run();
-        run3.run();
-        run4.run();
+            @Override
+            public void run() {
+
+                Launcher run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new MIMProcessor(MIM));
+                for (String e : classPath)
+                {
+                    run.addInputResource(e);
+
+
+                }
+                run.run();
+
+            }
+        };
+
+        Runnable Rnlmr = new Runnable() {
+
+            @Override
+            public void run() {
+
+                Launcher run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new NLMRProcessor(NLMR));
+                for (String e : classPath)
+                {
+                    run.addInputResource(e);
+
+
+                }
+                run.run();
+
+            }
+        };
+
+        Runnable Rlic = new Runnable() {
+
+            @Override
+            public void run() {
+
+                Launcher run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new LICProcessor(LIC));
+                for (String e : classPath)
+                {
+                    //System.out.println("in main "+e);
+                    run.addInputResource(e);
+
+
+                }
+                run.run();
+
+            }
+        };
+        Runnable Rhbr = new Runnable() {
+
+            @Override
+            public void run() {
+
+                Launcher run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new HBRProcessor(HBR));
+                for (String e : classPath)
+                {
+                    run.addInputResource(e);
+
+
+                }
+                run.run();
+
+            }
+        };
+
+
+        Runnable Rhas = new Runnable() {
+
+            @Override
+            public void run() {
+
+                Launcher run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new HASProcessor(HAS));
+                for (String e : classPath)
+                {
+                    run.addInputResource(e);
+
+                }
+                run.run();
+
+            }
+        };
+        try {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+
+            executor.submit(Rmim);
+            executor.submit(Rnlmr);
+            executor.submit(Rlic);
+            executor.submit(Rhbr);
+            executor.submit(Rhas);
+            executor.shutdown();
+
+            executor.awaitTermination(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+        }
+
 
         logger.info("fin refactor");
         System.out.println(" Refactor done ");
@@ -336,6 +414,9 @@ public class Main {
 
 
     }
+
+
+
 
 
 }

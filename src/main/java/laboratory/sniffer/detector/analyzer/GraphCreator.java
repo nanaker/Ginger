@@ -60,13 +60,11 @@ public class GraphCreator {
         for (VariableData variableData : detectorMethod.getUsedVariablesData()) {
             detectorClass = detectorApp.getDetectorInternalClass(variableData.getClassName());
             if (detectorClass != null) {
-                //System.out.println("detector class non null ");
-                 //System.out.println("method name "+detectorMethod.getName());
-                //System.out.println("variableData.getVariableName() "+variableData.getVariableName());
+
                 detectorVariable = detectorClass.findVariable(variableData.getVariableName());
 
                 if (detectorVariable != null) {
-                   // System.out.println("detector variable non null ");
+
                     detectorMethod.useVariable(detectorVariable);
                 }
                 else{

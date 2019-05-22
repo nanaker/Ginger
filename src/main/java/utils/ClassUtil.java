@@ -41,13 +41,7 @@ public class ClassUtil {
         return element;
     }
 
-    public static CtClass createVariable(AbstractProcessor processor, CtClass element){
-        String variableName=element.getQualifiedName();
-        String[] splitName = variableName.split("\\$");
-        variableName = splitName[0] + "$" +
-                ((CtNewClass) element.getParent()).getType().getQualifiedName() + splitName[1];
-        variableName= variableName.substring(variableName.lastIndexOf("$")+1);
-        variableName=Character.toLowerCase(variableName.charAt(0)) + variableName.substring(1);//la declaration d'une variable commence toujours par une miniscule
+    public static CtClass createVariable(AbstractProcessor processor, CtClass element, String variableName){
 
         CtTypeReference ref = processor.getFactory().Core().createTypeReference();//C'est le type de la nouvelle variable
         ref.setSimpleName(getType(element.getParent().toString()));
@@ -59,7 +53,8 @@ public class ClassUtil {
         CtField variable=processor.getFactory().createCtField(variableName,ref,element.getParent().toString(),k);
 
 
-        CtClass classeMere=element.getParent().getParent().getParent(CtClass.class);
+        //CtClass classeMere=element.getParent().getParent().getParent(CtClass.class);
+        CtClass classeMere=getClassMere(element);
         classeMere.addFieldAtTop(variable);//on declare la nouvelle variable en haut de la classe
 
 
@@ -82,5 +77,36 @@ public class ClassUtil {
         return null;
     }
 
+
+
+    public static  CtClass getClassMere(CtClass element){
+        String theClassName=element.getQualifiedName();
+        String[] splitName = theClassName.split("\\$");
+
+        theClassName= splitName[0];
+
+        CtClass classeMere=null;
+        CtClass saveElement=element;
+        boolean sortir=true;
+        if(saveElement!=null){
+            while (sortir){
+                if(saveElement!=null){
+
+                    if(saveElement.getQualifiedName().equals(theClassName)){
+                        sortir=false;
+                        classeMere=saveElement;
+                    }else{
+                        saveElement=saveElement.getParent(CtClass.class);
+
+                    }
+
+
+                }
+            }
+
+        }
+
+        return classeMere;
+    }
 
 }

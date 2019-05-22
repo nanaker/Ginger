@@ -30,34 +30,35 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     @Override
     public void process(CtClass element) {
 
-
+        System.out.println("in lic process");
         if(element.isAnonymous()){
 
             if(element.getParent().getParent() instanceof CtInvocationImpl){
 
-              RefactorCtInvocationImpl(element);
+              refactorCtInvocationImpl(element);
 
 
             }
             else if((element.getParent().getParent() instanceof CtConstructorCallImpl)){
 
 
-               refactorCtConstructorCallImpl(element);
+              refactorCtConstructorCallImpl(element);
 
             }else if((element.getParent().getParent() instanceof CtVariable)){
 
-               refactorCtVariable(element);
+              refactorCtVariable(element);
 
             }
 
         }else if(!element.isAnonymous()){
 
+            //if parent.isInterface alors on n'ajoute pas le modifier static
 
-
-                element.addModifier(ModifierKind.STATIC);
-                SaverOfTheFile fileSaver=new SaverOfTheFile();
-                fileSaver.reWriteFile(this,(element.getParent(CtClass.class)));
-
+                if(element.getParent(CtClass.class)!=null) {
+                    element.addModifier(ModifierKind.STATIC);
+                    SaverOfTheFile fileSaver = new SaverOfTheFile();
+                    fileSaver.reWriteFile(this, (element.getParent(CtClass.class)));
+                }
 
 
         }
@@ -67,6 +68,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
 
     @Override
     public boolean isToBeProcessed(CtClass candidate) {
+
         return checkValidToCsv(candidate);
     }
 
@@ -102,42 +104,15 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
 
 
 
-    public CtClass getClassMere(CtClass element){
-        String theClassName=element.getQualifiedName();
-        String[] splitName = theClassName.split("\\$");
 
-        theClassName= splitName[0];
-        //System.out.println("hi here "+theClassName);
-        CtClass classeMere=null;
-        CtClass saveElement=element;
-        boolean sortir=true;
-        if(saveElement!=null){
-            while (sortir){
-                if(saveElement!=null){
-                    //System.out.println("hi hi here "+saveElement.getQualifiedName());
-                    if(saveElement.getQualifiedName().equals(theClassName)){
-                        sortir=false;
-                        classeMere=saveElement;
-                    }else{
-                        saveElement=saveElement.getParent(CtClass.class);
-                        //System.out.println("the element= "+saveElement);
-                    }
-
-
-                }
-            }
-
-        }
-
-        return classeMere;
-    }
 
     public int refactorCtConstructorCallImpl(CtClass element){
 
         /*Pour refactoiser un LIC avec une classe anonyme, on extrait cette classe dans une variable*/
-        String variableName=element.getQualifiedName();
 
-        CtClass classeMere= ClassUtil.createVariable(this, element);
+        String variableName=getVariableName(element);
+
+        CtClass classeMere= ClassUtil.createVariable(this, element, variableName);
         //On remplace la classe anonyme par l'utilisation de la variable deja declarée
         List<CtExpression> listeOfArguments=((CtConstructorCallImpl) element.getParent().getParent()).getArguments();
         int argumentPosition=getArgumentPosition(listeOfArguments,element.getParent().toString());
@@ -165,10 +140,12 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     }
 
 
-    public int RefactorCtInvocationImpl(CtClass element){
+    public int refactorCtInvocationImpl(CtClass element){
         /*Pour refactoiser un LIC avec une classe anonyme, on extrait cette classe dans une variable*/
-        String variableName=element.getQualifiedName();
-        CtClass classeMere= ClassUtil.createVariable(this, element);
+        String variableName=getVariableName(element);
+        //CtClass classeMere= createVariableForInvocationImpl(this, element);
+        CtClass classeMere=ClassUtil.createVariable(this,element, variableName);
+
 
         //On remplace la classe anonyme par l'utilisation de la variable deja declarée
         List<CtExpression> listeOfArguments=((CtInvocationImpl) element.getParent().getParent()).getArguments();
@@ -196,6 +173,23 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     }
 
 
+    private String getVariableName(CtClass element){
+        String variableName=element.getQualifiedName();
 
+        String[] splitName = variableName.split("\\$");
+
+        variableName = splitName[0] + "$" +
+                ((CtNewClass) element.getParent()).getType().getQualifiedName() + splitName[1];
+        if(splitName.length>2){
+            variableName=variableName+splitName[2];
+        }
+
+        variableName= variableName.substring(variableName.lastIndexOf("$")+1);
+
+        variableName=Character.toLowerCase(variableName.charAt(0)) + variableName.substring(1);//la declaration d'une variable commence toujours par une miniscule
+
+        return variableName;
+
+    }
 
 }

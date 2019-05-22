@@ -47,6 +47,7 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
 
     public void process(CtMethod element) {
 
+
         element.addModifier(ModifierKind.STATIC);
         SaverOfTheFile fileSaver=new SaverOfTheFile();
         fileSaver.reWriteFile(this,element);
