@@ -298,7 +298,7 @@ def predict(argv):
             sys.exit(2)
         try:
             print("Detecting LIC code smells...")
-            columnsTitles = ['is_static','is_enum','uses_variables', 'call_method','is_interface','is_local_class','class_complexity','full_name']
+            columnsTitles = ['is_static','is_enum','uses_variables', 'call_method','is_interface','is_local_class','call_external_method','class_complexity','full_name']
             data_full_name = pd.read_csv(LIC_prediction_path)
             data_full_name = data_full_name.reindex(columns=columnsTitles)
             data_full_name.to_csv(LIC_prediction_path, index=False)

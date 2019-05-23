@@ -70,6 +70,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
             int numberOfLogicalLines=0;
             int nbCommentwithSemicoloone=0;
+           // System.out.println(ctMethod.getBody());
             int numbeOfLinesWithSemicolonnes=ctMethod.getBody().toString().split(";").length;
             int nbCtFor=ctMethod.getBody().getElements(new TypeFilter(CtFor.class)).size();
             int nbCtSwitch=ctMethod.getBody().getElements(new TypeFilter(CtSwitch.class)).size();
