@@ -47,7 +47,6 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
 
     public void process(CtMethod element) {
 
-
         element.addModifier(ModifierKind.STATIC);
         SaverOfTheFile fileSaver=new SaverOfTheFile();
         fileSaver.reWriteFile(this,element);
@@ -57,7 +56,6 @@ public class MIMProcessor extends AbstractProcessor<CtMethod> {
 
     private boolean checkValidToCsv(CtMethod candidate){
             String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
-
             for(String occurence : meth_toStatic){
                 String csvClassName = occurence.substring(occurence.lastIndexOf(".")+1);
                 if(csvClassName.contains(class_file) &&

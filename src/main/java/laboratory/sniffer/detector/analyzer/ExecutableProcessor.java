@@ -7,7 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
+import spoon.reflect.reference.CtVariableReference;
 import spoon.reflect.visitor.filter.TypeFilter;
+import spoon.support.reflect.code.*;
+import spoon.support.reflect.declaration.CtFieldImpl;
+import spoon.support.reflect.reference.CtTypeReferenceImpl;
+import spoon.support.reflect.reference.CtVariableReferenceImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +48,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         }
         int numberOfDeclaredLocals = ctExecutable.getElements(new TypeFilter<CtLocalVariable>(CtLocalVariable.class)).size();
         detectorMethod.setNumberOfLines(countEffectiveCodeLines(ctExecutable));
-
+        //System.out.println("detectorMethod= "+detectorMethod+" "+ctExecutable);
         handleUsedVariables(ctExecutable, detectorMethod);
         handleInvocations(ctExecutable, detectorMethod);
         detectorMethod.setComplexity(getComplexity(ctExecutable));
@@ -101,6 +106,38 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     private void handleUsedVariables(T ctExecutable, DetectorMethod detectorMethod) {
         List<CtFieldAccess> elements = ctExecutable.getElements(new TypeFilter<CtFieldAccess>(CtFieldAccess.class));
+        if (detectorMethod.getDetectorClass().isInnerClass()){
+        List<CtTypeAccessImpl> elements2 = ctExecutable.getElements(new TypeFilter<CtTypeAccessImpl>(CtTypeAccessImpl.class));
+        //System.out.println("ctExecutable in handleUsedVariables "+ctExecutable.getSimpleName());
+        //System.out.println("List<CtFieldAccess> elements "+elements);
+        //if (detectorMethod.getDetectorClass().getName().contains("InvalidateUpdateListener")) {
+
+            for (CtTypeAccessImpl elem : elements2) {
+
+
+                if(elem.getParent().toString().equals("this")){
+
+                 //   System.out.println("element parent this " + elem);
+                   String  variableTarget = elem.toString();
+                   String  variableName = "this";
+                    detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
+                }
+
+
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
+
 
         String variableTarget = null;
         String variableName;
@@ -122,6 +159,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
     private void variableUsedInMethod(DetectorMethod detectorMethod, CtTypeMember member, CtFieldAccess ctFieldAccess) {
         String variableTarget;
         String variableName;
+
         if (ctFieldAccess.getTarget() != null && ctFieldAccess.getTarget().getType() != null) {
 
              if (member != null && ctFieldAccess.getTarget().getType().getDeclaration() == member.getDeclaringType()) {
@@ -139,20 +177,35 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
             }
             else  if(detectorMethod.getDetectorClass().isInnerClass()){
+
+                if (detectorMethod.getDetectorClass().getName().contains("QueryThread")&&(detectorMethod.getName().contains("run()"))){
+                    //System.out.println("ct field"+ctFieldAccess);
+                }
                 //Chercher si la methode utilise des variable de la classe mère
 
 
                  CtElement parent=detectorMethod.getDetectorClass().getClasse();
+
+                    // System.out.println("method name "+detectorMethod.getName());
+                    // System.out.println("ctFieldAccess.getTarget().getType().getDeclaration() "+ctFieldAccess.getTarget().getType().getDeclaration());
 
 
                  while (parent.getParent()!=null){
 
 
 
+
+
+                       //  System.out.println("parent "+parent.getParent());
+
+
                      if(member!=null && ctFieldAccess.getTarget().getType().getDeclaration()!=null &&
                              ctFieldAccess.getTarget().getType().getDeclaration().equals(parent.getParent())){
+
                          variableTarget = ctFieldAccess.getTarget().getType().getQualifiedName();
                          variableName = ctFieldAccess.getVariable().getSimpleName();
+                       //  System.out.println("method name "+detectorMethod.getName());
+                        // System.out.println("variable name "+variableName);
 
                          detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
 
@@ -169,30 +222,133 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
     }
 
     private void handleInvocations(T ctConstructor, DetectorMethod detectorMethod) {
+
+        //System.out.println("usedVaribles "+usedVaribles);
+
         String targetName;
         String executable;
         String type = "Unknown";
 
         // Thanks to corrector we have to use a CtAbstractInvocation
         List<CtAbstractInvocation> invocations = ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));
-        for (CtAbstractInvocation invocation : invocations) {
+        List<CtAbstractInvocation> invocationsPb=null;
+        if (detectorMethod.getDetectorClass().isInnerClass()){ invocationsPb=ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));}
+
+            for (CtAbstractInvocation invocation : invocations) {
+
             executable = invocation.getExecutable().getSimpleName();
             targetName = getTarget(invocation);
+//            //if (detectorMethod.getDetectorClass().getName().contains("QueryThread")&&(detectorMethod.getName().contains("run"))){
+//
+//                //System.out.println("ctConstructor "+ctConstructor);
+//
+//               System.out.println("invocation 2 "+invocation );
+////                System.out.println("Role in parent "+invocation.getRoleInParent() );
+////                System.out.println("executable "+invocation.getExecutable());
+////                System.out.println("declaration "+invocation.getExecutable().getDeclaration() );
+////                System.out.println("signature "+invocation.getExecutable().getSignature() );
+////                System.out.println("invocation to String "+invocation.toString());
+////                System.out.println("executable to String  "+invocation.getExecutable().toString() );
+////
+////
+//
+//
+//            }
+
             if (invocation.getExecutable().getType() != null) {
                 type = invocation.getExecutable().getType().getQualifiedName();
-
 
             }
 
             if (targetName != null) {
 
-
                     detectorMethod.getInvocationData().add(new InvocationData(targetName, executable, type));
+                    if(invocationsPb!=null) {Boolean remove=invocationsPb.remove(invocation);}
+                   // System.out.println("removeinvocation "+remove);
 
 
             }
-        }
-    }
+            else {
+                if ( detectorMethod.getDetectorClass().isInnerClass()) {
+
+
+                        List<CtVariableAccess> varibles = ctConstructor.getElements(new TypeFilter<CtVariableAccess>(CtVariableAccess.class));
+                        List<CtThisAccessImpl> thisacess = ctConstructor.getElements(new TypeFilter<CtThisAccessImpl>(CtThisAccessImpl.class));
+
+                        //System.out.println(" thisacess "+thisacess);
+                       // System.out.println(" invocation "+invocation);
+                        for ( CtVariableAccess variableAccess :varibles) {
+                            //System.out.println(" variable access " + variableAccess.toString());
+                            //System.out.println("variableAccess.getVariable() " + variableAccess.getVariable());
+                           // System.out.println("variableAccess.getVariable().type" + variableAccess.getType());
+
+                            try {
+
+
+                                if (variableAccess.toString().contains(".") && (variableAccess.getType() != null) && (variableAccess.getVariable().getModifiers().contains(ModifierKind.STATIC))) {
+
+                                    if (invocation.toString().startsWith(variableAccess + ".")) {
+                                       // System.out.println("nekherjou");
+                                        Boolean remove = invocationsPb.remove(invocation);
+                                        //System.out.println("removeinvocation static  " + remove);
+
+                                    }
+                                } else {
+                                    if (invocation.toString().startsWith(variableAccess + ".")) {
+                                        //System.out.println("mliha");
+                                        Boolean remove = invocationsPb.remove(invocation);
+                                        //System.out.println("removeinvocation local   " + remove);
+                                    }
+                                }
+
+                            } catch(Exception e){
+
+                            }
+                        }
+
+
+                            if (invocation.toString().startsWith("this.")) {
+
+
+
+
+                                int size = invocationsPb.size();
+
+                                boolean remove = invocationsPb.remove(invocation);
+
+                                //System.out.println("removeinvocation this   " + remove + invocation);
+                            }
+
+
+
+
+                }
+
+
+
+
+            }
+
+            }
+            if (invocationsPb!=null) {
+                for (CtAbstractInvocation invocationpb : invocationsPb) {
+
+                    String executable2 = invocationpb.getExecutable().getSimpleName();
+                    /*if (detectorMethod.getDetectorClass().getName().contains("InvalidateUpdateListener")){
+
+                   System.out.println("invocation pb " + invocationpb);
+                    System.out.println("invocation pb executable " + invocationpb.getExecutable());
+                    System.out.println(" method " + detectorMethod.getName());
+                    System.out.println("class " + detectorMethod.getDetectorClass().getName());}*/
+                    detectorMethod.getInvocationData().add(new InvocationData("inconnu", executable2, "inconnu"));
+
+
+                }
+            }
+            }
+
+
+
 
     private String getTarget(CtAbstractInvocation ctInvocation) {
         try {

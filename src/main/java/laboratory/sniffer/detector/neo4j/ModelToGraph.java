@@ -214,6 +214,11 @@ public class ModelToGraph {
         methodNode.setProperty("name", detectorMethod.getName());
         methodNode.setProperty("full_name", detectorMethod.toString());
         methodNode.setProperty("return_type", detectorMethod.getReturnType());
+        // is_external veut dire que la interne invoque des méthodes de la classe via les variable ou c'est une methode externe du projet donc elle ne peut pas etre refactoriser et on ne peut pas mettre la clesse qui contient cette methode static
+        if (detectorMethod.getReturnType().equals("inconnu")){
+            methodNode.setProperty("is_external", true);
+        }
+        else methodNode.setProperty("is_external", false);
         methodNode.setProperty("app_name", appName);
         for (Metric metric : detectorMethod.getMetrics()) {
             insertMetric(metric, methodNode);

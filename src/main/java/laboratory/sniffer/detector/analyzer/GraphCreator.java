@@ -1,12 +1,6 @@
 package laboratory.sniffer.detector.analyzer;
 
-import laboratory.sniffer.detector.entities.DetectorClass;
-import laboratory.sniffer.detector.entities.Entity;
-import laboratory.sniffer.detector.entities.DetectorApp;
-import laboratory.sniffer.detector.entities.DetectorExternalClass;
-import laboratory.sniffer.detector.entities.DetectorExternalMethod;
-import laboratory.sniffer.detector.entities.DetectorMethod;
-import laboratory.sniffer.detector.entities.DetectorVariable;
+import laboratory.sniffer.detector.entities.*;
 import spoon.reflect.declaration.CtClass;
 
 import java.util.ArrayList;
@@ -58,13 +52,23 @@ public class GraphCreator {
         DetectorClass detectorClass;
         DetectorVariable detectorVariable;
         for (VariableData variableData : detectorMethod.getUsedVariablesData()) {
+
             detectorClass = detectorApp.getDetectorInternalClass(variableData.getClassName());
             if (detectorClass != null) {
-
+                if ((variableData.getVariableName().equals("this"))){
+                   // System.out.println("var name "+variableData.getVariableName());
+                   // System.out.println("class name "+variableData.getClassName());
+                    DetectorVariable detectorVariablethis = DetectorVariable.createDetectorVariable(variableData.getClassName(), "inconnus", DetectorModifiers.DEFAULT, detectorClass);
+                    detectorVariablethis.setStatic(false);
+                    detectorMethod.useVariable(detectorVariablethis);
+                }
+                //System.out.println("detector class non null ");
+                 //System.out.println("method name "+detectorMethod.getName());
+                //System.out.println("variableData.getVariableName() "+variableData.getVariableName());
                 detectorVariable = detectorClass.findVariable(variableData.getVariableName());
 
                 if (detectorVariable != null) {
-
+                   // System.out.println("detector variable non null ");
                     detectorMethod.useVariable(detectorVariable);
                 }
                 else{
@@ -76,8 +80,10 @@ public class GraphCreator {
                             detectorMethod.useVariable(detectorVariable);
                         }
                     }
+
                 }
             }
+
         }
     }
 

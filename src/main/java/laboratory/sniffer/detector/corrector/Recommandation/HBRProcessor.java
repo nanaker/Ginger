@@ -40,7 +40,6 @@ public class HBRProcessor extends AbstractProcessor<CtMethod> {
 
     private boolean checkValidToCsv(CtMethod candidate){
 
-
             String class_file = candidate.getPosition().getFile().getName().split("\\.")[0];
 
             for(String occurence : hbr_methods){

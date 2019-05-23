@@ -22,7 +22,7 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
     {
         System.out.println("Processor LICProcessor Start ... ");
         // Get applications information from the CSV - output
-        lic_classes= CsvReader.formatCsv(file,7);
+        lic_classes= CsvReader.formatCsv(file,8);
 
     }
 
@@ -35,18 +35,18 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
 
             if(element.getParent().getParent() instanceof CtInvocationImpl){
 
-              refactorCtInvocationImpl(element);
+                refactorCtInvocationImpl(element);
 
 
             }
             else if((element.getParent().getParent() instanceof CtConstructorCallImpl)){
 
 
-              refactorCtConstructorCallImpl(element);
+                refactorCtConstructorCallImpl(element);
 
             }else if((element.getParent().getParent() instanceof CtVariable)){
 
-              refactorCtVariable(element);
+                refactorCtVariable(element);
 
             }
 
@@ -54,11 +54,11 @@ public class LICProcessor extends AbstractProcessor<CtClass> {
 
             //if parent.isInterface alors on n'ajoute pas le modifier static
 
-                if(element.getParent(CtClass.class)!=null) {
-                    element.addModifier(ModifierKind.STATIC);
-                    SaverOfTheFile fileSaver = new SaverOfTheFile();
-                    fileSaver.reWriteFile(this, (element.getParent(CtClass.class)));
-                }
+            if(element.getParent(CtClass.class)!=null) {
+                element.addModifier(ModifierKind.STATIC);
+                SaverOfTheFile fileSaver = new SaverOfTheFile();
+                fileSaver.reWriteFile(this, (element.getParent(CtClass.class)));
+            }
 
 
         }

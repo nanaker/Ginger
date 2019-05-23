@@ -94,8 +94,8 @@ public class Main {
 
             System.out.println("Detecting code smells...");
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
-            classifier classifier=new classifier(base_path);
-            String result=classifier.exec();
+            //classifier classifier=new classifier(base_path);
+           // String result=classifier.exec();
             //logger.info(result);
             // System.out.println(result);
             System.out.println("Done");
