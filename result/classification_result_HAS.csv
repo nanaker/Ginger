@@ -1,2 +1,2 @@
 cyclomatic_complexity,number_of_instructions,has_method,full_name,is_code_smell
-4,9,True,onPostExecute#com.android.ex.chips.DefaultPhotoManager$android.os.AsyncTask1,True
+11,54,True,onProgressUpdate#net.ktnx.mobileledger.ui.transaction_list.TransactionListAdapter$TransactionLoader,True

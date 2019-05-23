@@ -30,12 +30,21 @@ public class DetectorClass extends Entity{
     private boolean isService;
     private boolean isContentProvider;
     private boolean isView;
+    private boolean isAbstract;
     private boolean isAsyncTask;
     private boolean isApplication;
     private boolean isInnerClass;
     private int depthOfInheritance;
     private ArrayList<String> interfacesNames;
     private String path;
+
+    public void setAbstract(boolean anAbstract) {
+        isAbstract = anAbstract;
+    }
+
+    public boolean isAbstract() {
+        return isAbstract;
+    }
 
     public CtType getClasse() {
         return classe;

@@ -160,6 +160,7 @@ public class ModelToGraph {
         variableNode.setProperty("modifier", detectorVariable.getModifier().toString().toLowerCase());
         variableNode.setProperty("type", detectorVariable.getType());
         variableNode.setProperty("app_name", appName);
+
         for (Metric metric : detectorVariable.getMetrics()) {
             insertMetric(metric, variableNode);
         }
@@ -174,6 +175,10 @@ public class ModelToGraph {
         methodNode.setProperty("modifier", detectorMethod.getModifier().toString().toLowerCase());
         methodNode.setProperty("full_name", detectorMethod.toString());
         methodNode.setProperty("app_name", appName);
+        if(detectorMethod.getDetectorClass().isAbstract()){
+            methodNode.setProperty("abstract_class", true);
+        }
+        else methodNode.setProperty("abstract_class", false);
         methodNode.setProperty("return_type", detectorMethod.getReturnType());
 
         for (Metric metric : detectorMethod.getMetrics()) {

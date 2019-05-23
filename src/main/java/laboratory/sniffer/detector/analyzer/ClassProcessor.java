@@ -152,6 +152,7 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         boolean isBroadcastReceiver = false;
         boolean isInterface = ctClass.isInterface();
         boolean isStatic = false;
+        boolean isAbstract = false;
 
         if (ctClass.isAnonymous()) {
 
@@ -175,6 +176,9 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
 //                    }
 //                }
 //            }
+        }
+        if(ctClass.isAbstract()){
+            isAbstract=true;
         }
 
         for (ModifierKind modifierKind : ctClass.getModifiers()) {
@@ -243,6 +247,7 @@ public class ClassProcessor extends TypeProcessor<CtClass> {
         detectorClass.setInterface(isInterface);
         detectorClass.setActivity(isActivity);
         detectorClass.setStatic(isStatic);
+        detectorClass.setAbstract(isAbstract);
         detectorClass.setAsyncTask(isAsyncTask);
         detectorClass.setContentProvider(isContentProvider);
         detectorClass.setBroadcastReceiver(isBroadcastReceiver);

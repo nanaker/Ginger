@@ -15,7 +15,7 @@ public class MIMQuery extends Query {
 
     @Override
     protected String getQuery(boolean details) {
-        String query = "MATCH (m1:Method) RETURN  m1.number_of_callers>0 as number_of_callers_not_null," +
+        String query = "MATCH (m1:Method{abstract_class:false}) RETURN  m1.number_of_callers>0 as number_of_callers_not_null," +
                 "CASE WHEN m1.is_init = true THEN true ELSE false END as is_init," +
                 " m1.is_static  as is_static,CASE WHEN m1.is_override = true THEN true ELSE false END   as is_override," +
                 "CASE WHEN (not (m1)-[:USES]->(:Variable{is_static:false})) = true THEN false ELSE true END as " +

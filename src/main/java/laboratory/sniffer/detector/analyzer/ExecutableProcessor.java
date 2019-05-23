@@ -107,19 +107,28 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
     private void handleUsedVariables(T ctExecutable, DetectorMethod detectorMethod) {
         List<CtFieldAccess> elements = ctExecutable.getElements(new TypeFilter<CtFieldAccess>(CtFieldAccess.class));
-        if (detectorMethod.getDetectorClass().isInnerClass()){
+
         List<CtTypeAccessImpl> elements2 = ctExecutable.getElements(new TypeFilter<CtTypeAccessImpl>(CtTypeAccessImpl.class));
         //System.out.println("ctExecutable in handleUsedVariables "+ctExecutable.getSimpleName());
         //System.out.println("List<CtFieldAccess> elements "+elements);
         //if (detectorMethod.getDetectorClass().getName().contains("InvalidateUpdateListener")) {
 
+            System.out.println("method name"+detectorMethod.getName());
+            System.out.println("éleme2 "+elements2);
             for (CtTypeAccessImpl elem : elements2) {
+                System.out.println("éleme "+elem);
+                System.out.println("parent elem "+elem.getParent());
 
 
                 if(elem.getParent().toString().equals("this")){
 
-                 //   System.out.println("element parent this " + elem);
-                   String  variableTarget = elem.toString();
+                   // System.out.println("element parent this " + elem);
+                    String  variableTarget ="";
+                    if (elem.toString()==""){
+                        System.out.println("element parent this " + elem);
+                        variableTarget=detectorMethod.getDetectorClass().getName();
+                    }
+                   else   variableTarget = elem.toString();
                    String  variableName = "this";
                     detectorMethod.getUsedVariablesData().add(new VariableData(variableTarget, variableName));
                 }
@@ -129,7 +138,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
 
 
-        }
+
 
 
 
