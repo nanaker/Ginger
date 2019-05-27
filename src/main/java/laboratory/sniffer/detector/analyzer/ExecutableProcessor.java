@@ -114,9 +114,9 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         //if (detectorMethod.getDetectorClass().getName().contains("InvalidateUpdateListener")) {
 
             //System.out.println("method name"+detectorMethod.getName());
-           // System.out.println("éleme2 "+elements2);
+            //System.out.println("éleme2 "+elements2);
             for (CtTypeAccessImpl elem : elements2) {
-                //System.out.println("éleme "+elem);
+               // System.out.println("éleme "+elem.toString()+elem.toString().length());
                 //System.out.println("parent elem "+elem.getParent());
 
 
@@ -124,8 +124,9 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
                    // System.out.println("element parent this " + elem);
                     String  variableTarget ="";
-                    if (elem.toString()==""){
-                        System.out.println("element parent this " + elem);
+                    if (elem.toString().length()==0){
+                       // System.out.println("element parent this vide " + elem);
+                        //System.out.println("method "+detectorMethod.getName());
                         variableTarget=detectorMethod.getDetectorClass().getName();
                     }
                    else   variableTarget = elem.toString();
