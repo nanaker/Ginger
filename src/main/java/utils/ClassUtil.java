@@ -2,13 +2,8 @@ package utils;
 
 
 import spoon.processing.AbstractProcessor;
-import spoon.reflect.code.CtComment;
-import spoon.reflect.code.CtExpression;
-import spoon.reflect.code.CtNewClass;
-import spoon.reflect.declaration.CtClass;
-import spoon.reflect.declaration.CtField;
-import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.declaration.ModifierKind;
+import spoon.reflect.code.*;
+import spoon.reflect.declaration.*;
 import spoon.reflect.reference.CtTypeReference;
 import spoon.reflect.visitor.filter.TypeFilter;
 import spoon.support.reflect.code.CtConstructorCallImpl;
@@ -58,9 +53,11 @@ public class ClassUtil {
         classeMere.addFieldAtTop(variable);//on declare la nouvelle variable en haut de la classe
 
 
+        classeMere.getElements(new TypeFilter(CtElement.class));
 
         return  classeMere;
     }
+
 
     public static String getType(String text){
         String pattern1 = "new ";

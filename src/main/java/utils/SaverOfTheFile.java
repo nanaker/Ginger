@@ -58,7 +58,7 @@ public class SaverOfTheFile {
             e.printStackTrace();
         }catch (Exception e){
 
-            System.out.println("Spoon can't refactor this");
+            System.out.println("Spoon can't refactor this "+processor.getClass()+"---"+element.getQualifiedName());
 
         }
 
@@ -82,7 +82,9 @@ public class SaverOfTheFile {
             }
 
             processor.getEnvironment().setAutoImports(true);
-            String contenu=element.toString();
+            //String contenu=element.toString();
+            String contenu=element.getOriginalSourceFragment().getSourceCode();
+            System.out.println("in saving file "+element.getOriginalSourceFragment().getSourceCode());
 
             BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(element.getPosition().getFile()));
 
@@ -92,7 +94,7 @@ public class SaverOfTheFile {
                     writer.newLine();
                 }else {
 
-                    writer.write(element+"");
+                    writer.write(element.getOriginalSourceFragment().getSourceCode());
                     writer.newLine();
                     writer.close();
                     processor.getEnvironment().report(processor, Level.WARN, element, "INFO :" + element.getReference());
@@ -107,7 +109,7 @@ public class SaverOfTheFile {
         }catch (IOException e) {
             e.printStackTrace();
         }catch (Exception e){
-            System.out.println("Spoon can't refactor this ");
+            System.out.println("Spoon can't refactor this "+processor.getClass()+"---"+element.getQualifiedName());
 
         }
 

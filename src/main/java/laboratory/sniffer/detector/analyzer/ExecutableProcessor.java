@@ -113,11 +113,11 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         //System.out.println("List<CtFieldAccess> elements "+elements);
         //if (detectorMethod.getDetectorClass().getName().contains("InvalidateUpdateListener")) {
 
-            System.out.println("method name"+detectorMethod.getName());
-            System.out.println("éleme2 "+elements2);
+            //System.out.println("method name"+detectorMethod.getName());
+           // System.out.println("éleme2 "+elements2);
             for (CtTypeAccessImpl elem : elements2) {
-                System.out.println("éleme "+elem);
-                System.out.println("parent elem "+elem.getParent());
+                //System.out.println("éleme "+elem);
+                //System.out.println("parent elem "+elem.getParent());
 
 
                 if(elem.getParent().toString().equals("this")){
