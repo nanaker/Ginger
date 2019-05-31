@@ -11,12 +11,7 @@ import utils.SaverOfTheFile;
 
 import java.util.HashSet;
 
-/**
- * Created by geoffrey on 08/04/16
- * Edited by mehdi on 30/05/16.
- *
- * MIM Handler
- */
+
 public class MIMProcessor extends AbstractProcessor<CtMethod> {
 
     HashSet<String> meth_toStatic;
