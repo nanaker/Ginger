@@ -1,4 +1,0 @@
-cyclomatic_complexity,number_of_instructions,has_method,full_name,is_code_smell
-5,13,True,onPreExecute#com.android.ex.chips.RecipientEditTextView$RecipientReplacementTask,True
-4,9,True,onPostExecute#com.android.ex.chips.DefaultPhotoManager$android.os.AsyncTask1,True
-4,18,True,onPostExecute#com.android.ex.chips.RecipientEditTextView$android.os.AsyncTask10,True

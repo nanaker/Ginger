@@ -27,9 +27,15 @@ public class InterfaceProcessor extends TypeProcessor<CtInterface> {
 
     @Override
     public void process(CtInterface ctType) {
+
+
         String qualifiedName = ctType.getQualifiedName();
         String absolutePath= ctType.getPosition().getFile().getAbsolutePath();
-        String relativePath = absolutePath.replaceFirst(MainProcessor.currentApp.getPath(),"");
+        //this step is to solve the problem of Java Regex
+        absolutePath = absolutePath.replaceAll("\\\\", "/");
+        String s = MainProcessor.currentApp.getPath();
+        s = s.replaceAll("\\\\", "/");
+        String relativePath = absolutePath.replaceFirst(s, "");
         if (ctType.isAnonymous()) {
             String[] splitName = qualifiedName.split("\\$");
             qualifiedName = splitName[0] + "$" +

@@ -40,6 +40,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
         DetectorMethod detectorMethod = DetectorMethod.createDetectorMethod(name, detectorModifiers, returnType,
                 MainProcessor.currentClass);
+
         MainProcessor.currentMethod = detectorMethod;
         for (CtParameter<?> ctParameter : (List<CtParameter>) ctExecutable.getParameters()) {
             qualifiedName = ctParameter.getType().getQualifiedName();
@@ -108,10 +109,39 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
     private void handleUsedVariables(T ctExecutable, DetectorMethod detectorMethod) {
         List<CtFieldAccess> elements = ctExecutable.getElements(new TypeFilter<CtFieldAccess>(CtFieldAccess.class));
 
+
         List<CtTypeAccessImpl> elements2 = ctExecutable.getElements(new TypeFilter<CtTypeAccessImpl>(CtTypeAccessImpl.class));
         //System.out.println("ctExecutable in handleUsedVariables "+ctExecutable.getSimpleName());
         //System.out.println("List<CtFieldAccess> elements "+elements);
         //if (detectorMethod.getDetectorClass().getName().contains("InvalidateUpdateListener")) {
+
+        List<CtVariableReadImpl> elements3 = ctExecutable.getElements(new TypeFilter(CtVariableReadImpl.class));
+
+
+        if(detectorMethod.getDetectorClass().isInnerClass()&&detectorMethod.getDetectorClass().getClasse().isAnonymous()){
+           Boolean equal=false;
+            List<CtLocalVariableImpl> elements4 = ctExecutable.getElements(new TypeFilter<>(CtLocalVariableImpl.class));
+            for( CtVariableReadImpl read :elements3){
+
+                    //System.out.println("ctExecutable.getParameters().toString()  "+ctExecutable.getParameters().toString());
+                  //System.out.println("elements4 "+elements4.toString());
+
+                   // System.out.println("elem "+elements);
+                    if((!ctExecutable.getParameters().toString().contains(read.toString()))&&(!elements4.toString().contains(read.toString())))
+                    {
+                      //  System.out.println("! equal  "+read.toString());
+                       // System.out.println("class name "+detectorMethod.getDetectorClass().getName());
+                       // System.out.println("method name "+detectorMethod.getName());
+                        detectorMethod.getUsedVariablesData().add(new VariableData(detectorMethod.getDetectorClass().getName(), read.toString()));
+
+                    }
+
+
+
+
+            }
+        }
+
 
             //System.out.println("method name"+detectorMethod.getName());
             //System.out.println("éleme2 "+elements2);
@@ -243,7 +273,10 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         // Thanks to corrector we have to use a CtAbstractInvocation
         List<CtAbstractInvocation> invocations = ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));
         List<CtAbstractInvocation> invocationsPb=null;
-        if (detectorMethod.getDetectorClass().isInnerClass()){ invocationsPb=ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));}
+        //if (detectorMethod.getDetectorClass().isInnerClass()){
+
+            invocationsPb=ctConstructor.getElements(new TypeFilter<>(CtAbstractInvocation.class));
+        //}
 
             for (CtAbstractInvocation invocation : invocations) {
 
@@ -280,7 +313,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
             }
             else {
-                if ( detectorMethod.getDetectorClass().isInnerClass()) {
+               // if ( detectorMethod.getDetectorClass().isInnerClass()) {
 
 
                         List<CtVariableAccess> varibles = ctConstructor.getElements(new TypeFilter<CtVariableAccess>(CtVariableAccess.class));
@@ -333,7 +366,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
 
 
-                }
+              //  }
 
 
 

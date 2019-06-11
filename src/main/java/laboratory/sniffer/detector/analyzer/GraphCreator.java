@@ -53,8 +53,12 @@ public class GraphCreator {
         DetectorVariable detectorVariable;
         for (VariableData variableData : detectorMethod.getUsedVariablesData()) {
 
+
             detectorClass = detectorApp.getDetectorInternalClass(variableData.getClassName());
             if (detectorClass != null) {
+                if ( detectorMethod.getName().equals("onFocusChangetest")){
+
+                }
                 if ((variableData.getVariableName().equals("this"))){
                    // System.out.println("var name "+variableData.getVariableName());
                    // System.out.println("class name "+variableData.getClassName());
@@ -62,6 +66,10 @@ public class GraphCreator {
                     detectorVariablethis.setStatic(false);
                     detectorMethod.useVariable(detectorVariablethis);
                 }
+                else {
+                DetectorVariable detectorVariablethis = DetectorVariable.createDetectorVariable(variableData.getVariableName(), "inconnus", DetectorModifiers.DEFAULT, detectorClass);
+                detectorVariablethis.setStatic(false);
+                detectorMethod.useVariable(detectorVariablethis);}
                 //System.out.println("detector class non null ");
                  //System.out.println("method name "+detectorMethod.getName());
                 //System.out.println("variableData.getVariableName() "+variableData.getVariableName());

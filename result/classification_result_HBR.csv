@@ -1,6 +1,0 @@
-cyclomatic_complexity,number_of_instructions,has_methode_onReceive,full_name,is_code_smell
-13,44,True,onReceive#com.android.calendar.alerts.AlertReceiver,True
-8,30,True,onReceive#com.android.calendar.alerts.GlobalDismissManager,True
-7,22,True,onReceive#com.android.common.NetworkConnectivityListener$ConnectivityBroadcastReceiver,True
-6,5,True,onReceive#com.android.calendar.Utils$CalendarBroadcastReceiver,True
-4,16,True,onReceive#com.android.calendar.widget.CalendarAppWidgetService$CalendarFactory,True

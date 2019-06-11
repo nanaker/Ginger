@@ -15,6 +15,7 @@ public class DetectorExternalArgument extends Entity{
     public static DetectorExternalArgument createDetectorExternalArgument(String name, int position, DetectorExternalMethod detectorExternalMethod){
         DetectorExternalArgument detectorExternalArgument = new DetectorExternalArgument(name,position, detectorExternalMethod);
         detectorExternalMethod.addExternalArgument(detectorExternalArgument);
+
         return detectorExternalArgument;
     }
 
