@@ -1,6 +1,1 @@
 has_onLowMemory,extend_class,class_complexity,full_name,is_code_smell
-False,False,34,com.google.android.diskusage.LoadableActivity,True
-False,False,25,com.google.android.diskusage.SelectActivity,True
-False,False,13,com.google.android.diskusage.PermissionRequestActivity,True
-False,False,7,com.google.android.diskusage.ShowHideMountPointsActivity,True
-False,False,3,com.google.android.diskusage.DeleteActivity,True

@@ -1,0 +1,2 @@
+cyclomatic_complexity,number_of_instructions,has_methode_onReceive,full_name,is_code_smell
+11,18,True,onReceive#com.google.android.diskusage.utils.RecieverFile,True

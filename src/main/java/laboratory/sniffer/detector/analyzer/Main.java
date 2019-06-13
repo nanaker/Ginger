@@ -5,7 +5,7 @@ import laboratory.sniffer.detector.corrector.Correction.MIMProcessor;
 import laboratory.sniffer.detector.corrector.Correction.NLMRProcessor;
 import laboratory.sniffer.detector.corrector.Recommandation.HASProcessor;
 import laboratory.sniffer.detector.corrector.Recommandation.HBRProcessor;
-import laboratory.sniffer.detector.detector.classifier;
+import laboratory.sniffer.detector.detector.classifier.*;
 import laboratory.sniffer.detector.entities.DetectorClass;
 import laboratory.sniffer.detector.metrics.MetricsCalculator;
 
@@ -16,6 +16,7 @@ import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -25,12 +26,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spoon.IncrementalLauncher;
 import spoon.Launcher;
 import spoon.reflect.declaration.CtType;
 import utils.CsvReader;
-
-import javax.security.auth.callback.LanguageCallback;
 
 import static utils.CsvReader.readAllDataAtOnce;
 
@@ -40,131 +38,68 @@ public class Main {
 
     public static void main(String[] args) {
         //testRun();
-        String save=args[0];
-        args=new String[6];
-        args[0]="analyse";
-        args[1]="-n";
-        args[2]="MyApplication";
-        args[3]="-db";
-        args[4]="db";
-        args[5]=save;
 
 
-        ArgumentParser parser = ArgumentParsers.newArgumentParser("detector");
+
+        ArgumentParser parser = ArgumentParsers.newArgumentParser("ginger");
         Subparsers subparsers = parser.addSubparsers().dest("sub_command");
-        Subparser analyseParser = subparsers.addParser("analyse").help("Analyse an app");
-        analyseParser.addArgument("folder").help("Path of the code source folder");
-        analyseParser.addArgument("-db", "--database").required(false).help("Path to neo4J Database folder");
-        analyseParser.addArgument("-n", "--name").required(false).help("Name of the application");
+        Subparser analyseParser = subparsers.addParser("detect").help("Analyse and detect code smells");
+        analyseParser.addArgument("-f","--folder").required(true).help("Path of the code source folder /src");
+        analyseParser.addArgument("-c","--codeSmell").required(true).help("Code smell to detect MIM,LIC,NLMR,HBR,HAS or ALL");
 
 
-        Subparser queryParser = subparsers.addParser("query").help("Query the database");
-        queryParser.addArgument("-db", "--database").required(true).help("Path to neo4J Database folder");
-        queryParser.addArgument("-r", "--request").help("Request to execute");
-        queryParser.addArgument("-c", "--csv").help("path to register csv files").setDefault("");
-        queryParser.addArgument("-dk", "--delKey").help("key to delete");
-        queryParser.addArgument("-dp", "--delPackage").help("Package of the applications to delete");
-        queryParser.addArgument("-d", "--details").type(Boolean.class).setDefault(false).help("Show the concerned entity in the results");
+        Subparser correctorParser = subparsers.addParser("correct").help("Correct the code smells");
+        correctorParser.addArgument("-c","--codeSmell").required(true).help("Code smell to correct MIM,LIC,NLMR,HBR,HAS or ALL");
+
+
+        Subparser allParser = subparsers.addParser("detect&correct").help("Detect and correct all code smells ");
+        allParser.addArgument("-f","--folder").required(true).help("Path of the code source folder /src");
+        allParser.addArgument("-c","--codeSmell").required(true).help("Code smell to correct MIM,LIC,NLMR,HBR,HAS or ALL");
 
         try {
+            Namespace res = parser.parseArgs(args);
+            if (res.getString("sub_command").equals("detect")) {
+                // Analyse de l'application
+                runAnalysis(res);
+                queryMode(res);
+
+                // Detection des défauts de code
+                detection(res);
 
 
-
-            Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
-            //System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
-
-            runAnalysis(pathOfApplicationToAnalyse);
-
-
-
-            String[] argumentsQyery=new String[5];
-            argumentsQyery[0]="query";
-            argumentsQyery[1]="-db";
-            argumentsQyery[2]="db";
-            argumentsQyery[3]="-d";
-            argumentsQyery[4]="TRUE";
+                
+            } else if (res.getString("sub_command").equals("correct")) {
+                //Correction des défauts de code
+                runRefactor(res);
+            }
+            else if (res.getString("sub_command").equals("detect&correct")) {
 
 
-            Namespace res = parser.parseArgs(argumentsQyery);
+                // Analyse de l'application
+                runAnalysis(res);
+                queryMode(res);
 
+                // Detection des défauts de code
+                detection(res);
 
-           queryMode(res);
-
-            // Detection des défauts de code
-
-            System.out.println("Detecting code smells...");
-            String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
-
-            classifier classifier=new classifier(base_path);
-            String result=classifier.exec();
-             System.out.println(result);
-            System.out.println("Done");
-
-
-
-            //Correction des défauts de code
-            runRefactor();
-
-
+                //Correction des défauts de code
+                runRefactor(res);
+            }
         } catch (ArgumentParserException e) {
             analyseParser.handleError(e);
+            allParser.handleError(e);
+            correctorParser.handleError(e);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-    }
-
-
-
-    public static void runAnalysis(Namespace arg) throws Exception {
-
-
-        deteleContenetOfDirectory("db");
-
-        logger.info("Collecting metrics");
-        System.out.println("Collecting metrics...");
-        String path = arg.getString("folder");
-        path = new File(path).getAbsolutePath();
-        String name = arg.getString("name");
-
-
-        MainProcessor mainProcessor = new MainProcessor(name, path);
-
-        mainProcessor.process();
-
-        List<DetectorClass> classes=mainProcessor.getCurrentApp().getDetectorClasses();
-        System.out.println("Save classes path ... ");
-        writeClasses(classes);
-
-        GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
-
-        graphCreator.createClassHierarchy();
-
-        graphCreator.createCallGraph();
-
-
-
-        MetricsCalculator.calculateAppMetrics(MainProcessor.currentApp);
-
-        ModelToGraph modelToGraph = new ModelToGraph(arg.getString("database"));
-
-        modelToGraph.insertApp(MainProcessor.currentApp);
-
-        logger.info("Saving into database " + arg.getString("database"));
-        System.out.println("saving into database");
-
-
-        modelToGraph.getDatabaseManager().shutDown();
-
-
 
     }
-    public static void runRefactor(){
 
-        logger.info("Refactoring ...  " );
+    private static void runRefactor(Namespace arg) {
 
-
+        System.out.println("Refactoring ...  " );
 
 
         final String MIM = "result/classification_result_MIM";
@@ -188,60 +123,14 @@ public class Main {
 
         }
 
+        String request = arg.get("codeSmell");
+       // System.out.println(" code smell "+request);
 
-
-
-
-
-        //Process now
-        Runnable Rmim = new Runnable() {
-
-            @Override
-            public void run() {
-
-                Launcher run=new Launcher();
-                run.getEnvironment().setNoClasspath(true);
-                run.getEnvironment().setShouldCompile(false);
-                run.setOutputFilter();
-                run.addProcessor(new MIMProcessor(MIM));
-                for (String e : classPath)
-                {
-                    run.addInputResource(e);
-
-
-                }
-                run.run();
-
-            }
-        };
-
-        Runnable Rnlmr = new Runnable() {
-
-            @Override
-            public void run() {
-
-                Launcher run=new Launcher();
-                run.getEnvironment().setNoClasspath(true);
-                run.getEnvironment().setShouldCompile(false);
-                run.setOutputFilter();
-                run.addProcessor(new NLMRProcessor(NLMR));
-                for (String e : classPath)
-                {
-                    run.addInputResource(e);
-
-
-                }
-                run.run();
-
-            }
-        };
-
-        Runnable Rlic = new Runnable() {
-
-            @Override
-            public void run() {
-
-                Launcher run=new Launcher();
+        String result="";
+        Launcher run=new Launcher();
+        switch (request) {
+            case "LIC":
+                run=new Launcher();
                 run.getEnvironment().setNoClasspath(true);
                 run.getEnvironment().setShouldCompile(false);
                 run.setOutputFilter();
@@ -254,15 +143,51 @@ public class Main {
 
                 }
                 run.run();
+                break;
+            case "MIM":
 
-            }
-        };
-        Runnable Rhbr = new Runnable() {
+                run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new MIMProcessor(MIM));
+                for (String e : classPath)
+                {
+                    run.addInputResource(e);
 
-            @Override
-            public void run() {
 
-                Launcher run=new Launcher();
+                }
+                run.run();
+                break;
+            case "NLMR":
+                run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new NLMRProcessor(NLMR));
+                for (String e : classPath)
+                {
+                    run.addInputResource(e);
+
+
+                }
+                run.run();
+                break;
+            case "HAS":
+                run=new Launcher();
+                run.getEnvironment().setNoClasspath(true);
+                run.getEnvironment().setShouldCompile(false);
+                run.setOutputFilter();
+                run.addProcessor(new HASProcessor(HAS));
+                for (String e : classPath)
+                {
+                    run.addInputResource(e);
+
+                }
+                run.run();
+                break;
+            case "HBR":
+                run=new Launcher();
                 run.getEnvironment().setNoClasspath(true);
                 run.getEnvironment().setShouldCompile(false);
                 run.setOutputFilter();
@@ -274,45 +199,139 @@ public class Main {
 
                 }
                 run.run();
+                break;
+            case "ALL":
+                //Process now
+                Runnable Rmim = new Runnable() {
 
-            }
-        };
+                    @Override
+                    public void run() {
+
+                        Launcher run=new Launcher();
+                        run.getEnvironment().setNoClasspath(true);
+                        run.getEnvironment().setShouldCompile(false);
+                        run.setOutputFilter();
+                        run.addProcessor(new MIMProcessor(MIM));
+                        for (String e : classPath)
+                        {
+                            run.addInputResource(e);
 
 
-        Runnable Rhas = new Runnable() {
+                        }
+                        run.run();
 
-            @Override
-            public void run() {
+                    }
+                };
 
-                Launcher run=new Launcher();
-                run.getEnvironment().setNoClasspath(true);
-                run.getEnvironment().setShouldCompile(false);
-                run.setOutputFilter();
-                run.addProcessor(new HASProcessor(HAS));
-                for (String e : classPath)
-                {
-                    run.addInputResource(e);
+                Runnable Rnlmr = new Runnable() {
 
+                    @Override
+                    public void run() {
+
+                        Launcher run=new Launcher();
+                        run.getEnvironment().setNoClasspath(true);
+                        run.getEnvironment().setShouldCompile(false);
+                        run.setOutputFilter();
+                        run.addProcessor(new NLMRProcessor(NLMR));
+                        for (String e : classPath)
+                        {
+                            run.addInputResource(e);
+
+
+                        }
+                        run.run();
+
+                    }
+                };
+
+                Runnable Rlic = new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Launcher run=new Launcher();
+                        run.getEnvironment().setNoClasspath(true);
+                        run.getEnvironment().setShouldCompile(false);
+                        run.setOutputFilter();
+                        run.addProcessor(new LICProcessor(LIC));
+                        for (String e : classPath)
+                        {
+                            //System.out.println("in main "+e);
+                            run.addInputResource(e);
+
+
+                        }
+                        run.run();
+
+                    }
+                };
+                Runnable Rhbr = new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Launcher run=new Launcher();
+                        run.getEnvironment().setNoClasspath(true);
+                        run.getEnvironment().setShouldCompile(false);
+                        run.setOutputFilter();
+                        run.addProcessor(new HBRProcessor(HBR));
+                        for (String e : classPath)
+                        {
+                            run.addInputResource(e);
+
+
+                        }
+                        run.run();
+
+                    }
+                };
+
+
+                Runnable Rhas = new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        Launcher run=new Launcher();
+                        run.getEnvironment().setNoClasspath(true);
+                        run.getEnvironment().setShouldCompile(false);
+                        run.setOutputFilter();
+                        run.addProcessor(new HASProcessor(HAS));
+                        for (String e : classPath)
+                        {
+                            run.addInputResource(e);
+
+                        }
+                        run.run();
+
+                    }
+                };
+                try {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+
+                    executor.submit(Rmim);
+                    executor.submit(Rnlmr);
+                    executor.submit(Rlic);
+                    executor.submit(Rhbr);
+                    executor.submit(Rhas);
+
+                    executor.shutdown();
+
+                    executor.awaitTermination(15, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
                 }
-                run.run();
 
-            }
-        };
-        try {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
 
-            executor.submit(Rmim);
-            executor.submit(Rnlmr);
-            executor.submit(Rlic);
-            executor.submit(Rhbr);
-            executor.submit(Rhas);
-            executor.shutdown();
-
-            executor.awaitTermination(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-
-            e.printStackTrace();
+                break;
         }
+
+
+
+
+
+
 
 
         logger.info("fin refactor");
@@ -320,11 +339,107 @@ public class Main {
 
     }
 
+
+    private static void detection(Namespace arg) {
+
+        System.out.println("Detecting code smells...");
+        String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
+        String request = arg.get("codeSmell");
+       // System.out.println(" code smell "+request);
+
+        String result="";
+        switch (request) {
+            case "LIC":
+                classifierLIC classifierLic=new classifierLIC(base_path);
+                result=classifierLic.exec();
+                System.out.println(result);
+                break;
+            case "MIM":
+
+                classifierMIM classifierMim=new classifierMIM(base_path);
+                result=classifierMim.exec();
+                System.out.println(result);
+                break;
+            case "NLMR":
+                classifierNLMR classifierNlmr=new classifierNLMR(base_path);
+                result=classifierNlmr.exec();
+                System.out.println(result);
+                break;
+            case "HAS":
+                classifierHAS classifierHas=new classifierHAS(base_path);
+                result=classifierHas.exec();
+                System.out.println(result);
+                   break;
+            case "HBR":
+                classifierHBR classifierHbr=new classifierHBR(base_path);
+                result=classifierHbr.exec();
+                System.out.println(result);
+                 break;
+            case "ALL":
+                classifier classifier=new classifier(base_path);
+                result=classifier.exec();
+                System.out.println(result);
+
+                break;
+        }
+
+
+        System.out.println("Done");
+    }
+
+
+    public static void runAnalysis(Namespace arg) throws Exception {
+
+
+        deteleContenetOfDirectory("db");
+
+        logger.info("Collecting metrics");
+        System.out.println("Collecting metrics...");
+        String path = arg.getString("folder");
+       // System.out.println(" path "+path);
+        path = new File(path).getAbsolutePath();
+        String name = "MyApplication";
+
+
+        MainProcessor mainProcessor = new MainProcessor(name, path);
+
+        mainProcessor.process();
+
+        List<DetectorClass> classes=mainProcessor.getCurrentApp().getDetectorClasses();
+        System.out.println("Save classes path ... ");
+        writeClasses(classes);
+
+        GraphCreator graphCreator = new GraphCreator(MainProcessor.currentApp);
+
+        graphCreator.createClassHierarchy();
+
+        graphCreator.createCallGraph();
+
+
+
+        MetricsCalculator.calculateAppMetrics(MainProcessor.currentApp);
+
+
+        ModelToGraph modelToGraph = new ModelToGraph("db");
+
+        modelToGraph.insertApp(MainProcessor.currentApp);
+
+
+        System.out.println("saving into database");
+
+
+        modelToGraph.getDatabaseManager().shutDown();
+
+
+
+    }
+
+
     public static void queryMode(Namespace arg) throws Exception {
 
         logger.info("Executing Queries");
         System.out.println("Executing Queries");
-        QueryEngine queryEngine = new QueryEngine(arg.getString("database"));
+        QueryEngine queryEngine = new QueryEngine("db");
 
 
         String query="\n" +
@@ -348,24 +463,47 @@ public class Main {
         pretraitement.exec();
 
 
-        String request = arg.get("request");
-
-        Calendar cal = new GregorianCalendar();
-        String csvDate = String.valueOf(cal.get(Calendar.YEAR)) + "_" + String.valueOf(cal.get(Calendar.MONTH) + 1) + "_" + String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + "_" + String.valueOf(cal.get(Calendar.HOUR_OF_DAY)) + "_" + String.valueOf(cal.get(Calendar.MINUTE));
-        String csvPrefix = arg.getString("csv") + csvDate;
+        String request = arg.get("codeSmell");
+      //  System.out.println(" code smell "+request);
 
 
-        queryEngine.setCsvPrefix(csvPrefix);
-        System.out.println("Execute MIM query ");
-        MIMQuery.createMIMQuery(queryEngine).execute(true);
-        System.out.println("Execute LIC query ");
-        LICQuery.createLICQuery(queryEngine).execute(true);
-        System.out.println("Execute NLMR query ");
-        NLMRQuery.createNLMRQuery(queryEngine).execute(true);
-        System.out.println("Execute HBR query ");
-        HeavyBroadcastReceiverQuery.createHeavyBroadcastReceiverQuery(queryEngine).execute(true);
-        System.out.println("Execute HAS query ");
-        HeavyAsyncTaskStepsQuery.createHeavyAsyncTaskStepsQuery(queryEngine).execute(true);
+        switch (request) {
+            case "LIC":
+                System.out.println("Execute LIC query ");
+                LICQuery.createLICQuery(queryEngine).execute(true);
+                break;
+            case "MIM":
+                System.out.println("Execute MIM query ");
+                MIMQuery.createMIMQuery(queryEngine).execute(true);
+                break;
+            case "NLMR":
+                System.out.println("Execute NLMR query ");
+                NLMRQuery.createNLMRQuery(queryEngine).execute(true);
+                break;
+            case "HAS":
+                System.out.println("Execute HAS query ");
+                HeavyAsyncTaskStepsQuery.createHeavyAsyncTaskStepsQuery(queryEngine).execute(true);
+                break;
+            case "HBR":
+                System.out.println("Execute HBR query ");
+                HeavyBroadcastReceiverQuery.createHeavyBroadcastReceiverQuery(queryEngine).execute(true);
+                break;
+            case "ALL":
+               
+                System.out.println("Execute MIM query ");
+                MIMQuery.createMIMQuery(queryEngine).execute(true);
+                System.out.println("Execute LIC query ");
+                LICQuery.createLICQuery(queryEngine).execute(true);
+                System.out.println("Execute NLMR query ");
+                NLMRQuery.createNLMRQuery(queryEngine).execute(true);
+                System.out.println("Execute HBR query ");
+                HeavyBroadcastReceiverQuery.createHeavyBroadcastReceiverQuery(queryEngine).execute(true);
+                System.out.println("Execute HAS query ");
+                HeavyAsyncTaskStepsQuery.createHeavyAsyncTaskStepsQuery(queryEngine).execute(true);
+                break;
+        }
+
+        
 
 
         queryEngine.shutDown();
@@ -374,9 +512,6 @@ public class Main {
     }
 
 
-    public static void addLibrary(DetectorApp detectorApp, String libraryString) {
-        DetectorLibrary.createDetectorLibrary(libraryString, detectorApp);
-    }
 
     public static void deteleContenetOfDirectory(String path){
         File directory = new File(path);

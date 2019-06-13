@@ -169,16 +169,19 @@ def predict(argv):
     base_path = ''
 
     try:
-        opts, args = getopt.getopt(argv, "hb:", ["bpath="])
+        opts, args = getopt.getopt(argv, "hb:c:", ["bcpath=","codeSmell="])
     except getopt.GetoptError:
-        print('test.py predict -b <base_path> ')
+        print('test.py predict -b <base_path> -c <code_smell> ')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('test.py -p <prediction_path> -m <model_path>')
+            print('test.py -p <prediction_path> -c <code_smell>')
             sys.exit()
         elif opt in ("-b", "--bpath"):
             base_path = arg
+        elif opt in ("-c", "--codeSmell"):
+            codeSmell = arg
+
 
     prediction_path=os.path.join(base_path, 'prediction')
     model_path = os.path.join(base_path, 'models')
@@ -193,54 +196,169 @@ def predict(argv):
     MIM_prediction_path = os.path.join(prediction_path, 'MIM_prediction.csv')
 
     NLMR_prediction_path = os.path.join(prediction_path, 'NLMR_prediction.csv')
+    if (codeSmell=="MIM") :
+        mim(MIM_prediction_path, model_path, result_path)
+    elif (codeSmell=="LIC") :
+        lic(LIC_prediction_path, model_path, result_path)
+    elif (codeSmell=="NLMR") :
+        nlmr(NLMR_prediction_path, model_path, result_path)
+    elif (codeSmell=="HAS") :
+        has(HAS_prediction_path, model_path, result_path)
+    elif (codeSmell=="HBR") :
+        hbr(HBR_prediction_path, model_path, result_path)
+    elif (codeSmell=="ALL") :
+        all(MIM_prediction_path, LIC_prediction_path, NLMR_prediction_path, HAS_prediction_path,
+            HBR_prediction_path, model_path, result_path)
 
 
-    # if the file containing dataset is not empty then create the model
-    # HBR
+
+
+
+
+
+
+
+
+
+
+
+
+def mim(MIM_prediction_path,model_path,result_path):
+    # MIM
     try:
-        size = os.stat(HBR_prediction_path).st_size
+        size = os.stat(MIM_prediction_path).st_size
     except FileNotFoundError:
-        print('  File or file path not found ', HBR_prediction_path)
+        print('  File or file path not found ', MIM_prediction_path)
         sys.exit(2)
     if (size != 0):
-        file_name = os.path.join(model_path, "model_HBR.pickle")
+        file_name = os.path.join(model_path, "model_MIM.pickle")
         try:
             lr_model = p.load(open(file_name, 'rb'))
         except FileNotFoundError:
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
-            print("Detecting HBR code smells...")
-            columnsTitles = ['cyclomatic_complexity', 'number_of_instructions', 'has_methode_onReceive', 'full_name']
-            data_full_name = pd.read_csv(HBR_prediction_path)
+            print("Detecting MIM code smells...")
+            columnsTitles = ['number_of_callers_not_null', 'is_init', 'is_static', 'is_override', 'uses_variables',
+                             'call_methode',
+                             'call_external_methode', 'cyclomatic_complexity', 'full_name']
+            data_full_name = pd.read_csv(MIM_prediction_path)
             data_full_name = data_full_name.reindex(columns=columnsTitles)
-            data_full_name.to_csv(HBR_prediction_path, index=False)
+            data_full_name.to_csv(MIM_prediction_path, index=False)
 
-            data_full_name = pd.read_csv(HBR_prediction_path)
-            data = pd.read_csv(HBR_prediction_path)
+            data_full_name = pd.read_csv(MIM_prediction_path)
+            data = pd.read_csv(MIM_prediction_path)
+
         except FileNotFoundError:
-            print('  File or file path not found ', HBR_prediction_path)
+            print('  File or file path not found ', MIM_prediction_path)
             sys.exit(2)
 
-
-
         data.drop('full_name', axis=1, inplace=True)
+        data.drop('cyclomatic_complexity', axis=1, inplace=True)
         X = data.values
         # prediction
         predictions = lr_model.predict(X)
         data_full_name["is_code_smell"] = predictions
         data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
         print("Done")
-        HBR_result_path=os.path.join(result_path, 'classification_result_HBR.csv')
+        MIM_result_path = os.path.join(result_path, 'classification_result_MIM.csv')
 
-        data2.to_csv(HBR_result_path, index=False)
+        data2.to_csv(MIM_result_path, index=False)
     else:
-        HBR_result_path = os.path.join(result_path, 'classification_result_HBR.csv')
-        with open(HBR_result_path, 'w'):
+        MIM_result_path = os.path.join(result_path, 'classification_result_MIM.csv')
+        with open(MIM_result_path, 'w'):
+            pass
+
+def lic(LIC_prediction_path,model_path,result_path):
+    # LIC
+    try:
+        size = os.stat(LIC_prediction_path).st_size
+    except FileNotFoundError:
+        print('  File or file path not found ', LIC_prediction_path)
+        sys.exit(2)
+    if (size != 0):
+        file_name = os.path.join(model_path, "model_LIC.pickle")
+        try:
+            lr_model = p.load(open(file_name, 'rb'))
+        except FileNotFoundError:
+            print('  File or file path not found ', file_name)
+            sys.exit(2)
+        try:
+            print("Detecting LIC code smells...")
+            columnsTitles = ['is_static', 'is_enum', 'uses_variables', 'call_method', 'is_interface', 'is_local_class',
+                             'call_external_method', 'class_complexity', 'full_name']
+            data_full_name = pd.read_csv(LIC_prediction_path)
+            data_full_name = data_full_name.reindex(columns=columnsTitles)
+            data_full_name.to_csv(LIC_prediction_path, index=False)
+
+            data_full_name = pd.read_csv(LIC_prediction_path)
+            data = pd.read_csv(LIC_prediction_path)
+        except FileNotFoundError:
+            print('  File or file path not found ', LIC_prediction_path)
+            sys.exit(2)
+
+        data.drop('full_name', axis=1, inplace=True)
+        data.drop('class_complexity', axis=1, inplace=True)
+        X = data.values
+        # prediction
+        predictions = lr_model.predict(X)
+        data_full_name["is_code_smell"] = predictions
+        data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
+        print("Done")
+        LIC_result_path = os.path.join(result_path, 'classification_result_LIC.csv')
+
+        data2.to_csv(LIC_result_path, index=False)
+    else:
+        LIC_result_path = os.path.join(result_path, 'classification_result_LIC.csv')
+        with open(LIC_result_path, 'w'):
+            pass
+
+def nlmr(NLMR_prediction_path,model_path,result_path):
+    # NLMR
+    try:
+        size = os.stat(NLMR_prediction_path).st_size
+    except FileNotFoundError:
+        print('  File or file path not found ', NLMR_prediction_path)
+        sys.exit(2)
+    if (size != 0):
+
+        file_name = os.path.join(model_path, "model_NLMR.pickle")
+        try:
+            lr_model = p.load(open(file_name, 'rb'))
+        except FileNotFoundError:
+            print('  File or file path not found ', file_name)
+            sys.exit(2)
+        try:
+            print("Detecting NLMR code smells...")
+            columnsTitles = ['has_onLowMemory', 'extend_class', 'class_complexity', 'full_name']
+            data_full_name = pd.read_csv(NLMR_prediction_path)
+            data_full_name = data_full_name.reindex(columns=columnsTitles)
+            data_full_name.to_csv(NLMR_prediction_path, index=False)
+            data_full_name = pd.read_csv(NLMR_prediction_path)
+            data = pd.read_csv(NLMR_prediction_path)
+        except FileNotFoundError:
+            print('  File or file path not found ', NLMR_prediction_path)
+            sys.exit(2)
+
+        data.drop('full_name', axis=1, inplace=True)
+        data.drop('class_complexity', axis=1, inplace=True)
+        X = data.values
+        # prediction
+        predictions = lr_model.predict(X)
+        data_full_name["is_code_smell"] = predictions
+        data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
+        print("Done")
+        NLMR_result_path = os.path.join(result_path, 'classification_result_NLMR.csv')
+
+        data2.to_csv(NLMR_result_path, index=False)
+    else:
+        NLMR_result_path = os.path.join(result_path, 'classification_result_NLMR.csv')
+        with open(NLMR_result_path, 'w'):
             pass
 
 
-        # if the file containing dataset is not empty then create the model
+def has(HAS_prediction_path,model_path,result_path):
+     # if the file containing dataset is not empty then create the model
     #HAS
     try:
         size = os.stat(HAS_prediction_path).st_size
@@ -283,131 +401,57 @@ def predict(argv):
         HAS_result_path = os.path.join(result_path, 'classification_result_HAS.csv')
         with open(HAS_result_path, 'w'):
             pass
-    #LIC
+
+def hbr(HBR_prediction_path,model_path,result_path):
+    # if the file containing dataset is not empty then create the model
+    # HBR
     try:
-        size = os.stat(LIC_prediction_path).st_size
+        size = os.stat(HBR_prediction_path).st_size
     except FileNotFoundError:
-        print('  File or file path not found ', LIC_prediction_path)
+        print('  File or file path not found ', HBR_prediction_path)
         sys.exit(2)
     if (size != 0):
-        file_name = os.path.join(model_path, "model_LIC.pickle")
+        file_name = os.path.join(model_path, "model_HBR.pickle")
         try:
             lr_model = p.load(open(file_name, 'rb'))
         except FileNotFoundError:
             print('  File or file path not found ', file_name)
             sys.exit(2)
         try:
-            print("Detecting LIC code smells...")
-            columnsTitles = ['is_static','is_enum','uses_variables', 'call_method','is_interface','is_local_class','call_external_method','class_complexity','full_name']
-            data_full_name = pd.read_csv(LIC_prediction_path)
+            print("Detecting HBR code smells...")
+            columnsTitles = ['cyclomatic_complexity', 'number_of_instructions', 'has_methode_onReceive', 'full_name']
+            data_full_name = pd.read_csv(HBR_prediction_path)
             data_full_name = data_full_name.reindex(columns=columnsTitles)
-            data_full_name.to_csv(LIC_prediction_path, index=False)
+            data_full_name.to_csv(HBR_prediction_path, index=False)
 
-            data_full_name = pd.read_csv(LIC_prediction_path)
-            data = pd.read_csv(LIC_prediction_path)
+            data_full_name = pd.read_csv(HBR_prediction_path)
+            data = pd.read_csv(HBR_prediction_path)
         except FileNotFoundError:
-            print('  File or file path not found ', LIC_prediction_path)
+            print('  File or file path not found ', HBR_prediction_path)
             sys.exit(2)
 
         data.drop('full_name', axis=1, inplace=True)
-        data.drop('class_complexity', axis=1, inplace=True)
         X = data.values
         # prediction
         predictions = lr_model.predict(X)
         data_full_name["is_code_smell"] = predictions
         data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
         print("Done")
-        LIC_result_path = os.path.join(result_path, 'classification_result_LIC.csv')
+        HBR_result_path = os.path.join(result_path, 'classification_result_HBR.csv')
 
-        data2.to_csv(LIC_result_path, index=False)
+        data2.to_csv(HBR_result_path, index=False)
     else:
-        LIC_result_path = os.path.join(result_path, 'classification_result_LIC.csv')
-        with open(LIC_result_path, 'w'):
+        HBR_result_path = os.path.join(result_path, 'classification_result_HBR.csv')
+        with open(HBR_result_path, 'w'):
             pass
-    #MIM
-    try:
-        size = os.stat(MIM_prediction_path).st_size
-    except FileNotFoundError:
-        print('  File or file path not found ', MIM_prediction_path)
-        sys.exit(2)
-    if (size != 0):
-        file_name = os.path.join(model_path, "model_MIM.pickle")
-        try:
-            lr_model = p.load(open(file_name, 'rb'))
-        except FileNotFoundError:
-            print('  File or file path not found ', file_name)
-            sys.exit(2)
-        try:
-            print("Detecting MIM code smells...")
-            columnsTitles = ['number_of_callers_not_null', 'is_init', 'is_static', 'is_override', 'uses_variables','call_methode',
-                             'call_external_methode','cyclomatic_complexity', 'full_name']
-            data_full_name = pd.read_csv(MIM_prediction_path)
-            data_full_name = data_full_name.reindex(columns=columnsTitles)
-            data_full_name.to_csv(MIM_prediction_path, index=False)
 
-            data_full_name = pd.read_csv(MIM_prediction_path)
-            data = pd.read_csv(MIM_prediction_path)
 
-        except FileNotFoundError:
-            print('  File or file path not found ', MIM_prediction_path)
-            sys.exit(2)
-
-        data.drop('full_name', axis=1, inplace=True)
-        data.drop('cyclomatic_complexity', axis=1, inplace=True)
-        X = data.values
-        # prediction
-        predictions = lr_model.predict(X)
-        data_full_name["is_code_smell"] = predictions
-        data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
-        print("Done")
-        MIM_result_path = os.path.join(result_path, 'classification_result_MIM.csv')
-
-        data2.to_csv(MIM_result_path, index=False)
-    else:
-        MIM_result_path = os.path.join(result_path, 'classification_result_MIM.csv')
-        with open(MIM_result_path, 'w'):
-            pass
-    #NLMR
-    try:
-        size = os.stat(NLMR_prediction_path).st_size
-    except FileNotFoundError:
-        print('  File or file path not found ', NLMR_prediction_path)
-        sys.exit(2)
-    if (size != 0):
-
-        file_name = os.path.join(model_path, "model_NLMR.pickle")
-        try:
-            lr_model = p.load(open(file_name, 'rb'))
-        except FileNotFoundError:
-            print('  File or file path not found ', file_name)
-            sys.exit(2)
-        try:
-            print("Detecting NLMR code smells...")
-            columnsTitles = ['has_onLowMemory', 'extend_class', 'class_complexity', 'full_name']
-            data_full_name = pd.read_csv(NLMR_prediction_path)
-            data_full_name = data_full_name.reindex(columns=columnsTitles)
-            data_full_name.to_csv(NLMR_prediction_path, index=False)
-            data_full_name = pd.read_csv(NLMR_prediction_path)
-            data = pd.read_csv(NLMR_prediction_path)
-        except FileNotFoundError:
-            print('  File or file path not found ', NLMR_prediction_path)
-            sys.exit(2)
-
-        data.drop('full_name', axis=1, inplace=True)
-        data.drop('class_complexity', axis=1, inplace=True)
-        X = data.values
-        # prediction
-        predictions = lr_model.predict(X)
-        data_full_name["is_code_smell"] = predictions
-        data2 = data_full_name.loc[data_full_name['is_code_smell'] == 1]
-        print("Done")
-        NLMR_result_path = os.path.join(result_path, 'classification_result_NLMR.csv')
-
-        data2.to_csv(NLMR_result_path, index=False)
-    else:
-        NLMR_result_path = os.path.join(result_path, 'classification_result_NLMR.csv')
-        with open(NLMR_result_path, 'w'):
-            pass
+def all(MIM_prediction_path,LIC_prediction_path,NLMR_prediction_path,HAS_prediction_path,HBR_prediction_path,model_path,result_path):
+   mim(MIM_prediction_path,model_path,result_path)
+   lic(LIC_prediction_path,model_path,result_path)
+   nlmr(NLMR_prediction_path,model_path,result_path)
+   has(HAS_prediction_path,model_path,result_path)
+   hbr(HBR_prediction_path,model_path,result_path)
 
 
 if __name__ == "__main__":
