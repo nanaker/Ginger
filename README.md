@@ -33,30 +33,30 @@ Note that Ginger use Neo4j To save the application analysed but you don't need t
 
 #### Detect mode usage
 
-```
+
 
 usage: Ginger.jar [-h] detect  -f folder -c codeSmell 
 
 positional arguments:
   -f folder                  Path of the code source folder /src
   -c codeSmell               Code smell to detect MIM,LIC,NLMR,HBR,HAS or ALL to detect all code smells 
-
+```
 
 ```
 
 #### Correct mode usage
 
-```
+
 usage: Ginger.jar [-h] correct   -c codeSmell 
 
 positional arguments:
   -c codeSmell               Code smell to detect MIM,LIC,NLMR,HBR,HAS or ALL to detect all code smells 
 
 ```
-
+```
 #### Detect&Correct mode usage
 
-```
+
 usage: Ginger.jar [-h] detect&correct  -f folder  -c codeSmell 
 
 positional arguments:
