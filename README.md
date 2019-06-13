@@ -70,17 +70,17 @@ positional arguments:
 First we launch the detection mode to detect potential code smells present in the android application  :
 
 ```
-java -Xmx2G -XX:+UseConcMarkSweepGC -jar  Ginger.jar detect -f "/path/to/application/src" -c "MIM" 
+java  -jar  Ginger.jar detect -f "/path/to/application/src" -c "MIM" 
 ```
 
 Then you can launch the correction  using correct mode, for example :
 ```
-java -Xmx2G -XX:+UseConcMarkSweepGC -jar  Ginger.jar correct -c "MIM" 
+java  -jar  Ginger.jar correct -c "MIM" 
 ```
 
 OR  you can directly  launch the detection and the correction at once  using detect&correct mode, for example :
 ```
-java -Xmx2G -XX:+UseConcMarkSweepGC -jar  Ginger.jar detect&correct -f "/path/to/application/src" -c "ALL" 
+java -jar  Ginger.jar detect&correct -f "/path/to/application/src" -c "ALL" 
 ```
 
 ### <a name="troubleshootings"></a>Troubleshootings
