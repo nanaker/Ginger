@@ -25,7 +25,7 @@ Ginger supports currently 5 Android code smells.
 
 
 You can choose between three modes: **detect** , **correct** and  **detect&correct** .
-The **detect** mode will allows you to scan with [Spoon](https://github.com/INRIA/spoon) your Application application, then detect contained code smells.
+The **detect** mode will allows you to scan with [Spoon](https://github.com/INRIA/spoon) your  application, then detect contained code smells.
 You can use after the **correct** mode to correct code smells detected or suggest some recommendation instructions to correct them and **detect&correct** that combine the two privious mode
 
 Note that Ginger use Neo4j To save the application analysed but you don't need to install Neo4J on your side since it's embedded into Ginger (however it can be useful if you want to visualize the database , use the Neo4J Desktop Application).
