@@ -1,4 +1,4 @@
-# paprika
+# Ginger
 
 Ginger is a toolkit to detect and correct  some code smells in analysed Android applications.
 
