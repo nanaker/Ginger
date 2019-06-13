@@ -1,6 +1,11 @@
 is_static,is_enum,uses_variables,call_method,is_interface,is_local_class,call_external_method,class_complexity,full_name,is_code_smell
-False,False,False,False,False,False,False,1,org.passwordmaker.android.AccountListFragment$com.google.common.base.FunctionAccountStack,True
-False,False,False,False,False,False,False,1,org.passwordmaker.android.AccountListFragment$com.google.common.base.PredicateAccountStack,True
-False,False,False,False,False,False,False,1,org.passwordmaker.android.ImportExportRdf$com.google.common.base.Function3,True
-False,False,False,False,False,False,False,1,org.passwordmaker.android.MainActivity$com.google.common.base.Function6,True
-False,False,False,False,False,False,False,0,org.passwordmaker.android.ClassicSettingsImporter$com.tasermonkeys.google.json.reflect.TypeToken1,True
+False,False,False,False,False,False,False,2,com.google.android.diskusage.datasource.debug.DebugDataSource$com.google.android.diskusage.datasource.debug.PortableStreamProtoWriterImpl$CloseCallback3,True
+False,False,False,False,False,False,False,2,com.google.android.diskusage.delete.FileInfoAdapter$java.util.Comparator1,True
+False,False,False,False,False,False,False,2,com.google.android.diskusage.opengl.AbstractRenderingThread$ControlEvent,True
+False,False,False,False,False,False,False,1,com.google.android.diskusage.entity.FileSystemEntry$SearchInterruptedException,True
+False,False,False,False,False,False,False,1,com.google.android.diskusage.opengl.AbstractRenderingThread$ExitException,True
+False,False,False,False,False,False,False,1,com.google.android.diskusage.DiskUsage$android.content.DialogInterface$OnClickListener3,True
+False,False,False,False,False,False,False,1,com.google.android.diskusage.DiskUsage$android.content.DialogInterface$OnClickListener5,True
+False,False,False,False,False,False,False,1,com.google.android.diskusage.LoadableActivity$PersistantActivityState,True
+False,False,False,False,False,False,False,1,com.google.android.diskusage.RendererManager$android.content.DialogInterface.OnClickListener2,True
+False,False,False,False,False,False,False,1,com.google.android.diskusage.RendererManager$android.content.DialogInterface.OnCancelListener1,True

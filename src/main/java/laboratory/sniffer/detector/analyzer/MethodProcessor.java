@@ -1,5 +1,6 @@
 package laboratory.sniffer.detector.analyzer;
 
+import laboratory.sniffer.detector.entities.DetectorClass;
 import laboratory.sniffer.detector.entities.DetectorMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,8 @@ public class MethodProcessor extends ExecutableProcessor<CtMethod> {
         detectorMethod.setSetter(checkSetter(ctMethod));
         detectorMethod.setGetter(checkGetter(ctMethod));
         detectorMethod.setOverride(isOverride(ctMethod,detectorMethod));
+
+
 
         for (ModifierKind modifierKind : ctMethod.getModifiers()) {
             if (modifierKind.toString().toLowerCase().equals("static")) {

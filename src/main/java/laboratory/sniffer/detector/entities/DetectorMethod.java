@@ -28,6 +28,15 @@ public class DetectorMethod extends Entity{
     private boolean isSetter;
     private boolean isStatic;
     private boolean isOverride;
+    private boolean isOverrided;
+
+    public void setOverrided(boolean overrided) {
+        isOverrided = overrided;
+    }
+
+    public boolean isOverrided() {
+        return isOverrided;
+    }
 
     public boolean isOverride() {
         return isOverride;
@@ -63,6 +72,7 @@ public class DetectorMethod extends Entity{
         this.isGetter=false;
         this.isStatic=false;
         this.isOverride=false;
+        this.isOverrided=false;
     }
 
     public static DetectorMethod createDetectorMethod(String name, DetectorModifiers modifier, String returnType, DetectorClass detectorClass) {

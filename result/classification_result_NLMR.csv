@@ -1,9 +1,6 @@
 has_onLowMemory,extend_class,class_complexity,full_name,is_code_smell
-False,False,86,org.passwordmaker.android.MainActivity,True
-False,False,23,org.passwordmaker.android.AccountListActivity,True
-False,False,16,org.passwordmaker.android.PatternDataListActivity,True
-False,False,13,org.passwordmaker.android.ImportExportRdf,True
-False,False,12,org.passwordmaker.android.EditFavoritesActivity,True
-False,False,9,org.passwordmaker.android.AccountDetailActivity,True
-False,False,8,org.passwordmaker.android.PatternDataDetailActivity,True
-False,False,6,org.passwordmaker.android.SettingsActivity,True
+False,False,34,com.google.android.diskusage.LoadableActivity,True
+False,False,25,com.google.android.diskusage.SelectActivity,True
+False,False,13,com.google.android.diskusage.PermissionRequestActivity,True
+False,False,7,com.google.android.diskusage.ShowHideMountPointsActivity,True
+False,False,3,com.google.android.diskusage.DeleteActivity,True

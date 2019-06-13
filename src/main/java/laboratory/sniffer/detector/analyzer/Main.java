@@ -73,7 +73,7 @@ public class Main {
             Namespace pathOfApplicationToAnalyse=parser.parseArgs(args);
             //System.out.println("pathOfApplicationToAnalyse = "+pathOfApplicationToAnalyse);
 
-          //  runAnalysis(pathOfApplicationToAnalyse);
+            runAnalysis(pathOfApplicationToAnalyse);
 
 
 
@@ -88,16 +88,16 @@ public class Main {
             Namespace res = parser.parseArgs(argumentsQyery);
 
 
-         //   queryMode(res);
+           queryMode(res);
 
             // Detection des défauts de code
 
             System.out.println("Detecting code smells...");
             String base_path = FileSystems.getDefault().getPath("").normalize().toAbsolutePath().toString();
-           classifier classifier=new classifier(base_path);
-           // String result=classifier.exec();
-            //logger.info(result);
-             //System.out.println(result);
+
+            classifier classifier=new classifier(base_path);
+            String result=classifier.exec();
+             System.out.println(result);
             System.out.println("Done");
 
 

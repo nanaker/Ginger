@@ -1,6 +1,7 @@
 package laboratory.sniffer.detector.analyzer;
 
 import laboratory.sniffer.detector.entities.DetectorArgument;
+import laboratory.sniffer.detector.entities.DetectorClass;
 import laboratory.sniffer.detector.entities.DetectorMethod;
 import laboratory.sniffer.detector.entities.DetectorModifiers;
 import org.slf4j.Logger;
@@ -40,6 +41,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
 
         DetectorMethod detectorMethod = DetectorMethod.createDetectorMethod(name, detectorModifiers, returnType,
                 MainProcessor.currentClass);
+
 
         MainProcessor.currentMethod = detectorMethod;
         for (CtParameter<?> ctParameter : (List<CtParameter>) ctExecutable.getParameters()) {
@@ -116,6 +118,7 @@ public abstract class ExecutableProcessor<T extends CtExecutable> {
         //if (detectorMethod.getDetectorClass().getName().contains("InvalidateUpdateListener")) {
 
         List<CtVariableReadImpl> elements3 = ctExecutable.getElements(new TypeFilter(CtVariableReadImpl.class));
+
 
 
         if(detectorMethod.getDetectorClass().isInnerClass()&&detectorMethod.getDetectorClass().getClasse().isAnonymous()){

@@ -1,5 +1,6 @@
 package laboratory.sniffer.detector.neo4j;
 
+import laboratory.sniffer.detector.analyzer.MainProcessor;
 import laboratory.sniffer.detector.entities.Entity;
 import laboratory.sniffer.detector.entities.DetectorApp;
 import laboratory.sniffer.detector.entities.DetectorArgument;
@@ -179,6 +180,28 @@ public class ModelToGraph {
             methodNode.setProperty("abstract_class", true);
         }
         else methodNode.setProperty("abstract_class", false);
+
+        for (DetectorClass detectorClass : MainProcessor.getCurrentApp().getDetectorClasses()){
+            for (DetectorMethod method:detectorClass.getDetectorMethods()){
+                if (detectorMethod.getName().equals(method.getName())&&(method.isOverride())&&(detectorMethod.isOverride()==false)&&(detectorMethod.isOverrided()==false)){
+                    detectorMethod.setOverrided(true);
+                    //System.out.println("is overrided "+detectorMethod.getName());
+                    //System.out.println("is class "+detectorMethod.getDetectorClass().getName());
+                    break;
+                }
+
+            }
+
+        }
+        if(detectorMethod.isOverrided()){
+            methodNode.setProperty("overrided", true);
+        }
+        else   methodNode.setProperty("overrided", false);
+
+        if(detectorMethod.getDetectorClass().isInnerClass()){
+            methodNode.setProperty("inner_class", true);
+        }
+        else   methodNode.setProperty("inner_class", false);
         methodNode.setProperty("return_type", detectorMethod.getReturnType());
 
         for (Metric metric : detectorMethod.getMetrics()) {
