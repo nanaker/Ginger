@@ -1,1 +1,2 @@
 number_of_callers_not_null,is_init,is_static,is_override,uses_variables,call_methode,call_external_methode,cyclomatic_complexity,full_name,is_code_smell
+True,False,False,False,False,False,False,1,idealIntArraySize#com.google.protobuf.nano.FieldArray,True
